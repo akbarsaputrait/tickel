@@ -11,20 +11,41 @@ class AdminController extends Controller
 {
 	use AuthenticatesUsers;
 
-	protected $redirectTo = '/admin/dashboard';
-
-	public function __construct()
-  {
-    $this->middleware('guest')->except('logout');
-  }
+	protected $redirectTo = '/admin/dasbor';
 
 	public function guard()
-	{
-	    return auth()->guard('admin');
-	}
+  {
+   return Auth::guard('admin');
+  }
 
   public function showLoginForm()
   {
+		if(!Auth::guard('admin')->check()) {
       return view('layouts.login_admin');
+		} else {
+			return redirect()->route('admin.dashboard');
+		}
   }
+
+	public function loginAdmin(Request $request)
+    {
+      // Validate the form data
+      $this->validate($request, [
+        'email'   => 'required|email',
+        'password' => 'required'
+      ]);
+      // Attempt to log the user in
+      if (Auth::guard('admin')->attempt(['email' => $request->email, 'password' => $request->password])) {
+        // if successful, then redirect to their intended location
+        return redirect()->route('admin.dashboard');
+      }
+      // if unsuccessful, then redirect back to the login with the form data
+      return redirect()->back()->withInput($request->only('email', 'remember'));
+    }
+
+    public function logoutAdmin()
+    {
+        Auth::guard('admin')->logout();
+        return redirect()->route('admin.login');
+    }
 }

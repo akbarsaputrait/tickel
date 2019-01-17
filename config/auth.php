@@ -126,19 +126,19 @@ return [
         'admins' => [
             'provider' => 'admins',
             'table' => 'password_resets',
-            'expire' => 60,
+            'expire' => 15,
         ],
 
         'petugass' => [
             'provider' => 'petugass',
             'table' => 'password_resets',
-            'expire' => 60,
+            'expire' => 15,
         ],
 
         'penumpangs' => [
             'provider' => 'penumpangs',
             'table' => 'password_resets',
-            'expire' => 60,
+            'expire' => 15,
         ],
     ],
 

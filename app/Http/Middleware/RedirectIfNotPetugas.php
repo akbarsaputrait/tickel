@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Illuminate\Support\Facades\Auth;
 
 class RedirectIfNotPetugas
 {
@@ -15,8 +16,8 @@ class RedirectIfNotPetugas
      */
      public function handle($request, Closure $next, $guard="petugas")
      {
-         if(!auth()->guard($guard)->check()) {
-             return redirect(route('petugas.login'));
+         if(!Auth::guard($guard)->check()) {
+             return redirect()->route('petugas.login');
          }
          return $next($request);
      }

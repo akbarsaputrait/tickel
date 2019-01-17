@@ -10,7 +10,10 @@
 						</h4>
 					</div>
 					<div class="mb-3">
-						<a href="{{ url('admin/rute/create') }}" class="btn btn-primary">
+            <a href="{{ route('type-rute.index') }}" class="btn btn-warning">
+							<i class="fa fa-rocket"></i> Type Rute
+						</a>
+            <a href="{{ route('rute.create') }}" class="btn btn-primary">
 							<i class="fa fa-plus"></i> Tambah
 						</a>
 					</div>
@@ -19,6 +22,9 @@
           <table class="table table-bordered table-striped">
             <thead>
               <tr>
+                <th>
+                  Tipe
+                </th>
                 <th>
                   Tujuan
                 </th>
@@ -40,33 +46,38 @@
               </tr>
             </thead>
             <tbody>
+              @foreach($rute as $item)
               <tr>
                 <td>
-                  Jakarta
+                  {{ $item->type->nama_type }}
                 </td>
                 <td>
-                  Bandara Djuanda
+                  {{ $item->tujuan }}
                 </td>
                 <td>
-                  Bandara Soekarno-Hatta
+                  {{ $item->rute_awal }}
                 </td>
                 <td>
-                  Rp. 300,000
+                  {{ $item->rute_akhir }}
                 </td>
                 <td>
-                  Pesawat Garuda Indonesia
+                  Rp. {{ $item->harga }}
+                </td>
+                <td>
+                  {{ $item->transportasi->nama_transportasi }}
                 </td>
                 <td>
                   <div class="btn-group">
-                    <button type="button" name="button" class="btn btn-success">
+                    <a href="{{ route('rute.edit', ['rute' => $item->id_rute]) }}" class="btn btn-success">
                       <i class="fa fa-pencil"></i>
-                    </button>
-                    <button type="button" name="button" class="btn btn-danger">
+                    </a>
+                    <button type="button" name="button" id="deleteButton" class="btn btn-danger" data-id="{{ $item->id_rute }}" data-menu="rute">
                       <i class="fa fa-trash"></i>
                     </button>
                   </div>
                 </td>
               </tr>
+              @endforeach
             </tbody>
           </table>
         </div>

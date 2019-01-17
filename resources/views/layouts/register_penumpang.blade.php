@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -28,23 +27,42 @@
           <div class="col-lg-4 mx-auto">
             <h2 class="text-center mb-4">Register</h2>
             <div class="auto-form-wrapper">
-              <form action="{{ route('register.store') }}" method="post">
+              <form action="{{ route('penumpang.register.post') }}" method="post">
                 @csrf
                 <div class="form-group">
                   <label class="label">Name</label>
-                  <input type="text" class="form-control" placeholder="Name" name="name">
+                  <input type="text" class="form-control {{ ($errors->has('nama_penumpang')) ? 'is-invalid' : '' }}" placeholder="Name" name="nama_penumpang">
+                  <div class="invalid-feedback">
+                    {{ $errors->first('nama_penumpang') }}
+                  </div>
                 </div>
                 <div class="form-group">
                   <label class="label">Username</label>
-                  <input type="text" class="form-control" placeholder="Username" name="username">
+                  <input type="text" class="form-control {{ ($errors->has('username')) ? 'is-invalid' : '' }}" placeholder="Username" name="username">
+                  <div class="invalid-feedback">
+                    {{ $errors->first('username') }}
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="label">Email</label>
+                  <input type="email" class="form-control {{ ($errors->has('email')) ? 'is-invalid' : '' }}" value="{{ old('email') }}" placeholder="Email Address" name="email" autofocus>
+                  <div class="invalid-feedback">
+                    {{ $errors->first('email') }}
+                  </div>
                 </div>
                 <div class="form-group">
                   <label class="label">Password</label>
-                  <input type="password" class="form-control" placeholder="*********" name="password">
+                  <input type="password" class="form-control {{ ($errors->has('password')) ? 'is-invalid' : '' }}" placeholder="*********" name="password">
+                  <div class="invalid-feedback">
+                    {{ $errors->first('password') }}
+                  </div>
                 </div>
                 <div class="form-group">
                   <label class="label">Confirm Password</label>
-                  <input type="password" class="form-control" placeholder="*********" name="confirm_password">
+                  <input type="password" class="form-control {{ ($errors->has('confirm_password')) ? 'is-invalid' : '' }}" placeholder="*********" name="confirm_password">
+                  <div class="invalid-feedback">
+                    {{ $errors->first('confirm_password') }}
+                  </div>
                 </div>
                 <div class="form-group">
                   <button class="btn btn-primary submit-btn btn-block" type="submit">Register</button>

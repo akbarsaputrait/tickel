@@ -1,11 +1,12 @@
-@extends('master_admin') @section('title', 'Rute') @section('content')
+@extends('master_admin') @section('title', $rute->tujuan) @section('content')
 <div class="row">
   <div class="col-12 grid-margin">
     <div class="card">
       <div class="card-body">
-        <h4 class="card-title">Tambah Rute</h4>
-        <form class="form-horizontal" action="{{ route('rute.store') }}" method="post">
+        <h4 class="card-title">Edit Rute</h4>
+        <form class="form-horizontal" action="{{ route('rute.update', ['rute' => $rute->id_rute]) }}" method="post">
           @csrf
+          @method('PUT')
           <h3 class="card-description">
             Informasi Rute
           </h3>
@@ -13,7 +14,7 @@
             <div class="col-md-4">
               <div class="form-group">
                 <label for="">Tujuan</label>
-                <input type="text" class="form-control {{ ($errors->has('tujuan')) ? 'is-invalid' : '' }}" name="tujuan" value="" placeholder="Tujuan">
+                <input type="text" class="form-control {{ ($errors->has('tujuan')) ? 'is-invalid' : '' }}" name="tujuan" value="{{ $rute->tujuan }}" placeholder="Tujuan">
                 <div class="invalid-feedback">
                   {{ $errors->first('tujuan') }}
                 </div>
@@ -23,7 +24,7 @@
               <div class="form-group">
                 <div class="form-group">
                   <label for="">Rute Awal</label>
-                  <input type="text" class="form-control {{ ($errors->has('rute_awal')) ? 'is-invalid' : '' }}" name="rute_awal" value="" placeholder="Rute Awal">
+                  <input type="text" class="form-control {{ ($errors->has('rute_awal')) ? 'is-invalid' : '' }}" name="rute_awal" value="{{ $rute->rute_awal }}" placeholder="Rute Awal">
                   <div class="invalid-feedback">
                     {{ $errors->first('rute_awal') }}
                   </div>
@@ -33,7 +34,7 @@
             <div class="col-md-4">
               <div class="form-group">
                 <label for="">Rute Akhir</label>
-                <input type="text" class="form-control {{ ($errors->has('rute_akhir')) ? 'is-invalid' : '' }}" name="rute_akhir" value="" placeholder="Rute Akhir">
+                <input type="text" class="form-control {{ ($errors->has('rute_akhir')) ? 'is-invalid' : '' }}" name="rute_akhir" value="{{ $rute->rute_akhir }}" placeholder="Rute Akhir">
                 <div class="invalid-feedback">
                   {{ $errors->first('rute_akhir') }}
                 </div>
@@ -48,7 +49,7 @@
                   <div class="input-group-prepend">
                     <span class="input-group-text">Rp.</span>
                   </div>
-                  <input type="text" class="form-control {{ ($errors->has('harga')) ? 'is-invalid' : '' }}" name="harga" value="" id="hargaRute" placeholder="Harga">
+                  <input type="text" class="form-control {{ ($errors->has('harga')) ? 'is-invalid' : '' }}" name="harga" value="{{ $rute->harga }}" id="hargaRute" placeholder="Harga">
                 </div>
                 <div class="invalid-feedback">
                   {{ $errors->first('harga') }}
@@ -61,7 +62,7 @@
                 <select class="form-control {{ ($errors->has('id_transportasi')) ? 'is-invalid' : '' }}" name="id_transportasi">
                   <option value="">-- Jenis Transportasi</option>
                   @foreach($transportasi as $item)
-                  <option value="{{ $item->id_transportasi }}">{{ $item->nama_transportasi }}</option>
+                  <option value="{{ $item->id_transportasi }}" {{ ($rute->id_transportasi == $item->id_transportasi) ? 'selected' : '' }}>{{ $item->nama_transportasi }}</option>
                   @endforeach
                 </select>
                 <div class="invalid-feedback">
@@ -75,7 +76,7 @@
                 <select class="form-control {{ ($errors->has('id_type_rute')) ? 'is-invalid' : '' }}" name="id_type_rute">
                   <option value="">-- Tipe Rute</option>
                   @foreach($type as $item)
-                  <option value="{{ $item->id_type_rute }}">{{ $item->nama_type }}</option>
+                  <option value="{{ $item->id_type_rute }}" {{ ($rute->id_type_rute == $item->id_type_rute) ? 'selected' : '' }}>{{ $item->nama_type }}</option>
                   @endforeach
                 </select>
                 <div class="invalid-feedback">

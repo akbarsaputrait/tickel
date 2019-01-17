@@ -41,11 +41,17 @@
 								@csrf
                 <div class="form-group">
                   <label class="label">Email</label>
-                  <input type="email" class="form-control" placeholder="Email Address" name="email" autofocus>
+                  <input type="email" class="form-control {{ ($errors->has('email')) ? 'is-invalid' : '' }}" value="{{ old('email') }}" placeholder="Email Address" name="email" autofocus>
+                  <div class="invalid-feedback">
+                    {{ $errors->first('email') }}
+                  </div>
                 </div>
                 <div class="form-group">
                   <label class="label">Password</label>
-                  <input type="password" class="form-control" placeholder="*********" name="password">
+                  <input type="password" class="form-control {{ ($errors->has('password')) ? 'is-invalid' : '' }}" placeholder="*********" name="password">
+                  <div class="invalid-feedback">
+                    {{ $errors->first('password') }}
+                  </div>
                 </div>
                 <div class="form-group">
                   <button class="btn btn-primary submit-btn btn-block" type="submit">Login</button>

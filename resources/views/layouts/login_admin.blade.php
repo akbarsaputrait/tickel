@@ -41,7 +41,7 @@
 								@csrf
                 <div class="form-group">
                   <label class="label">Email</label>
-                  <input type="email" class="form-control" placeholder="Email Address" name="email" autofocus>
+                  <input type="email" class="form-control" value="{{ old('email') }}" placeholder="Email Address" name="email" autofocus>
                 </div>
                 <div class="form-group">
                   <label class="label">Password</label>

@@ -10,7 +10,7 @@
 						</h4>
 					</div>
 					<div class="mb-3">
-            <a href="{{ route('type-transportasi.index') }}" class="btn btn-warning">
+            <a href="{{ route('tipe-transportasi.index') }}" class="btn btn-warning">
 							<i class="fa fa-rocket"></i> Type Transportasi
 						</a>
 						<a href="{{ route('transportasi.create') }}" class="btn btn-primary">

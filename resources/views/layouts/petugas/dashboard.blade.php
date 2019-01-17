@@ -1,5 +1,5 @@
 @extends('master_petugas')
-@section('title', 'Dashboard')
+@section('title', 'Dasbor')
 @section('content')
 <div class="row">
   <div class="col-lg-12 grid-margin">

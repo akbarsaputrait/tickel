@@ -1,4 +1,4 @@
-@extends('master_admin') @section('title', 'Type Transportasi') @section('content')
+@extends('master_admin') @section('title', 'Tipe Rute') @section('content')
 <div class="row">
   <div class="col-lg-12 grid-margin">
     <div class="card">
@@ -6,12 +6,12 @@
 				<div class="d-flex justify-content-between align-items-center">
 					<div class="">
 						<h4 class="card-title">
-							<b>Type Transportasi</b>
+							<b>Tipe Rute</b>
 						</h4>
 					</div>
 					<div class="mb-3">
-            <a href="{{ route('transportasi.index') }}" class="btn btn-warning">
-							<i class="fa fa-plane"></i> Transportasi
+            <a href="{{ route('rute.index') }}" class="btn btn-warning">
+							<i class="fa fa-location-arrow"></i> Rute
 						</a>
 						<button data-toggle="modal" data-target="#createType" class="btn btn-primary">
 							<i class="fa fa-plus"></i> Tambah
@@ -34,7 +34,7 @@
               </tr>
             </thead>
             <tbody>
-              @foreach($type_transportasi as $item)
+              @foreach($type as $item)
               <tr>
                 <td>
                   {{ $item->nama_type }}
@@ -44,10 +44,10 @@
                 </td>
                 <td>
                   <div class="btn-group">
-                    <a href="{{ route('type-transportasi.edit', ['type-transportasi' => $item->id_type_transportasi]) }}" class="btn btn-success">
+                    <a href="{{ route('type-rute.edit', ['type-rute' => $item->id_type_rute]) }}" class="btn btn-success">
                       <i class="fa fa-pencil"></i>
                     </a>
-                    <button type="button" name="button" id="deleteButton" class="btn btn-danger" data-id="{{ $item->id_type_transportasi }}" data-menu="type-transportasi">
+                    <button type="button" name="button" id="deleteButton" class="btn btn-danger" data-id="{{ $item->id_type_rute }}" data-menu="type-rute">
                       <i class="fa fa-trash"></i>
                     </button>
                   </div>
@@ -73,10 +73,10 @@
         </button>
       </div>
       <div class="modal-body">
-        <form class="form-horizontal" action="{{ route('type-transportasi.store') }}" method="post">
+        <form class="form-horizontal" action="{{ route('type-rute.store') }}" method="post">
           @csrf
           <h3 class="card-description">
-            Informasi Tipe Transportasi
+            Informasi Tipe Rute
           </h3>
           <div class="form-row">
             <div class="col-md-12">
@@ -100,7 +100,7 @@
           <div class="form-group">
             <button type="submit" class="btn btn-success" name="button">
               <i class="fa fa-save"></i> Simpan</button>
-            <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+              <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
           </div>
         </form>
       </div>
