@@ -1,0 +1,22 @@
+.form-control:focus {
+	border-color: #fa3a8f;
+  box-shadow: 0 0 0 0.2rem rgba(255,0,212,.25);
+}
+.btn-primary.custom {
+	width: 100%;
+	padding: 0.6rem 1rem;
+}
+
+.img-holder {
+	padding-bottom: 14% !important;
+}
+
+.nav-menu.is-scrolling {
+    padding: 0;
+}
+.nav-menu.is-scrolling, .nav-menu.menu-is-open {
+    background: #fff !important;
+    -webkit-box-shadow: 0px 5px 23px 0px rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: 0px 5px 23px 0px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 5px 23px 0px rgba(0, 0, 0, 0.1);
+}

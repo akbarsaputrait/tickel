@@ -29,10 +29,7 @@
 						@if(session()->has('message'))
 								<div class="alert alert-{{ session()->get('status') }} alert-dissmissible fade show">
 										<button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
-										<i class="material-icons">
-										session()->get('status') == 'success' ? 'check' : 'close'
-										</i>
-										{{ session()->get('message') }}
+										<i class="fa fa-{{ session()->get('status') == 'success' ? 'check' : 'close' }}"></i> {{ session()->get('message') }}
 								</div>
 						@endif
             <div class="auto-form-wrapper">

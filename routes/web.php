@@ -35,6 +35,9 @@ Route::group(['middleware' => 'admin'], function() {
   Route::get('admin/transportasi/hapus/{id}', 'Admin\TransportasiController@destroy');
   Route::get('admin/rute/hapus/{id}', 'Admin\RuteController@destroy');
   Route::get('admin/tipe-rute/hapus/{id}', 'Admin\TypeRuteController@destroy');
+  Route::get('admin/profil', 'Admin\ProfileController@index')->name('admin.profile');
+  Route::post('admin/profil/store', 'Admin\ProfileController@updateProfile')->name('admin.profile.store');
+  Route::post('admin/profil/reset-password', 'Admin\ProfileController@resetPassword')->name('admin.profile.reset');
 });
 
 // PETUGAS

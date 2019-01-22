@@ -26,7 +26,7 @@ class RegisterRequest extends FormRequest
         return [
             'username' => 'required|min:3|max:20',
             'password' => 'required',
-            'confirm_password' => 'required|confirmed:password',
+            'confirm_password' => 'required|same:password',
             'email' => 'required|unique:penumpangs,email',
             'nama_penumpang' => 'required',
         ];
@@ -48,7 +48,7 @@ class RegisterRequest extends FormRequest
         'min' => ':attributes harus lebih dari :min karakter',
         'max' => ':attributes harus kurang dari :max karakter',
         'unique' => ':attribute sudah digunakan',
-        'confirmed' => ':attribute harus sama'
+        'same' => ':attribute harus sama'
       ];
     }
 }

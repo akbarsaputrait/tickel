@@ -203,5 +203,5 @@
 @endsection
 
 @section('script')
-<script src="{{ asset('js/chart.js') }}"></script>
+<script src="{{ asset('admin/js/chart.js') }}"></script>
 @endsection

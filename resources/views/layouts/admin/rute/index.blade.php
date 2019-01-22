@@ -6,11 +6,11 @@
 				<div class="d-flex justify-content-between align-items-center">
 					<div class="">
 						<h4 class="card-title">
-							<b>Petugas</b>
+							<b>Rute</b>
 						</h4>
 					</div>
 					<div class="mb-3">
-            <a href="{{ route('type-rute.index') }}" class="btn btn-warning">
+            <a href="{{ route('tipe-rute.index') }}" class="btn btn-warning">
 							<i class="fa fa-rocket"></i> Type Rute
 						</a>
             <a href="{{ route('rute.create') }}" class="btn btn-primary">

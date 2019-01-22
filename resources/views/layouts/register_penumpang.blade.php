@@ -15,6 +15,14 @@
   <!-- End plugin css for this page -->
   <!-- inject:css -->
   <link rel="stylesheet" href="{{ asset('admin/css/style.css') }}">
+  <style media="screen">
+    .auth.theme-one .auto-form-wrapper {
+      box-shadow: none;
+    }
+    .auth.register-bg-1 {
+      background: url({{ asset('home/images/asset3.png') }}) center  no-repeat;
+    }
+  </style>
   <!-- endinject -->
   <link rel="shortcut icon" href="{{ asset('admin/images/favicon.png') }}" />
 </head>
@@ -31,21 +39,21 @@
                 @csrf
                 <div class="form-group">
                   <label class="label">Name</label>
-                  <input type="text" class="form-control {{ ($errors->has('nama_penumpang')) ? 'is-invalid' : '' }}" placeholder="Name" name="nama_penumpang">
+                  <input type="text" class="form-control {{ ($errors->has('nama_penumpang')) ? 'is-invalid' : '' }}" value="{{ old('nama_penumpang') }}" placeholder="Name" name="nama_penumpang" autofocus>
                   <div class="invalid-feedback">
                     {{ $errors->first('nama_penumpang') }}
                   </div>
                 </div>
                 <div class="form-group">
                   <label class="label">Username</label>
-                  <input type="text" class="form-control {{ ($errors->has('username')) ? 'is-invalid' : '' }}" placeholder="Username" name="username">
+                  <input type="text" class="form-control {{ ($errors->has('username')) ? 'is-invalid' : '' }}" value="{{ old('username') }}" placeholder="Username" name="username">
                   <div class="invalid-feedback">
                     {{ $errors->first('username') }}
                   </div>
                 </div>
                 <div class="form-group">
                   <label class="label">Email</label>
-                  <input type="email" class="form-control {{ ($errors->has('email')) ? 'is-invalid' : '' }}" value="{{ old('email') }}" placeholder="Email Address" name="email" autofocus>
+                  <input type="email" class="form-control {{ ($errors->has('email')) ? 'is-invalid' : '' }}" value="{{ old('email') }}" placeholder="Email Address" name="email">
                   <div class="invalid-feedback">
                     {{ $errors->first('email') }}
                   </div>

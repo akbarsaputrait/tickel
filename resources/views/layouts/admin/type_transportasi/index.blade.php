@@ -44,7 +44,7 @@
                 </td>
                 <td>
                   <div class="btn-group">
-                    <a href="{{ route('type-transportasi.edit', ['type-transportasi' => $item->id_type_transportasi]) }}" class="btn btn-success">
+                    <a href="{{ route('tipe-transportasi.edit', ['tipe-transportasi' => $item->id_type_transportasi]) }}" class="btn btn-success">
                       <i class="fa fa-pencil"></i>
                     </a>
                     <button type="button" name="button" id="deleteButton" class="btn btn-danger" data-id="{{ $item->id_type_transportasi }}" data-menu="type-transportasi">
@@ -73,7 +73,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <form class="form-horizontal" action="{{ route('type-transportasi.store') }}" method="post">
+        <form class="form-horizontal" action="{{ route('tipe-transportasi.store') }}" method="post">
           @csrf
           <h3 class="card-description">
             Informasi Tipe Transportasi

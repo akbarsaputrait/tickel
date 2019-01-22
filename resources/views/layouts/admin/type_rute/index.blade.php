@@ -44,7 +44,7 @@
                 </td>
                 <td>
                   <div class="btn-group">
-                    <a href="{{ route('type-rute.edit', ['type-rute' => $item->id_type_rute]) }}" class="btn btn-success">
+                    <a href="{{ route('tipe-rute.edit', ['tipe-rute' => $item->id_type_rute]) }}" class="btn btn-success">
                       <i class="fa fa-pencil"></i>
                     </a>
                     <button type="button" name="button" id="deleteButton" class="btn btn-danger" data-id="{{ $item->id_type_rute }}" data-menu="type-rute">
@@ -73,7 +73,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <form class="form-horizontal" action="{{ route('type-rute.store') }}" method="post">
+        <form class="form-horizontal" action="{{ route('tipe-rute.store') }}" method="post">
           @csrf
           <h3 class="card-description">
             Informasi Tipe Rute
