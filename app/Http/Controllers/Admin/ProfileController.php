@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
 use App\Admin;
 
 class ProfileController extends Controller
@@ -46,22 +47,31 @@ class ProfileController extends Controller
 
 		public function resetPassword(Request $request) {
 			$request->validate([
+        'current_pasword' => 'required',
 				'new_password' => 'required|min:8',
 				'confirm_password' => 'required|same:new_password'
 			], [
-				'new_password.required' => 'Kata sandi baru diisi!',
+        'current_pasword.required' => 'Kata sandi anda harus diisi',
+				'new_password.required' => 'Kata sandi baru diisi',
 				'new_password.min' => 'Kata sandi harus lebih dari 8 karakter',
-				'confirm_password.required' => 'Kata sandi konfirmasi harus diisi!',
+				'confirm_password.required' => 'Kata sandi konfirmasi harus diisi',
 				'confirm_password.same' => 'Kata sandi harus sama'
 			]);
 
+
 			$id = auth()->guard('admin')->user()->id;
 			$admin = Admin::find($id);
-			$admin->password = bcrypt($request->confirm_password);
-			$admin->save();
+      if (Hash::check($request->current_pasword, $admin->password)) {
+        $admin->password = bcrypt($request->confirm_password);
+        $admin->save();
 
-			session()->flash('status', 'success');
-			session()->flash('message', 'Kata sandi berhasil diperbarui!');
+        session()->flash('status', 'success');
+        session()->flash('message', 'Kata sandi berhasil diperbarui');
+      } else {
+        session()->flash('status', 'danger');
+        session()->flash('message', 'Kata sandi anda salah');
+      }
+
 			return redirect()->route('admin.profile');
 		}
 }

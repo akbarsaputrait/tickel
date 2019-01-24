@@ -10,11 +10,11 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/', function () {
-    return view('welcome');
-    // dd(bcrypt("yudha"));
-});
+Route::get('/', 'HomeController@index')->name('home');
+// Route::get('/', function () {
+//     // return view('welcome');
+//     dd(str_random(2));
+// });
 
 Auth::routes();
 
@@ -42,8 +42,11 @@ Route::group(['middleware' => 'admin'], function() {
 
 // PETUGAS
 Route::group(['middleware' => 'petugas'], function() {
-  Route::get('/petugas/dasbor', 'Petugas\DashboardController@index')->name('petugas.dashboard');
+  Route::get('petugas/dasbor', 'Petugas\DashboardController@index')->name('petugas.dashboard');
   Route::resource('petugas/order', 'Petugas\OrderController');
+  Route::get('petugas/profil', 'Petugas\ProfileController@index')->name('petugas.profile');
+  Route::post('petugas/profil/store', 'Petugas\ProfileController@updateProfile')->name('petugas.profile.store');
+  Route::post('petugas/profil/reset-password', 'Petugas\ProfileController@resetPassword')->name('petugas.profile.reset');
 });
 
 // PENUMPANG
@@ -67,7 +70,6 @@ Route::group(['middleware'=>'guest'], function() {
   Route::get('/penumpang/logout', 'PenumpangController@logoutPenumpang')->name('penumpang.logout');
   Route::get('/penumpang/register', 'PenumpangController@registerForm')->name('penumpang.register');
   Route::post('/penumpang/register', 'PenumpangController@registerPost')->name('penumpang.register.post');
-
 });
 
 // Route::group(['guard'=>'admin'], function() {

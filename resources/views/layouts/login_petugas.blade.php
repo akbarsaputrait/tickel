@@ -18,6 +18,14 @@
   <link rel="stylesheet" href="{{ asset('admin/css/style.css') }}">
   <!-- endinject -->
   <link rel="shortcut icon" href="{{ asset('admin/images/favicon.png') }}" />
+  <style media="screen">
+    .auth.theme-one .auto-form-wrapper {
+      box-shadow: none;
+    }
+    .auth.auth-bg-1 {
+      background: url({{ asset('home/images/asset3.png') }}) center  no-repeat;
+    }
+  </style>
 </head>
 
 <body>

@@ -1,4 +1,9 @@
 @extends('master_admin') @section('title', auth()->guard('admin')->user()->name) @section('content')
+@if($errors->has('new_password') || $errors->has('confirm_password') || $errors->has('current_pasword'))
+  <div class="alert alert-danger">
+    <i class="fa fa-close"></i> Gagal memperbarui kata sandi.
+  </div>
+@endif
 <div class="row">
   <div class="col-md-4">
     <div class="card h-100">
@@ -70,9 +75,16 @@
           <div class="card-body">
             <form class="form-vertical" action="{{ route('admin.profile.reset') }}" method="post">
 							@csrf
+              <div class="form-group">
+								<label for="">Kata sandi sekarang</label>
+								<input type="password" class="form-control {{ $errors->has('current_pasword') ? 'is-invalid' : '' }}" name="current_pasword" value="" autofocus>
+								<div class="invalid-feedback">
+									{{ $errors->first('current_pasword') }}
+								</div>
+							</div>
 							<div class="form-group">
 								<label for="">Kata sandi baru</label>
-								<input type="password" class="form-control {{ $errors->has('new_password') ? 'is-invalid' : '' }}" name="new_password" value="" autofocus>
+								<input type="password" class="form-control {{ $errors->has('new_password') ? 'is-invalid' : '' }}" name="new_password" value="">
 								<div class="invalid-feedback">
 									{{ $errors->first('new_password') }}
 								</div>

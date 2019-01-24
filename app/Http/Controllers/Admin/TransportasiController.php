@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Helpers\Helper;
 use App\TypeTransportasi;
 use App\Transportasi;
+use App\Kursi;
 
 class TransportasiController extends Controller
 {
@@ -46,6 +48,15 @@ class TransportasiController extends Controller
       $trans->keterangan = $request->keterangan;
       $trans->id_type_transportasi = $request->id_type_transportasi;
       $trans->save();
+
+      $jumlahKursi = (int) $trans->jumlah_kursi;
+      $randomString = Helper::generateRandomString(4);
+      for ($i=1; $i<=$jumlahKursi; $i++) {
+        $kursi = new Kursi;
+        $kursi->id_transportasi = $trans->id_transportasi;
+        $kursi->kode = $randomString . $i;
+        $kursi->save();
+      }
 
       session()->flash('status', 'success');
       session()->flash('message', 'Transportasi berhasil ditambahkan.');
@@ -94,7 +105,7 @@ class TransportasiController extends Controller
       $trans->save();
 
       session()->flash('status', 'success');
-      session()->flash('message', 'Transportasi berhasil ditambahkan.');
+      session()->flash('message', 'Transportasi berhasil diperbarui.');
       return redirect()->route('transportasi.index');
     }
 

@@ -19,6 +19,7 @@
   <!-- endinject -->
   <link rel="stylesheet" href="{{ asset('admin/vendors/datatables/datatables.min.css') }}">
   <link rel="stylesheet" href="{{ asset('admin/vendors/sweetalert/sweetalert2.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('admin/vendors/select2/select2.min.css') }}">
   <link rel="stylesheet" href="{{ asset('admin/css/custom.css') }}">
   @yield('style')
   <link rel="shortcut icon" href="{{ asset('admin/images/favicon.png') }}" />
@@ -32,7 +33,7 @@
         <a class="navbar-brand brand-logo" href="{{ route('admin.dashboard') }}">
           <img src="{{ asset('home/images/logo.png') }}" alt="logo" />
         </a>
-        <a class="navbar-brand brand-logo-mini" href="../../index.html">
+        <a class="navbar-brand brand-logo-mini" href="{{ route('admin.dashboard') }}">
           <img src="{{ asset('home/images/logo.png') }}" alt="logo" />
         </a>
       </div>
@@ -49,6 +50,9 @@
             </a>
           </li>
         </ul>
+        <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
+          <span class="mdi mdi-menu"></span>
+        </button>
       </div>
     </nav>
     <!-- partial -->
@@ -152,10 +156,12 @@
   <script src="{{ asset('admin/vendors/datatables/datatables.min.js') }}" charset="utf-8"></script>
   <script src="{{ asset('admin/vendors/datatables/buttons.bootstrap4.min.js') }}" charset="utf-8"></script>
   <script src="{{ asset('admin/vendors/datatables/vfs_fonts.js') }}" charset="utf-8"></script>
+  <script src="{{ asset('admin/vendors/select2/select2.full.min.js') }}" charset="utf-8"></script>
   <script src="{{ asset('admin/js/script.js') }}" charset="utf-8"></script>
   <script type="text/javascript">
     $(document).ready(function() {
       $('table').DataTable();
+      $('select').select2();
     })
   </script>
   @yield('script')
