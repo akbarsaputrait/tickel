@@ -1,22 +1,29 @@
 <?php
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-Route::get('/', 'HomeController@index')->name('home');
-// Route::get('/', function () {
-//     // return view('welcome');
-//     dd(str_random(2));
-// });
-
 Auth::routes();
+
+Route::group(['middleware'=>'guest'], function() {
+  Route::get('/', 'HomeController@index')->name('home');
+
+  // AUTH ADMIN
+  Route::get('/admin/login', 'AdminController@showLoginForm')->name('admin.login');
+  Route::post('/admin/login', 'AdminController@loginAdmin')->name('admin.login.post');
+
+  // AUTH PETUGAS
+  Route::get('/petugas/login', 'PetugasController@showLoginForm')->name('petugas.login');
+  Route::post('/petugas/login', 'PetugasController@loginPetugas')->name('petugas.login.post');
+  Route::get('/petugas/logout', 'PetugasController@logoutPetugas')->name('petugas.logout');
+
+  // AUTH PENUMPANG
+  Route::get('/penumpang/login', 'PenumpangController@showLoginForm')->name('penumpang.login');
+  Route::post('/penumpang/login', 'PenumpangController@loginPenumpang')->name('penumpang.login.post');
+  Route::get('/penumpang/logout', 'PenumpangController@logoutPenumpang')->name('penumpang.logout');
+  Route::get('/penumpang/register', 'PenumpangController@registerForm')->name('penumpang.register');
+  Route::post('/penumpang/register', 'PenumpangController@registerPost')->name('penumpang.register.post');
+
+  Route::post('/pesan-tiket/proses', 'HomeController@pesanTiket')->name('pesan.store');
+  Route::get('/pesan-tiket/', 'HomeController@formPesanTiket')->name('pesan.create');
+
+});
 
 //ADMIN
 Route::group(['middleware' => 'admin'], function() {
@@ -53,34 +60,3 @@ Route::group(['middleware' => 'petugas'], function() {
 Route::group(['middleware' => 'penumpang'], function() {
   Route::get('/penumpang/dasbor', 'Penumpang\DashboardController@index')->name('penumpang.dashboard');
 });
-
-Route::group(['middleware'=>'guest'], function() {
-  // AUTH ADMIN
-  Route::get('/admin/login', 'AdminController@showLoginForm')->name('admin.login');
-  Route::post('/admin/login', 'AdminController@loginAdmin')->name('admin.login.post');
-
-  // AUTH PETUGAS
-  Route::get('/petugas/login', 'PetugasController@showLoginForm')->name('petugas.login');
-  Route::post('/petugas/login', 'PetugasController@loginPetugas')->name('petugas.login.post');
-  Route::get('/petugas/logout', 'PetugasController@logoutPetugas')->name('petugas.logout');
-
-  // AUTH PENUMPANG
-  Route::get('/penumpang/login', 'PenumpangController@showLoginForm')->name('penumpang.login');
-  Route::post('/penumpang/login', 'PenumpangController@loginPenumpang')->name('penumpang.login.post');
-  Route::get('/penumpang/logout', 'PenumpangController@logoutPenumpang')->name('penumpang.logout');
-  Route::get('/penumpang/register', 'PenumpangController@registerForm')->name('penumpang.register');
-  Route::post('/penumpang/register', 'PenumpangController@registerPost')->name('penumpang.register.post');
-});
-
-// Route::group(['guard'=>'admin'], function() {
-//
-//
-// });
-//
-// Route::group(['middleware'=>'auth:petugas'], function() {
-//   Route::get('/petugas/dashboard', 'PetugasController@dashboard')->name('petugas.dashboard');
-// });
-//
-// Route::group(['middleware'=>'penumpang'], function() {
-//   Route::get('/penumpang/dashboard', 'PenumpangController@dashboard')->name('penumpang.dashboard');
-// });

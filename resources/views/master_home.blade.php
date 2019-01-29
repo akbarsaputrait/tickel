@@ -42,18 +42,25 @@ URI     : https://colorlib.com
       <div class="row">
         <div class="col-md-12">
           <nav class="navbar navbar-dark navbar-expand-lg">
-            <a class="navbar-brand" href="index.html"><img src="{{ asset('home/images/logo.png') }}" class="img-fluid" alt="logo" width="100"></a>
+            <a class="navbar-brand" href="{{ route('home') }}"><img src="{{ asset('home/images/logo.png') }}" class="img-fluid" alt="logo" width="100"></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span> </button>
             <div class="collapse navbar-collapse" id="navbar">
               <ul class="navbar-nav ml-auto">
-                <li class="nav-item"> <a class="nav-link text-dark" href="#features">PESAN TIKET SEKARANG!</a> </li>
-                <li class="nav-item"><a class="nav-link text-dark" href="#why">MENGAPA TICKEL?</a></li>
-                <li class="nav-item"> <a class="nav-link text-dark" href="#contact">KONTAK KAMI</a> </li>
+                <li class="nav-item"> <a class="nav-link text-white" href="pesan-tiket">PESAN TIKET SEKARANG!</a> </li>
+                <li class="nav-item"><a class="nav-link text-white" href="/#why">MENGAPA TICKEL?</a></li>
+                <li class="nav-item"> <a class="nav-link text-white" href="#contact">KONTAK KAMI</a> </li>
                 <li class="nav-item">
                   <div class="btn-group">
+                    @if(!auth()->guard('penumpang')->user())
                     <a href="{{ route('penumpang.login') }}" class="btn btn-outline-dark">Masuk</a>
                     <a href="{{ route('penumpang.register') }}" class="btn btn-outline-dark">Daftar</a>
+                    @else
+                    <button type="button" class="btn btn-dark" name="button">
+                      {{ '@'. auth()->guard('penumpang')->user()->username }}
+                    </button>
+                    <a href="{{ route('penumpang.logout') }}" class="btn btn-outline-dark">Keluar</a>
+                    @endif
                   </div>
                 </li>
               </ul>

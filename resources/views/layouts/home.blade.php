@@ -1,44 +1,41 @@
 @extends('master_home') @section('content')
 <header class="text-dark" id="home">
   <div class="container mt-5">
-    <h1>Tickel</h1>
-    <p>Aplikasi pembelian tiket pesawat dan kereta api di Indonesia.</p>
-  </div>
-  <div class="img-holder mt-3">
-    <!-- <img src="{{ asset('home/images/plane.png') }}" alt="phone" class="img-fluid" width="300">
-          <img src="{{ asset('home/images/train.png') }}" alt="phone" class="img-fluid" width="300"> -->
-  </div>
-</header>
-
-<div class="section light-bg" id="features">
-  <div class="container">
-    <div class="section-title">
-      <h3>Cari rute tujuan mu!</h3>
+    <div class="my-5">
+      <h1>Tickel</h1>
+      <p>Aplikasi pembelian tiket pesawat dan kereta api di Indonesia.</p>
     </div>
     <div class="row">
       <div class="col-md-12">
         <div class="card features p-4">
-          <form class="form-horizontal" action="" method="post" id="pesanTiket">
+          <form class="form-horizontal" action="{{ route('pesan.store') }}" method="post" id="pesanTiket">
             @csrf
+            <input type="hidden" name="id_rute" value="">
             <div class="row">
               <div class="col-md-4">
                 <div class="form-group">
                   <label for="">Kota Asal</label>
-                  <select class="form-control" name="rute_awal">
+                  <select class="form-control" name="rute_awal"  {{ ($errors->has('rute_akhir')) ? 'is-invalid' : '' }}>
                     <option value="">Pilih kota asal</option>
                     @foreach($rute_awal as $item)
                     <option value="{{ $item->rute_awal }}">{{ $item->rute_awal }}</option>
                     @endforeach
                   </select>
+                  <div class="invalid-feedback">
+                    {{ $errors->first('rute_awal') }}
+                  </div>
                 </div>
                 <div class="form-group">
                   <label for="">Kota Tujuan</label>
-                  <select class="form-control" name="rute_akhir">
+                  <select class="form-control" name="rute_akhir" {{ ($errors->has('rute_akhir')) ? 'is-invalid' : '' }}>
                     <option value="">Pilih kota tujuan</option>
                     @foreach($rute_akhir as $item)
                     <option value="{{ $item->rute_akhir }}">{{ $item->rute_akhir }}</option>
                     @endforeach
                   </select>
+                  <div class="invalid-feedback">
+                    {{ $errors->first('rute_akhir') }}
+                  </div>
                 </div>
               </div>
               <div class="col-md-8">
@@ -46,13 +43,19 @@
                   <div class="col-md-6">
                     <div class="form-group">
                       <label for="">Tanggal Berangkat</label>
-                      <input type="date" class="form-control" name="tanggal_berangkat" value="" disabled>
+                      <input type="date" class="form-control {{ ($errors->has('tanggal_berangkat')) ? 'is-invalid' : '' }}" name="tanggal_berangkat" value="" disabled>
+                      <div class="invalid-feedback">
+                        {{ $errors->first('tanggal_berangkat') }}
+                      </div>
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="form-group">
                       <label for="">Jam Berangkat</label>
-                      <input type="time" class="form-control" name="jam_berangkat" value="" placeholder="Jam keberangkatan" disabled>
+                      <input type="time" class="form-control {{ ($errors->has('jam_berangkat')) ? 'is-invalid' : '' }}" name="jam_berangkat" value="" placeholder="Jam keberangkatan" disabled>
+                      <div class="invalid-feedback">
+                        {{ $errors->first('jam_berangkat') }}
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -60,29 +63,36 @@
                   <div class="col-md-4">
                     <div class="form-group">
                       <label for="">Transportasi</label>
-                      <select class="form-control" name="transportasi" disabled>
+                      <select class="form-control {{ ($errors->has('transportasi')) ? 'is-invalid' : '' }}" name="transportasi" disabled>
                         <option value="">Jenis Transportasi</option>
                         @foreach($transportasi as $item)
                         <option value="{{ $item->nama_transportasi }}">{{ $item->nama_transportasi }}</option>
                         @endforeach
                       </select>
+                      <div class="invalid-feedback">
+                        {{ $errors->first('transportasi') }}
+                      </div>
                     </div>
                   </div>
                   <div class="col-md-4">
                     <div class="form-group">
                       <label for="">Kelas</label>
-                      <select class="form-control" name="kelas" disabled>
+                      <select class="form-control {{ ($errors->has('kelas')) ? 'is-invalid' : '' }}" name="kelas" disabled>
                         <option value="">Kelas Transportasi</option>
                         @foreach($type_rute as $item)
                         <option value="{{ $item->nama_type }}">{{ $item->nama_type }}</option>
                         @endforeach
                       </select>
+                      <div class="invalid-feedback">
+                        {{ $errors->first('kelas') }}
+                      </div>
                     </div>
                   </div>
                   <div class="col-md-4">
                     <div class="form-group">
                       <div class="btn-group w-100">
                         <input type="button" id="cariTiket" class="mt-4 btn btn-primary custom" name="submit" value="Cari Tiket">
+                        <button type="submit" class="btn btn-primary-custom mt-4" name="button" id="pesanTiketButton">Pesan</button>
                         <button type="button" id="clearButton" class="btn btn-primary custom d-none" name="button">Batal</button>
                       </div>
                     </div>
@@ -91,17 +101,18 @@
               </div>
             </div>
           </form>
+          @if(!auth()->guard('penumpang')->check())
           <div class="text-center">
             <a href="#">Masuk</a> atau <a href="#">Daftar</a> untuk melengkapi pemesanan tiket.
           </div>
+          @endif
         </div>
       </div>
     </div>
   </div>
-</div>
+</header>
 <!-- // end .section -->
 <div class="section">
-
   <div class="section" id="why">
     <div class="container">
       <div class="row">
@@ -201,41 +212,5 @@
     </div>
 
   </div>
-  <!-- // end .section -->
-  <!-- MODAL -->
-  <div class="modal fade" id="showTicket" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg" role="document" style="max-width: 1000px !important;">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLongTitle">Daftar ketersedian tiket</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body d-flex justify-content-center">
-          <div class="row">
-            <div class="col-md-12">
-              <table class="table table-striped table-responsive">
-                <thead>
-                  <th>Rute Awal</th>
-                  <th>Rute Akhir</th>
-                  <th>Harga</th>
-                  <th>Jam Berangkat</th>
-                  <th>Jam Tiba</th>
-                  <th>Nama Transportasi</th>
-                  <th></th>
-                </thead>
-                <tbody id="dataTiket">
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
-        </div>
-      </div>
-    </div>
-  </div>
+  @include('layouts.modal_tiket')
   @endsection

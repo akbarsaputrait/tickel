@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Illuminate\Support\Facades\Auth;
 
 class RedirectIfNotPenumpang
 {
@@ -15,9 +16,9 @@ class RedirectIfNotPenumpang
      */
      public function handle($request, Closure $next, $guard="penumpang")
      {
-         if(!auth()->guard($guard)->check()) {
-             return redirect(route('penumpang.login'));
-         }
-         return $next($request);
+       if(!Auth::guard($guard)->check()) {
+           return redirect()->route('penumpang.login');
+       }
+       return $next($request);
      }
 }

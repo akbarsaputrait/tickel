@@ -1,6 +1,7 @@
 $(function() {
+$("#pesanTiketButton").hide();
 	$(document).on('click', '#cariTiket', function(event) {
-		event.preventDefault;
+		event.preventDefault();
 
 		var rute_awal = $("select[name='rute_awal']").val();
 		var rute_akhir = $("select[name='rute_akhir']").val();
@@ -89,7 +90,7 @@ $(function() {
 	});
 
 	$(document).on('click', '#idRute', function(e) {
-		e.preventDefault;
+		e.preventDefault();
 		var idrute = $(this).data('idrute');
 
 		$.ajax({
@@ -108,11 +109,13 @@ $(function() {
 				$('select[name="transportasi"]').val(data.nama_transportasi);
 				$('select[name="kelas"]').val(data.nama_type);
 				$('input[name="jam_berangkat"]').val(data.jam_berangkat);
+				$('input[name="id_rute"]').val(data.id_rute);
 
-				$("#cariTiket").attr('value', 'Pesan tiket');
-				$("#cariTiket").attr('class', 'btn btn-primary-custom mt-4');
-				$("#cariTiket").attr('type', 'submit');
-				$("#pesanTiket").attr('action', '#');
+				// $("#cariTiket").attr('value', 'Pesan tiket');
+				// $("#cariTiket").attr('class', 'btn btn-primary-custom mt-4');
+				// $("#cariTiket").attr('type', 'submit');
+				$("#cariTiket").hide();
+				$("#pesanTiketButton").show();
 				$("#clearButton").removeClass('d-none');
 				$("#clearButton").addClass('mt-4');
 			}
@@ -130,11 +133,13 @@ $(function() {
 		$('select[name="transportasi"]').val('');
 		$('select[name="kelas"]').val('');
 		$('input[name="jam_berangkat"]').val('');
+		$('input[name="id_rute"]').val('id_rute');
 
-		$("#cariTiket").attr('value', 'Cari Tiket');
-		$("#cariTiket").attr('class', 'btn btn-primary custom mt-4');
-		$("#cariTiket").attr('type', 'button');
-		$("#pesanTiket").attr('action', '#');
+		// $("#cariTiket").attr('value', 'Cari Tiket');
+		// $("#cariTiket").attr('class', 'btn btn-primary custom mt-4');
+		// $("#cariTiket").attr('type', 'button');
+		$("#cariTiket").show();
+		$("#pesanTiketButton").hide();
 		$("#clearButton").addClass('d-none');
 	});
 });

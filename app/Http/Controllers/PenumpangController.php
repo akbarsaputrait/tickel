@@ -13,7 +13,7 @@ class PenumpangController extends Controller
 {
 	use AuthenticatesUsers;
 
-	protected $redirectTo = '/penumpang/dasbor';
+	protected $redirectTo = '/';
 
 	public function guard()
   {
@@ -25,7 +25,7 @@ class PenumpangController extends Controller
 		if(!Auth::guard('penumpang')->check()) {
       return view('layouts.login_penumpang');
 		} else {
-			return redirect()->route('penumpang.dashboard');
+			return redirect()->route('home');
 		}
   }
 
@@ -42,18 +42,19 @@ class PenumpangController extends Controller
 			]);
 
       // Attempt to log the user in
-      if (Auth::guard('penumpang')->attempt(['email' => $request->email, 'password' => $request->password])) {
+			if (Auth::guard('penumpang')->attempt(['email' => $request->email, 'password' => $request->password])) {
         // if successful, then redirect to their intended location
-        return redirect()->route('penumpang.dashboard');
+        return redirect()->route('home');
       }
+
       // if unsuccessful, then redirect back to the login with the form data
       return redirect()->back()->withInput($request->only('email'));
     }
 
     public function logoutPenumpang()
     {
-        Auth::guard('penumpang')->logout();
-        return redirect()->route('penumpang.login');
+      Auth::guard('penumpang')->logout();
+      return redirect()->route('home');
     }
 
 		public function registerForm() {
