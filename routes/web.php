@@ -21,7 +21,7 @@ Route::group(['middleware'=>'guest'], function() {
   Route::post('/penumpang/register', 'PenumpangController@registerPost')->name('penumpang.register.post');
 
   Route::post('/pesan-tiket/proses', 'HomeController@pesanTiket')->name('pesan.store');
-  Route::get('/pesan-tiket/', 'HomeController@formPesanTiket')->name('pesan.create');
+  Route::get('/pesan-tiket', 'HomeController@formPesanTiket')->name('pesan.create');
 
 });
 
@@ -58,5 +58,6 @@ Route::group(['middleware' => 'petugas'], function() {
 
 // PENUMPANG
 Route::group(['middleware' => 'penumpang'], function() {
-  Route::get('/penumpang/dasbor', 'Penumpang\DashboardController@index')->name('penumpang.dashboard');
+  Route::get('/profile/{username}', 'Penumpang\ProfilController@profilShow')->name('profile.show');
+  Route::post('/profile/{username}/update', 'Penumpang\ProfilController@profilUpdate')->name('profile.update');
 });

@@ -2,20 +2,19 @@
 <header class="text-dark" id="home">
   <div class="container mt-5">
     <div class="my-5">
-      <h1>Tickel</h1>
-      <p>Aplikasi pembelian tiket pesawat dan kereta api di Indonesia.</p>
+      <h3>Pesan tiket dengan mudah dan cepat.</h3>
     </div>
     <div class="row">
       <div class="col-md-12">
-        <div class="card features p-4">
+        <div class="card features p-4 text-left text-dark">
           <form class="form-horizontal" action="{{ route('pesan.store') }}" method="post" id="pesanTiket">
             @csrf
-            <input type="hidden" name="id_rute" value="">
+            <input type="hidden" name="id_rute" id="id_rute" value="">
             <div class="row">
               <div class="col-md-4">
                 <div class="form-group">
                   <label for="">Kota Asal</label>
-                  <select class="form-control" name="rute_awal"  {{ ($errors->has('rute_akhir')) ? 'is-invalid' : '' }}>
+                  <select class="form-control" name="rute_awal" {{ ($errors->has('rute_akhir')) ? 'is-invalid' : '' }}>
                     <option value="">Pilih kota asal</option>
                     @foreach($rute_awal as $item)
                     <option value="{{ $item->rute_awal }}">{{ $item->rute_awal }}</option>
@@ -102,7 +101,7 @@
             </div>
           </form>
           @if(!auth()->guard('penumpang')->check())
-          <div class="text-center">
+          <div class="text-center text-dark">
             <a href="#">Masuk</a> atau <a href="#">Daftar</a> untuk melengkapi pemesanan tiket.
           </div>
           @endif
@@ -116,7 +115,12 @@
   <div class="section" id="why">
     <div class="container">
       <div class="row">
-        <div class="col-lg-6 offset-lg-6">
+        <div class="col-md-6">
+          <div id="whys">
+
+          </div>
+        </div>
+        <div class="col-lg-6">
           <div class="card" style="border: none; border-radius: 0px; box-shadow: 0px 5px 7px 0px rgba(0, 0, 0, 0.04);">
             <div class="card-body">
               <h2>Mengapa memilih Tickel?</h2>
@@ -129,19 +133,14 @@
               </div>
             </div>
           </div>
-          <!-- <a href="#" class="btn btn-primary">Read more</a> -->
         </div>
       </div>
-      <div class="perspective-phone">
-        <img src="{{ asset('home/images/AssetA.png') }}" alt="perspective phone" class="img-fluid">
-      </div>
     </div>
-
   </div>
+</div>
   <!-- // end .section -->
 
   <div class="section light-bg">
-
     <div class="container">
       <div class="row">
         <div class="col-md-8 d-flex align-items-center">

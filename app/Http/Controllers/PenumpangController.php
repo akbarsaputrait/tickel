@@ -62,6 +62,18 @@ class PenumpangController extends Controller
 		}
 
 		public function registerPost(RegisterRequest $request) {
+			if(Penumpang::where('username', '=', $request->username)->exists()) {
+				session()->flash('status', 'danger');
+				session()->flash('message', 'Nama pengguna sudah digunakan!');
+				return redirect()->back();
+			}
+
+			if(Penumpang::where('email', '=', $request->email)->exists()) {
+				session()->flash('status', 'danger');
+				session()->flash('message', 'Alamat email sudah digunakan!');
+				return redirect()->back();
+			}
+
 			$penum = new Penumpang;
 			$penum->username = $request->username;
 			$penum->email = $request->email;

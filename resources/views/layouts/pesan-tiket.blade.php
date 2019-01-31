@@ -3,7 +3,7 @@
   <div class="container mt-5">
     <div class="my-5">
       <h1>Pesan tiket sekarang!</h1>
-      <p>Lengkapi data pribadi anda untuk melanjutkan pemesanan.</p>
+      <p class="text-white">Lengkapi data pribadi anda untuk melanjutkan pemesanan.</p>
     </div>
     <form class="form-horizontal" action="{{ route('pesan.store') }}" method="post" id="pesanTiket">
       <div class="row">
@@ -11,41 +11,68 @@
           @if(session()->has('message'))
           <div class="alert alert-{{ session()->get('status') }} alert-dissmissible fade show mb-4">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
-            <i class="fa fa-{{ session()->get('status') == 'success' ? 'check' : 'close' }}">
+            <i class="ti-{{ session()->get('status') == 'success' ? 'check' : 'close' }}">
                   </i> {{ session()->get('message') }}
           </div>
           @endif
-          <div class="card features p-4">
+          <div class="card features p-4 text-left text-dark">
             <h5 class="card-description">
             Informasi Rute
           </h5> @csrf
-            <div class="row">
-              <div class="col-md-4">
-                <div class="form-group">
-                  <label for="">Kota Asal</label>
-                  <select class="form-control {{ ($errors->has('rute_awal')) ? 'is-invalid' : '' }}" name="rute_awal">
-                    <option value="">Pilih kota asal</option>
-                    @foreach($rute_awal as $item)
-                    <option value="{{ $item->rute_awal }}" {{ ($item->rute_awal == old('rute_awal')) ? 'selected' : '' }}>{{ $item->rute_awal }}</option>
-                    @endforeach
-                  </select>
-                  <div class="invalid-feedback">
-                    {{ $errors->first('rute_awal') }}
+          <input type="hidden" name="id_rutes" id="id_rute" value="">
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="">Rute Awal</label>
+                <select class="form-control {{ ($errors->has('rute_awal')) ? 'is-invalid' : '' }}" name="rute_awal">
+                  <option value="">Pilih kota asal</option>
+                  @foreach($rute_awal as $item)
+                  <option value="{{ $item->rute_awal }}" {{ ($item->rute_awal == old('rute_awal')) ? 'selected' : '' }}>{{ $item->rute_awal }}</option>
+                  @endforeach
+                </select>
+                <div class="invalid-feedback">
+                  {{ $errors->first('rute_awal') }}
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="">Rute Akhir</label>
+                <select class="form-control {{ ($errors->has('rute_akhir')) ? 'is-invalid' : '' }}" name="rute_akhir">
+                  <option value="">Pilih kota tujuan</option>
+                  @foreach($rute_akhir as $item)
+                  <option value="{{ $item->rute_akhir }}" {{ ($item->rute_akhir == old('rute_akhir')) ? 'selected' : '' }}>{{ $item->rute_akhir }}</option>
+                  @endforeach
+                </select>
+                <div class="invalid-feedback">
+                  {{ $errors->first('rute_akhir') }}
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="row">
+                <div class="col-md-5">
+                  <div class="form-group">
+                    <label for="">Tujuan</label>
+                    <input type="text" class="form-control {{ ($errors->has('tujuan')) ? 'is-invalid' : '' }}" name="tujuan" value="{{ old('tujuan') }}"  {{ (old('tujuan')) ? '' : '' }} placeholder="Tujuan">
+                    <div class="invalid-feedback">
+                      {{ $errors->first('tujuan') }}
+                    </div>
                   </div>
                 </div>
-                <div class="form-group">
-                  <label for="">Kota Tujuan</label>
-                  <select class="form-control {{ ($errors->has('rute_akhir')) ? 'is-invalid' : '' }}" name="rute_akhir">
-                    <option value="">Pilih kota tujuan</option>
-                    @foreach($rute_akhir as $item)
-                    <option value="{{ $item->rute_akhir }}" {{ ($item->rute_akhir == old('rute_akhir')) ? 'selected' : '' }}>{{ $item->rute_akhir }}</option>
-                    @endforeach
-                  </select>
-                  <div class="invalid-feedback">
-                    {{ $errors->first('rute_akhir') }}
+                <div class="col-md-7">
+                  <div class="form-group">
+                    <label for="">Tanggal Berangkat</label>
+                    <input type="date" class="form-control {{ ($errors->has('tanggal_berangkat')) ? 'is-invalid' : '' }}" name="tanggal_berangkat" value="{{ old('tanggal_berangkat') }}"  {{ (old('tanggal_berangkat')) ? '' : '' }}>
+                    <div class="invalid-feedback">
+                      {{ $errors->first('tanggal_berangkat') }}
+                    </div>
                   </div>
                 </div>
               </div>
+            </div>
+          </div>
+            <div class="row">
               <div class="col-md-4">
                 <div class="form-group">
                   <label for="">Transportasi</label>
@@ -59,32 +86,50 @@
                     {{ $errors->first('transportasi') }}
                   </div>
                 </div>
-                <div class="form-group">
-                  <label for="">Kelas</label>
-                  <select class="form-control {{ ($errors->has('kelas')) ? 'is-invalid' : '' }}" name="kelas"  {{ (old('kelas')) ? '' : 'disabled' }}>
-                    <option value="">Kelas Transportasi</option>
-                    @foreach($type_rute as $item)
-                    <option value="{{ $item->nama_type }}" {{ ($item->nama_type == old('kelas')) ? 'selected' : '' }}>{{ $item->nama_type }}</option>
-                    @endforeach
-                  </select>
-                  <div class="invalid-feedback">
-                    {{ $errors->first('kelas') }}
+              </div>
+              <div class="col-md-4">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="">Kelas</label>
+                      <select class="form-control {{ ($errors->has('kelas')) ? 'is-invalid' : '' }}" name="kelas"  {{ (old('kelas')) ? '' : 'disabled' }}>
+                        <option value="">Kelas</option>
+                        @foreach($type_rute as $item)
+                        <option value="{{ $item->nama_type }}" {{ ($item->nama_type == old('kelas')) ? 'selected' : '' }}>{{ $item->nama_type }}</option>
+                        @endforeach
+                      </select>
+                      <div class="invalid-feedback">
+                        {{ $errors->first('kelas') }}
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="">Jam Berangkat</label>
+                      <input type="time" class="form-control {{ ($errors->has('jam_berangkat')) ? 'is-invalid' : '' }}" name="jam_berangkat" value="{{ old('jam_berangkat') }}" placeholder="Jam keberangkatan"  {{ (old('jam_berangkat')) ? '' : 'disabled' }}>
+                      <div class="invalid-feedback">
+                        {{ $errors->first('jam_berangkat') }}
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
               <div class="col-md-4">
-                <div class="form-group">
-                  <label for="">Tanggal Berangkat</label>
-                  <input type="date" class="form-control {{ ($errors->has('tanggal_berangkat')) ? 'is-invalid' : '' }}" name="tanggal_berangkat" value="{{ old('tanggal_berangkat') }}"  {{ (old('tanggal_berangkat')) ? '' : 'disabled' }}>
-                  <div class="invalid-feedback">
-                    {{ $errors->first('tanggal_berangkat') }}
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="">Tempat Pemesanan</label>
+                      <input type="text" class="form-control" name="tempat_pemesanan" value="{{ old('tempat_pemesanan') }}"  {{ (old('tempat_pemesanan')) ? '' : 'disabled' }}>
+                      <div class="invalid-feedback">
+                        {{ $errors->first('tempat_pemesanan') }}
+                      </div>
+                    </div>
                   </div>
-                </div>
-                <div class="form-group">
-                  <label for="">Jam Berangkat</label>
-                  <input type="time" class="form-control {{ ($errors->has('jam_berangkat')) ? 'is-invalid' : '' }}" name="jam_berangkat" value="{{ old('jam_berangkat') }}" placeholder="Jam keberangkatan"  {{ (old('jam_berangkat')) ? '' : 'disabled' }}>
-                  <div class="invalid-feedback">
-                    {{ $errors->first('jam_berangkat') }}
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="">Total Harga</label>
+                      <input type="text" class="form-control" name="harga" value="{{ old('harga') }}" disabled>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -102,7 +147,7 @@
       </div>
       <div class="row my-4">
         <div class="col-md-12">
-          <div class="card users p-4">
+          <div class="card users p-4 text-left text-dark">
             <h5 class="card-description">
             Informasi Penumpang
           </h5>

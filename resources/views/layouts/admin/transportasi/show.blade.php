@@ -45,7 +45,10 @@
                 <select class="form-control" name="id_type_transportasi">
                   <option value="">-- Jenis Transportasi</option>
                   @foreach($type as $item)
-                  <option value="{{ $item->id_type_transportasi }}" {{ ($trans->id_type_transportasi == $item->id_type_transportasi) ? 'selected' : '' }}>{{ $item->nama_type }}</option>
+                  <option value="{{ $item->id_type_transportasi }}"
+                    {{ ($trans->id_type_transportasi == $item->id_type_transportasi) ? 'selected' : '' }}>
+                    {{ $item->nama_type }}
+                  </option>
                   @endforeach
                 </select>
               </div>

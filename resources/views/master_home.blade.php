@@ -42,7 +42,7 @@ URI     : https://colorlib.com
       <div class="row">
         <div class="col-md-12">
           <nav class="navbar navbar-dark navbar-expand-lg">
-            <a class="navbar-brand" href="{{ route('home') }}"><img src="{{ asset('home/images/logo.png') }}" class="img-fluid" alt="logo" width="100"></a>
+            <a class="navbar-brand" href="{{ route('home') }}"><img src="{{ asset('home/images/logo.png') }}" class="img-fluid" alt="logo" width="70"></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span> </button>
             <div class="collapse navbar-collapse" id="navbar">
@@ -56,9 +56,14 @@ URI     : https://colorlib.com
                     <a href="{{ route('penumpang.login') }}" class="btn btn-outline-dark">Masuk</a>
                     <a href="{{ route('penumpang.register') }}" class="btn btn-outline-dark">Daftar</a>
                     @else
-                    <button type="button" class="btn btn-dark" name="button">
+                    <a href="{{ route('profile.show', ['username' => auth()->guard('penumpang')->user()->username]) }}" class="btn btn-dark text-lowercase">
+                      @if(is_null(auth()->guard('penumpang')->user()->image))
+                      <img src="{{ asset('home/images/client.png') }}" class="img-fluid" style="border-radius: 50%;" alt="" width="20">
+                      @else
+                      <img src="{{ asset('uploads/images/avatars/' . auth()->guard('penumpang')->user()->image) }}" class="img-fluid" style="border-radius: 50%;" alt="" width="20">
+                      @endif
                       {{ '@'. auth()->guard('penumpang')->user()->username }}
-                    </button>
+                    </a> 
                     <a href="{{ route('penumpang.logout') }}" class="btn btn-outline-dark">Keluar</a>
                     @endif
                   </div>

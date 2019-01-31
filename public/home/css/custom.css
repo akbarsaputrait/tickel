@@ -1,3 +1,14 @@
+h3 {
+	font-weight: 300;
+  letter-spacing: -1px;
+  margin-bottom: 1.5rem;
+	color: white;
+}
+
+.card.features:hover {
+	transform: none;
+}
+
 .form-control:focus {
 	border-color: #fa3a8f;
   box-shadow: 0 0 0 0.2rem rgba(255,0,212,.25);
@@ -80,6 +91,16 @@ header#home {
 	color: white !important;
 }
 
+div#whys {
+	padding: 145px 100px;
+	height: auto;
+	width: 100%;
+	background-image: url('../images/AssetA.svg');
+	background-size: cover;
+	background-position: center center;
+	color: white !important;
+}
+
 .card.users:before {
     content: "";
     position: absolute;
@@ -91,4 +112,24 @@ header#home {
     top: 0;
     bottom: 0;
     left: 0;
+}
+
+nav.navbar button.navbar-toggler {
+	padding: .25rem .75rem;
+    font-size: 1.25rem;
+    line-height: 1;
+    background: 0 0;
+    border: 2px solid white;
+    border-radius: .25rem;
+    color: white !important;
+}
+
+.is-scrolling nav.navbar button.navbar-toggler {
+	padding: .25rem .75rem;
+    font-size: 1.25rem;
+    line-height: 1;
+    background: 0 0;
+    border: 2px solid black;
+    border-radius: .25rem;
+    color: white !important;
 }

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+  <!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -31,10 +31,10 @@
     <nav class="navbar default-layout navbar-grad-2 col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
       <div class="text-center navbar-brand-wrapper d-flex align-items-top justify-content-center">
         <a class="navbar-brand brand-logo" href="{{ route('admin.dashboard') }}">
-          <img src="{{ asset('home/images/logo.png') }}" alt="logo" />
+          <img src="{{ asset('home/images/logo.png') }}" alt="logo" width="50" class="img-fluid" />
         </a>
         <a class="navbar-brand brand-logo-mini" href="{{ route('admin.dashboard') }}">
-          <img src="{{ asset('home/images/logo.png') }}" alt="logo" />
+          <img src="{{ asset('home/images/logo.png') }}" alt="logo"  width="50"/>
         </a>
       </div>
       <div class="navbar-menu-wrapper d-flex align-items-center">
