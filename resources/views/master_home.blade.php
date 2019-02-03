@@ -47,7 +47,7 @@ URI     : https://colorlib.com
               <span class="navbar-toggler-icon"></span> </button>
             <div class="collapse navbar-collapse" id="navbar">
               <ul class="navbar-nav ml-auto">
-                <li class="nav-item"> <a class="nav-link text-white" href="pesan-tiket">PESAN TIKET SEKARANG!</a> </li>
+                <li class="nav-item"> <a class="nav-link text-white" href="/pesan-tiket">PESAN TIKET SEKARANG!</a> </li>
                 <li class="nav-item"><a class="nav-link text-white" href="/#why">MENGAPA TICKEL?</a></li>
                 <li class="nav-item"> <a class="nav-link text-white" href="#contact">KONTAK KAMI</a> </li>
                 <li class="nav-item">
@@ -63,7 +63,7 @@ URI     : https://colorlib.com
                       <img src="{{ asset('uploads/images/avatars/' . auth()->guard('penumpang')->user()->image) }}" class="img-fluid" style="border-radius: 50%;" alt="" width="20">
                       @endif
                       {{ '@'. auth()->guard('penumpang')->user()->username }}
-                    </a> 
+                    </a>
                     <a href="{{ route('penumpang.logout') }}" class="btn btn-outline-dark">Keluar</a>
                     @endif
                   </div>

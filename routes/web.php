@@ -5,29 +5,28 @@ Route::group(['middleware'=>'guest'], function() {
   Route::get('/', 'HomeController@index')->name('home');
 
   // AUTH ADMIN
-  Route::get('/admin/login', 'AdminController@showLoginForm')->name('admin.login');
-  Route::post('/admin/login', 'AdminController@loginAdmin')->name('admin.login.post');
+  Route::get('/admin/masuk', 'AdminController@showLoginForm')->name('admin.login');
+  Route::post('/admin/masuk', 'AdminController@loginAdmin')->name('admin.login.post');
 
   // AUTH PETUGAS
-  Route::get('/petugas/login', 'PetugasController@showLoginForm')->name('petugas.login');
-  Route::post('/petugas/login', 'PetugasController@loginPetugas')->name('petugas.login.post');
-  Route::get('/petugas/logout', 'PetugasController@logoutPetugas')->name('petugas.logout');
+  Route::get('/petugas/masuk', 'PetugasController@showLoginForm')->name('petugas.login');
+  Route::post('/petugas/masuk', 'PetugasController@loginPetugas')->name('petugas.login.post');
+  Route::get('/petugas/keluar', 'PetugasController@logoutPetugas')->name('petugas.logout');
 
   // AUTH PENUMPANG
-  Route::get('/penumpang/login', 'PenumpangController@showLoginForm')->name('penumpang.login');
-  Route::post('/penumpang/login', 'PenumpangController@loginPenumpang')->name('penumpang.login.post');
-  Route::get('/penumpang/logout', 'PenumpangController@logoutPenumpang')->name('penumpang.logout');
-  Route::get('/penumpang/register', 'PenumpangController@registerForm')->name('penumpang.register');
-  Route::post('/penumpang/register', 'PenumpangController@registerPost')->name('penumpang.register.post');
+  Route::get('/penumpang/masuk', 'PenumpangController@showLoginForm')->name('penumpang.login');
+  Route::post('/penumpang/masuk', 'PenumpangController@loginPenumpang')->name('penumpang.login.post');
+  Route::get('/penumpang/keluar', 'PenumpangController@logoutPenumpang')->name('penumpang.logout');
+  Route::get('/penumpang/daftar', 'PenumpangController@registerForm')->name('penumpang.register');
+  Route::post('/penumpang/daftar', 'PenumpangController@registerPost')->name('penumpang.register.post');
 
-  Route::post('/pesan-tiket/proses', 'HomeController@pesanTiket')->name('pesan.store');
-  Route::get('/pesan-tiket', 'HomeController@formPesanTiket')->name('pesan.create');
-
+  Route::post('/pesan-tiket/proses', 'PesanTiketController@pesanTiket')->name('pesan.store');
+  Route::get('/pesan-tiket', 'PesanTiketController@formPesanTiket')->name('pesan.create');
 });
 
 //ADMIN
 Route::group(['middleware' => 'admin'], function() {
-  Route::get('/admin/logout', 'AdminController@logoutAdmin')->name('admin.logout');
+  Route::get('/admin/keluar', 'AdminController@logoutAdmin')->name('admin.logout');
   Route::get('/admin/dasbor', 'Admin\DashboardController@index')->name('admin.dashboard');
   Route::resource('admin/petugas', 'Admin\PetugasController');
   Route::resource('admin/rute', 'Admin\RuteController');
@@ -44,7 +43,7 @@ Route::group(['middleware' => 'admin'], function() {
   Route::get('admin/tipe-rute/hapus/{id}', 'Admin\TypeRuteController@destroy');
   Route::get('admin/profil', 'Admin\ProfileController@index')->name('admin.profile');
   Route::post('admin/profil/store', 'Admin\ProfileController@updateProfile')->name('admin.profile.store');
-  Route::post('admin/profil/reset-password', 'Admin\ProfileController@resetPassword')->name('admin.profile.reset');
+  Route::post('admin/profil/ganti-password', 'Admin\ProfileController@resetPassword')->name('admin.profile.reset');
 });
 
 // PETUGAS
@@ -53,11 +52,12 @@ Route::group(['middleware' => 'petugas'], function() {
   Route::resource('petugas/order', 'Petugas\OrderController');
   Route::get('petugas/profil', 'Petugas\ProfileController@index')->name('petugas.profile');
   Route::post('petugas/profil/store', 'Petugas\ProfileController@updateProfile')->name('petugas.profile.store');
-  Route::post('petugas/profil/reset-password', 'Petugas\ProfileController@resetPassword')->name('petugas.profile.reset');
+  Route::post('petugas/profil/ganti-password', 'Petugas\ProfileController@resetPassword')->name('petugas.profile.reset');
 });
 
 // PENUMPANG
 Route::group(['middleware' => 'penumpang'], function() {
-  Route::get('/profile/{username}', 'Penumpang\ProfilController@profilShow')->name('profile.show');
-  Route::post('/profile/{username}/update', 'Penumpang\ProfilController@profilUpdate')->name('profile.update');
+  Route::get('/profil/{username}', 'Penumpang\ProfilController@profilShow')->name('profile.show');
+  Route::post('/profil/{username}/update', 'Penumpang\ProfilController@profilUpdate')->name('profile.update');
+  Route::get('/pesat-tiket/pembayaran', 'PesanTiketController@pembayaranView')->name('pembayaran.create');
 });

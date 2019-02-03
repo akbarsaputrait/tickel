@@ -1,5 +1,6 @@
 $(function() {
 $("#pesanTiketButton").hide();
+
 	$(document).on('click', '#cariTiket', function(event) {
 		event.preventDefault();
 

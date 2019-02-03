@@ -111,7 +111,6 @@
       <div class="main-panel">
         <div class="content-wrapper bg-1">
           <!-- Begin Validation -->
-
           @if(session()->has('message'))
           <div class="alert alert-{{ session()->get('status') }} alert-dissmissible fade show">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>

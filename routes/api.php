@@ -17,5 +17,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('/cariTransportasi', 'HomeController@cariTransportasi');
-Route::get('/cariTransportasiBy/{id}', 'HomeController@getRute');
+Route::post('/cariTransportasi', 'PesanTiketController@cariTransportasi');
+Route::get('/cariTransportasiBy/{id}', 'PesanTiketController@getRute');

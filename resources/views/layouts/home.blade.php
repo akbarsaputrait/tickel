@@ -1,5 +1,5 @@
 @extends('master_home') @section('content')
-<header class="text-dark" id="home">
+<header class="text-dark pb-4" id="home">
   <div class="container mt-5">
     <div class="my-5">
       <h3>Pesan tiket dengan mudah dan cepat.</h3>

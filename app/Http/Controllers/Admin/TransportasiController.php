@@ -41,6 +41,13 @@ class TransportasiController extends Controller
      */
     public function store(Request $request)
     {
+      // CEK JIKA ADA KODE YANG SAMA
+      if(Transportasi::where('kode', '=', $request->kode)->exists()) {
+        session()->flash('status', 'danger');
+        session()->flash('message', 'Kode transportasi sudah digunakan');
+        return redirect()->back()->withInput();
+      }
+      
       $trans = new Transportasi;
       $trans->kode = $request->kode;
       $trans->nama_transportasi = $request->nama_transportasi;
@@ -48,15 +55,6 @@ class TransportasiController extends Controller
       $trans->keterangan = $request->keterangan;
       $trans->id_type_transportasi = $request->id_type_transportasi;
       $trans->save();
-
-      $jumlahKursi = (int) $trans->jumlah_kursi;
-      $randomString = Helper::generateRandomString(4);
-      for ($i=1; $i<=$jumlahKursi; $i++) {
-        $kursi = new Kursi;
-        $kursi->id_transportasi = $trans->id_transportasi;
-        $kursi->kode = $randomString . $i;
-        $kursi->save();
-      }
 
       session()->flash('status', 'success');
       session()->flash('message', 'Transportasi berhasil ditambahkan.');
