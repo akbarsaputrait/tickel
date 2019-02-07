@@ -6,12 +6,14 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PenumpangRequest;
 use App\Penumpang;
+use App\Pemesanan;
 
 class ProfilController extends Controller
 {
 	public function profilShow($username) {
 		$username = auth()->guard('penumpang')->user()->username;
 		$data['penumpang'] = Penumpang::where('username', '=', $username)->first();
+		$data['pemesanan'] = Pemesanan::with('rute')->where('id_pelanggan', '=', auth()->guard('penumpang')->user()->id_penumpang)->orderBy('created_at', 'DESC')->get();
 		return view('layouts.penumpang.profil')->with($data);
 	}
 

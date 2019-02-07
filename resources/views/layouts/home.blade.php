@@ -13,23 +13,26 @@
             <div class="row">
               <div class="col-md-4">
                 <div class="form-group">
-                  <label for="">Kota Asal</label>
-                  <select class="form-control" name="rute_awal" {{ ($errors->has('rute_akhir')) ? 'is-invalid' : '' }}>
+                  <label for="">Rute Awal</label>
+                  <select class="form-control {{ ($errors->has('rute_awal')) ? 'is-invalid' : '' }}"
+                    name="rute_awal" width="100%">
                     <option value="">Pilih kota asal</option>
                     @foreach($rute_awal as $item)
-                    <option value="{{ $item->rute_awal }}">{{ $item->rute_awal }}</option>
+                    <option value="{{ $item->rute_awal }}" {{ ($item->rute_awal == old('rute_awal')) ? 'selected' : '' }}>{{ $item->rute_awal }}</option>
                     @endforeach
                   </select>
                   <div class="invalid-feedback">
                     {{ $errors->first('rute_awal') }}
                   </div>
                 </div>
+              </div>
+              <div class="col-md-4">
                 <div class="form-group">
-                  <label for="">Kota Tujuan</label>
-                  <select class="form-control" name="rute_akhir" {{ ($errors->has('rute_akhir')) ? 'is-invalid' : '' }}>
+                  <label for="">Rute Akhir</label>
+                  <select class="form-control {{ ($errors->has('rute_akhir')) ? 'is-invalid' : '' }}" name="rute_akhir">
                     <option value="">Pilih kota tujuan</option>
                     @foreach($rute_akhir as $item)
-                    <option value="{{ $item->rute_akhir }}">{{ $item->rute_akhir }}</option>
+                    <option value="{{ $item->rute_akhir }}" {{ ($item->rute_akhir == old('rute_akhir')) ? 'selected' : '' }}>{{ $item->rute_akhir }}</option>
                     @endforeach
                   </select>
                   <div class="invalid-feedback">
@@ -37,49 +40,53 @@
                   </div>
                 </div>
               </div>
-              <div class="col-md-8">
+              <div class="col-md-4">
                 <div class="row">
-                  <div class="col-md-6">
+                  <div class="col-md-5">
+                    <div class="form-group">
+                      <label for="">Tujuan</label>
+                      <input type="text" class="form-control {{ ($errors->has('tujuan')) ? 'is-invalid' : '' }}" name="tujuan" value="{{ old('tujuan') }}" {{ (old( 'tujuan')) ? '' : '' }} placeholder="Tujuan">
+                      <div class="invalid-feedback">
+                        {{ $errors->first('tujuan') }}
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-7">
                     <div class="form-group">
                       <label for="">Tanggal Berangkat</label>
-                      <input type="date" class="form-control {{ ($errors->has('tanggal_berangkat')) ? 'is-invalid' : '' }}" name="tanggal_berangkat" value="" disabled>
+                      <input type="date" class="form-control {{ ($errors->has('tanggal_berangkat')) ? 'is-invalid' : '' }}" name="tanggal_berangkat" value="{{ old('tanggal_berangkat') }}" {{ (old( 'tanggal_berangkat')) ? '' : '' }}>
                       <div class="invalid-feedback">
                         {{ $errors->first('tanggal_berangkat') }}
                       </div>
                     </div>
                   </div>
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label for="">Jam Berangkat</label>
-                      <input type="time" class="form-control {{ ($errors->has('jam_berangkat')) ? 'is-invalid' : '' }}" name="jam_berangkat" value="" placeholder="Jam keberangkatan" disabled>
-                      <div class="invalid-feedback">
-                        {{ $errors->first('jam_berangkat') }}
-                      </div>
-                    </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="">Transportasi</label>
+                  <select class="form-control {{ ($errors->has('transportasi')) ? 'is-invalid' : '' }}" name="transportasi" {{ (old( 'transportasi')) ? '' : 'disabled' }}>
+                    <option value="">Jenis Transportasi</option>
+                    @foreach($transportasi as $item)
+                    <option value="{{ $item->nama_transportasi }}" {{ ($item->nama_transportasi == old('transportasi')) ? 'selected' : '' }}>{{ $item->nama_transportasi }}</option>
+                    @endforeach
+                  </select>
+                  <div class="invalid-feedback">
+                    {{ $errors->first('transportasi') }}
                   </div>
                 </div>
+              </div>
+              <div class="col-md-4">
                 <div class="row">
-                  <div class="col-md-4">
-                    <div class="form-group">
-                      <label for="">Transportasi</label>
-                      <select class="form-control {{ ($errors->has('transportasi')) ? 'is-invalid' : '' }}" name="transportasi" disabled>
-                        <option value="">Jenis Transportasi</option>
-                        @foreach($transportasi as $item)
-                        <option value="{{ $item->nama_transportasi }}">{{ $item->nama_transportasi }}</option>
-                        @endforeach
-                      </select>
-                      <div class="invalid-feedback">
-                        {{ $errors->first('transportasi') }}
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-4">
+                  <div class="col-md-6">
                     <div class="form-group">
                       <label for="">Kelas</label>
-                      <select class="form-control {{ ($errors->has('kelas')) ? 'is-invalid' : '' }}" name="kelas" disabled>
-                        <option value="">Kelas Transportasi</option>
+                      <select class="form-control {{ ($errors->has('kelas')) ? 'is-invalid' : '' }}" name="kelas" {{ (old( 'kelas')) ? '' : 'disabled' }}>
+                        <option value="">Kelas</option>
                         @foreach($type_rute as $item)
-                        <option value="{{ $item->nama_type }}">{{ $item->nama_type }}</option>
+                        <option value="{{ $item->nama_type }}" {{ ($item->nama_type == old('kelas')) ? 'selected' : '' }}>{{ $item->nama_type }}</option>
                         @endforeach
                       </select>
                       <div class="invalid-feedback">
@@ -87,24 +94,58 @@
                       </div>
                     </div>
                   </div>
-                  <div class="col-md-4">
+                  <div class="col-md-6">
                     <div class="form-group">
-                      <div class="btn-group w-100">
-                        <input type="button" id="cariTiket" class="mt-4 btn btn-primary custom" name="submit" value="Cari Tiket">
-                        <button type="submit" class="btn btn-primary-custom mt-4" name="button" id="pesanTiketButton">Pesan</button>
-                        <button type="button" id="clearButton" class="btn btn-primary custom d-none" name="button">Batal</button>
+                      <label for="">Jam Berangkat</label>
+                      <input type="time" class="form-control {{ ($errors->has('jam_berangkat')) ? 'is-invalid' : '' }}" name="jam_berangkat" value="{{ old('jam_berangkat') }}" placeholder="Jam keberangkatan" {{ (old( 'jam_berangkat')) ? '' : 'disabled' }}>
+                      <div class="invalid-feedback">
+                        {{ $errors->first('jam_berangkat') }}
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
+              <div class="col-md-4">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="">Tempat Pemesanan</label>
+                      <input type="text" class="form-control" name="tempat_pemesanan" value="{{ old('tempat_pemesanan') }}" {{ (old( 'tempat_pemesanan')) ? '' : 'disabled' }}>
+                      <div class="invalid-feedback">
+                        {{ $errors->first('tempat_pemesanan') }}
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="">Total Harga</label>
+                      <input type="text" class="form-control" name="harga" value="{{ old('harga') }}" disabled>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-9">
+                <div class="form-group">
+                  @if(!auth()->guard('penumpang')->check())
+                  <div class="text-center text-dark mt-4">
+                    <a href="#">Masuk</a> atau <a href="#">Daftar</a> untuk melengkapi pemesanan tiket.
+                  </div>
+                  @endif
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <div class="btn-group w-100">
+                    <input type="button" id="cariTiket" class="mt-4 btn btn-primary custom" name="submit" value="Cari Tiket">
+                    <button type="submit" class="btn btn-primary-custom mt-4" name="button" id="pesanTiketButton">Pesan</button>
+                    <button type="button" id="clearButton" class="btn btn-primary custom d-none" name="button">Batal</button>
+                  </div>
+                </div>
+              </div>
             </div>
           </form>
-          @if(!auth()->guard('penumpang')->check())
-          <div class="text-center text-dark">
-            <a href="#">Masuk</a> atau <a href="#">Daftar</a> untuk melengkapi pemesanan tiket.
-          </div>
-          @endif
         </div>
       </div>
     </div>

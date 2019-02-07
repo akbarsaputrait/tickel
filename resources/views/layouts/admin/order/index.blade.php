@@ -29,66 +29,31 @@
               </tr>
             </thead>
             <tbody>
+              @php
+                $x = 1;
+              @endphp
+              @foreach($pemesanan as $item)
               <tr>
                 <td class="font-weight-medium">
-                  1
+                  {{ $x++ }}
                 </td>
                 <td>
-                  <a href="{{ url('admin/order/1') }}" class="nav-link">A3313</a>
+                  <a href="{{ route('admin.order.show', ['order' => $item->kode_pemesanan]) }}" class="btn btn-dark btn-sm">#{{ $item->kode_pemesanan }}</a>
                 </td>
                 <td>
                   <span class="badge badge-warning">Proses</span>
                 </td>
                 <td>
-                  Rp. 7,000
+                  Rp. {{ $item->total_bayar }}
                 </td>
                 <td>
-                  Petugas A
+                  -
                 </td>
                 <td>
-                  Apr 21, 2018
+                  {{ date('d F Y, H:i A', strtotime($item->created_at)) }}
                 </td>
               </tr>
-              <tr>
-                <td class="font-weight-medium">
-                  2
-                </td>
-                <td>
-                  <a href="#" class="nav-link">A3512</a>
-                </td>
-                <td>
-                  <span class="badge badge-danger">Gagal</span>
-                </td>
-                <td>
-                  Rp. 7,000
-                </td>
-                <td>
-                  Petugas A
-                </td>
-                <td>
-                  Apr 21, 2018
-                </td>
-              </tr>
-              <tr>
-                <td class="font-weight-medium">
-                  3
-                </td>
-                <td>
-                  <a href="#" class="nav-link">A3521</a>
-                </td>
-                <td>
-                  <span class="badge badge-success">Berhasil</span>
-                </td>
-                <td>
-                  Rp. 7,000
-                </td>
-                <td>
-                  Petugas A
-                </td>
-                <td>
-                  Apr 21, 2018
-                </td>
-              </tr>
+              @endforeach
             </tbody>
           </table>
         </div>

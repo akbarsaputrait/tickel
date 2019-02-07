@@ -11,7 +11,7 @@
 				@if(is_null(auth()->guard('petugas')->user()->image))
         <img class="img-lg rounded-circle card-img-top" width="300" src="{{ asset('admin/images/faces/face1.jpg') }}" alt="Profile image">
 				@else
-				<img class="img-lg rounded-circle card-img-top" width="300" src="{{ asset('petugas/uploads/images/avatars/'.auth()->guard('petugas')->user()->image ) }}" alt="Profile image">
+				<img class="img-lg rounded-circle card-img-top" width="300" src="{{ asset('uploads/images/avatars/'.auth()->guard('petugas')->user()->image ) }}" alt="Profile image">
 				@endif
         <div class="description my-3">
           <h3>{{ auth()->guard('petugas')->user()->name }}</h3>

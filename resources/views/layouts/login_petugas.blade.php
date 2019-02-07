@@ -23,9 +23,12 @@
       box-shadow: none;
     }
     .auth.auth-bg-1 {
-      background: url({{ asset('home/images/asset3.png') }}) center  no-repeat;
+      background: url({{ asset('home/images/asset3.png') }});
+      background-position: center center;
+      background-repeat: no-repeat;
     }
   </style>
+
 </head>
 
 <body>

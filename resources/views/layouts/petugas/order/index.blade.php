@@ -1,7 +1,5 @@
-@extends('master_petugas') @section('title', 'Pesanan')
-@section('style')
-<link rel="stylesheet" href="{{ asset('vendors/datatables/datatables.min.css') }}">
-@endsection
+@extends('master_petugas')
+@section('title', 'Dasbor')
 @section('content')
 <div class="row">
   <div class="col-lg-12 grid-margin">
@@ -12,9 +10,6 @@
           <table class="table table-bordered table-striped" id="datatable">
             <thead>
               <tr>
-                <th>
-                  #
-                </th>
                 <th>
                   Kode Pemesan
                 </th>
@@ -33,81 +28,36 @@
               </tr>
             </thead>
             <tbody>
+              @foreach($pemesanan as $item)
               <tr>
-                <td class="font-weight-medium">
-                  1
+                <td>
+                  <a href="{{ route('petugas.order.show', ['order' => $item->kode_pemesanan]) }}" class="btn btn-sm btn-dark">
+                    #{{ $item->kode_pemesanan }}
+                  </a>
                 </td>
                 <td>
-                  <a href="{{ url('petugas/order/1') }}" class="nav-link">A3313</a>
+                  <span class="badge badge-warning">{{ ucfirst($item->status) }}</span>
                 </td>
                 <td>
-                  <span class="badge badge-warning">Proses</span>
+                  Rp.{{ $item->total_bayar }}
                 </td>
                 <td>
-                  Rp. 7,000
+                  {{ (is_null($item->petugas)) ? '-' : $item->petugas->nama_petugas }}
                 </td>
                 <td>
-                  Petugas A
-                </td>
-                <td>
-                  Apr 21, 2018
+                  {{ date('d F Y, H:i A', strtotime($item->created_at)) }}
                 </td>
               </tr>
-              <tr>
-                <td class="font-weight-medium">
-                  2
-                </td>
-                <td>
-                  <a href="#" class="nav-link">A3512</a>
-                </td>
-                <td>
-                  <span class="badge badge-danger">Gagal</span>
-                </td>
-                <td>
-                  Rp. 7,000
-                </td>
-                <td>
-                  Petugas A
-                </td>
-                <td>
-                  Apr 21, 2018
-                </td>
-              </tr>
-              <tr>
-                <td class="font-weight-medium">
-                  3
-                </td>
-                <td>
-                  <a href="#" class="nav-link">A3521</a>
-                </td>
-                <td>
-                  <span class="badge badge-success">Berhasil</span>
-                </td>
-                <td>
-                  Rp. 7,000
-                </td>
-                <td>
-                  Petugas A
-                </td>
-                <td>
-                  Apr 21, 2018
-                </td>
-              </tr>
+              @endforeach
             </tbody>
           </table>
         </div>
       </div>
+      <div class="card-footer">
+        <a href="{{ url('admin/order') }}" class="btn btn-outline-primary">
+          <i class="fa fa-arrow-right"></i> Lihat lainnya</a>
+      </div>
     </div>
   </div>
 </div>
-@endsection
-@section('script')
-<script src="{{ asset('vendors/datatables/datatables.min.js') }}" charset="utf-8"></script>
-<script src="{{ asset('vendors/datatables/buttons.bootstrap4.min.js') }}" charset="utf-8"></script>
-<script src="{{ asset('vendors/datatables/vfs_fonts.js') }}" charset="utf-8"></script>
-<script type="text/javascript">
-  $(document).ready(function() {
-    $('#datatable').DataTable();
-  })
-</script>
 @endsection

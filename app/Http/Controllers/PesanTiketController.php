@@ -10,6 +10,7 @@ use App\Rute;
 use App\TypeRute;
 use App\Transportasi;
 use App\Pemesanan;
+use App\BuktiPembayaran;
 
 class PesanTiketController extends Controller
 {
@@ -28,8 +29,6 @@ class PesanTiketController extends Controller
 		$data['rute_awal'] = Rute::distinct()->select('rute_awal')->get(['id_rute','rute_awal']);
 		$data['rute_akhir'] = Rute::distinct()->select('rute_akhir')->get(['id_rute','rute_akhir']);
 		$data['transportasi'] = Transportasi::with(['jenis'])->orderBy('id_transportasi', 'DESC')->get();
-		// dd($data);
-		// ID RUTE TIDAK DIKETAHUI KARENA DATA DIAMBIL SECARA DITINCT
 		return view('layouts.pesan-tiket')->with($data);
 	}
 
@@ -86,17 +85,18 @@ class PesanTiketController extends Controller
 				$transportasi->save();
 				$pemesanan->save();
 
+				$bukti = new BuktiPembayaran;
+				$bukti->id_penumpang = auth()->guard('penumpang')->user()->id_penumpang;
+				$bukti->id_pemesanan = $pemesanan->id_pemesanan;
+				$bukti->save();
+
 				session()->flash('status', 'success');
-				session()->flash('message', 'Tiket berhasil dipesan. Silahkan mengirim bukti pembayaran tiket sesuai dengan total harga dan nomor rekening di bawah ini');
-				return redirect()->route('pesan.create');
+				session()->flash('message', 'Untuk melanjutkan pemesanan silahkan unggah bukti pembayaran anda.');
+				return redirect()->route('pembayaran.show', ['id_pemesanan' => $pemesanan->kode_kursi]);
 		} else {
 			session()->flash('status', 'danger');
 			session()->flash('message', 'Maaf tiket yang anda pesan telah habis.');
 			return redirect()->back()->withInput();
 		}
-	}
-
-	public function pembayaranView() {
-		return view('layouts.pembayaran');
 	}
 }

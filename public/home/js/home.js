@@ -1,6 +1,7 @@
 $(function() {
 $("#pesanTiketButton").hide();
-
+$('b[role="presentation"]').hide();
+$('.select2-selection__arrow').append('<i class="fa fa-angle-down"></i>');
 	$(document).on('click', '#cariTiket', function(event) {
 		event.preventDefault();
 
@@ -93,10 +94,7 @@ $("#pesanTiketButton").hide();
 				$('input[name="harga"]').val(data.harga);
 				$('input[name="tujuan"]').val(data.tujuan);
 				$('#id_rute').val(idrute);
-
-				// $("#cariTiket").attr('value', 'Pesan tiket');
-				// $("#cariTiket").attr('class', 'btn btn-primary-custom mt-4');
-				// $("#cariTiket").attr('type', 'submit');
+				$('input[name="tanggal_berangkat"]').focus();
 				$("#cariTiket").hide();
 				$("#pesanTiketButton").show();
 				$("#clearButton").removeClass('d-none');
@@ -115,10 +113,8 @@ $("#pesanTiketButton").hide();
 		$('select[name="rute_akhir"]').val('');
 		$('input[name="tujuan"]').val('');
 		$('input[name="id_rutes"]').val('');
-
-		// $("#cariTiket").attr('value', 'Cari Tiket');
-		// $("#cariTiket").attr('class', 'btn btn-primary custom mt-4');
-		// $("#cariTiket").attr('type', 'button');
+		$('input[name="tempat_pemesanan"]').val('');
+		$('input[name="tanggal_berangkat"]').val('');
 		$("#cariTiket").show();
 		$("#pesanTiketButton").hide();
 		$("#clearButton").addClass('d-none');

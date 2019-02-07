@@ -61,7 +61,7 @@ class PetugasController extends Controller
 
       session()->flash('status', 'success');
       session()->flash('message', 'Petugas berhasil ditambahkan.');
-      return redirect()->route('petugas.index');
+      return redirect()->route('admin.petugas.index');
     }
 
     /**

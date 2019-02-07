@@ -4,6 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Pemesanan;
+use App\Penumpang;
+use App\Rute;
+use App\Petugas;
 
 class OrderController extends Controller
 {
@@ -14,7 +18,8 @@ class OrderController extends Controller
      */
     public function index()
     {
-        return view('layouts.admin.order.index');
+      $data['pemesanan'] = Pemesanan::all();
+      return view('layouts.admin.order.index')->with($data);
     }
 
     /**
@@ -46,7 +51,11 @@ class OrderController extends Controller
      */
     public function show($id)
     {
-        return view('layouts.admin.order.show');
+      $data['pemesanan'] = Pemesanan::where('kode_pemesanan', '=', $id)->first();
+      $data['penumpang'] = Penumpang::find($data['pemesanan']->id_pelanggan)->first();
+      $data['rute'] = Rute::with(['transportasi', 'type'])->where('id_rute', '=', $data['pemesanan']->id_rute)->first();
+      $data['petugas'] = Petugas::find($data['pemesanan']->id_petugas);
+        return view('layouts.admin.order.show')->with($data);
     }
 
     /**

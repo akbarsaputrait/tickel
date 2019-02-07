@@ -10,7 +10,7 @@
 						</h4>
 					</div>
 					<div class="mb-3">
-						<a href="{{ url('admin/petugas/create') }}" class="btn btn-primary">
+						<a href="{{ route('admin.petugas.create') }}" class="btn btn-primary">
 							<i class="fa fa-plus"></i> Tambah
 						</a>
 					</div>
@@ -45,7 +45,7 @@
                 </td>
                 <td>
                   <div class="btn-group">
-                    <a href="{{ route('petugas.edit', ['petugas' => $item->id_petugas]) }}" class="btn btn-success">
+                    <a href="{{ route('admin.petugas.edit', ['petugas' => $item->id_petugas]) }}" class="btn btn-success">
                       <i class="fa fa-pencil"></i>
                     </a>
                     <button type="button" name="button" id="deleteButton" class="btn btn-danger" data-id="{{ $item->id_petugas }}" data-menu="petugas">

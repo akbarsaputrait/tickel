@@ -1,9 +1,9 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.9
+-- version 4.8.5
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Waktu pembuatan: 31 Jan 2019 pada 05.28
+-- Waktu pembuatan: 06 Feb 2019 pada 07.08
 -- Versi server: 5.7.21
 -- Versi PHP: 7.1.16
 
@@ -90,7 +90,7 @@ CREATE TABLE IF NOT EXISTS `admins` (
 --
 
 INSERT INTO `admins` (`id`, `username`, `email`, `password`, `remember_token`, `name`, `image`, `id_level`, `created_at`, `updated_at`) VALUES
-(1, 'admin', 'admin@admin.com', '$2y$10$pLSxCFmhYqz4id5B9v6/HOKFFHu4LfsmTr5ytC9HR..GKPF70OxBu', 'V0c16LAeFfeZc5Fu63ogesknv4N94lX4kJD3tU2G1nxp5Wh8rbPpMRlyMzPu', 'Admin Tickel', '1548164287.png', 1, '2019-01-13 15:04:23', '2019-01-31 04:54:13');
+(1, 'admin', 'admin@admin.com', '$2y$10$pLSxCFmhYqz4id5B9v6/HOKFFHu4LfsmTr5ytC9HR..GKPF70OxBu', 'itiiQhWO0RLfykTJoXIpyvr1YjjBVtyxPNz8VmTGgVS5M9J7aOeQWu2tb8kV', 'Admin Tickel', '1548164287.png', 1, '2019-01-13 15:04:23', '2019-02-06 06:04:13');
 
 -- --------------------------------------------------------
 
@@ -101,16 +101,25 @@ INSERT INTO `admins` (`id`, `username`, `email`, `password`, `remember_token`, `
 DROP TABLE IF EXISTS `bukti_pembayaran`;
 CREATE TABLE IF NOT EXISTS `bukti_pembayaran` (
   `id_bukti` int(11) NOT NULL AUTO_INCREMENT,
-  `id_penumpang` int(11) UNSIGNED DEFAULT NULL,
-  `id_pemesanan` int(11) UNSIGNED NOT NULL,
+  `id_penumpang` int(11) DEFAULT NULL,
+  `id_pemesanan` int(11) NOT NULL,
   `file` varchar(255) DEFAULT NULL,
+  `id_petugas` int(11) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `deleted_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id_bukti`),
   KEY `id_penumpang` (`id_penumpang`),
-  KEY `id_pemesanan` (`id_pemesanan`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  KEY `id_pemesanan` (`id_pemesanan`),
+  KEY `id_petugas` (`id_petugas`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `bukti_pembayaran`
+--
+
+INSERT INTO `bukti_pembayaran` (`id_bukti`, `id_penumpang`, `id_pemesanan`, `file`, `id_petugas`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 1, 6, '1549436666.png', NULL, '2019-02-05 21:13:15', '2019-02-06 00:04:26', NULL);
 
 -- --------------------------------------------------------
 
@@ -220,7 +229,7 @@ CREATE TABLE IF NOT EXISTS `pemesanans` (
   `tanggal_pemesanan` datetime NOT NULL,
   `tempat_pemesanan` varchar(255) DEFAULT NULL,
   `status` varchar(255) NOT NULL,
-  `id_pelanggan` int(10) UNSIGNED NOT NULL,
+  `id_pelanggan` int(11) NOT NULL,
   `kode_kursi` varchar(10) NOT NULL,
   `id_rute` int(10) UNSIGNED NOT NULL,
   `tujuan` varchar(255) DEFAULT NULL,
@@ -228,21 +237,22 @@ CREATE TABLE IF NOT EXISTS `pemesanans` (
   `jam_cekin` time DEFAULT NULL,
   `jam_berangkat` time NOT NULL,
   `total_bayar` varchar(255) NOT NULL,
-  `id_petugas` int(10) UNSIGNED DEFAULT NULL,
+  `id_petugas` int(11) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `deleted_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id_pemesanan`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+  PRIMARY KEY (`id_pemesanan`),
+  KEY `id_pelanggan` (`id_pelanggan`),
+  KEY `id_rute` (`id_rute`),
+  KEY `pemesanan_petugas` (`id_petugas`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data untuk tabel `pemesanans`
 --
 
 INSERT INTO `pemesanans` (`id_pemesanan`, `kode_pemesanan`, `tanggal_pemesanan`, `tempat_pemesanan`, `status`, `id_pelanggan`, `kode_kursi`, `id_rute`, `tujuan`, `tanggal_berangkat`, `jam_cekin`, `jam_berangkat`, `total_bayar`, `id_petugas`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, '5c4c65cccbb26', '2019-01-26 00:00:00', 'Rumah', 'pending', 1, 'KA333-10', 2, 'Yogyakarta', '2019-04-21', '06:30:00', '07:30:00', '75.000', NULL, '2019-01-26 06:51:09', '2019-01-31 05:15:39', NULL),
-(2, '5c4c65fa683dd', '2019-01-26 00:00:00', 'Rumah', 'pending', 2, 'KA333-9', 2, 'Yogyakarta', '2019-04-21', '06:30:00', '07:30:00', '75.000', NULL, '2019-01-26 06:51:54', '2019-01-31 05:15:35', NULL),
-(3, '5c5284313dadf', '2019-01-31 00:00:00', 'Pasuruan', 'pending', 3, 'KA333-8', 2, 'Yogyakarta', '2019-02-02', NULL, '07:30:00', '75.000', NULL, '2019-01-30 22:14:25', '2019-01-31 05:16:10', NULL);
+(6, '5c5a5edb5e12a', '2019-02-06 00:00:00', 'Pasuruan', 'Proccess', 1, 'KA333-5', 2, 'Yogyakarta', '2019-04-21', '00:00:00', '07:30:00', '75.000', NULL, '2019-02-05 21:13:15', '2019-02-06 00:04:26', NULL);
 
 -- --------------------------------------------------------
 
@@ -268,16 +278,14 @@ CREATE TABLE IF NOT EXISTS `penumpangs` (
   `deleted_at` timestamp NULL DEFAULT NULL,
   `remember_token` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id_penumpang`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data untuk tabel `penumpangs`
 --
 
 INSERT INTO `penumpangs` (`id_penumpang`, `username`, `email`, `password`, `nama_penumpang`, `no_identitas`, `alamat_penumpang`, `tanggal_lahir`, `jenis_kelamin`, `telefone`, `image`, `created_at`, `updated_at`, `deleted_at`, `remember_token`) VALUES
-(1, 'akbarsaputra', 'akbarsaputrait@outlook.com', '$2y$10$1cuc.jUG3KM5Uct920dglu1hGtzcLtQkfRZl.oDe2fB3bLBhkmHyG', 'Akbar', NULL, NULL, NULL, NULL, NULL, NULL, '2019-01-21 22:34:46', '2019-01-29 02:07:24', NULL, 'hFALTpUjeVt75zfLyJrPtDK9YzbPB8zJQyi8ECQg86J7pa07VJsZdWMLuIBm'),
-(2, 'fariz', 'alfarizie@gmail.com', '$2y$10$UR2mT6yKiH4nZuxYXqcLz.FsdL/IZAtG84OI3gJha0u.Gm.BLxqr6', 'fariz al', NULL, NULL, NULL, NULL, NULL, NULL, '2019-01-23 19:50:42', '2019-01-23 19:50:42', NULL, NULL),
-(3, 'akbarsaputrait', 'akbar@gmail.com', '$2y$10$k0frzh3D.tShZnWFVBm3iuSI57cQjwZXshYXBw0hxa1klXx2Okqvy', 'Akbar Anung Yudha Saputra', '0003135234', 'Malang, Jawa Timur', '2019-01-30', 'L', '081931006841', '1548830345.jpg', '2019-01-28 20:29:03', '2019-01-31 05:27:02', NULL, '7OM8OGtKeAy2YSP4nbY40cCk8FeWB6miT8t28RuuTPWUXhpEnhO6nz0IuH5k');
+(1, 'akbarsaputrait', 'akbar@gmail.com', '$2y$10$1KJKocG1wVrZDKLrp2VVNe/tKZW79PVPxBWqzcw8mV3xYxe0pzUGu', 'Akbar Anung Yudha Saputra', '0003135234', 'Malang, Jawa Timur', '2000-12-26', 'L', '081931006841', '1548940509.jpg', '2019-01-31 06:14:32', '2019-02-06 07:07:08', NULL, 'fGJ69BjBU1lbDLgxmLzmvov4Ke5fvqg5rv2owq5rJYcu0ip5WIS7vfH9wh9b');
 
 -- --------------------------------------------------------
 
@@ -304,15 +312,14 @@ CREATE TABLE IF NOT EXISTS `petugass` (
   `remember_token` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id_petugas`),
   KEY `level` (`id_level`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data untuk tabel `petugass`
 --
 
 INSERT INTO `petugass` (`id_petugas`, `username`, `email`, `password`, `nama_petugas`, `jenis_kelamin`, `alamat_petugas`, `tanggal_lahir`, `telefone`, `id_level`, `image`, `created_at`, `updated_at`, `deleted_at`, `remember_token`) VALUES
-(1, 'petugas', 'petugas@tickle.com', '$2y$10$ZxPklD0iTeSi7y8dZnhjd.kCzw.CEJLZ/P2W3ZnYb2QS8HBjGt72u', 'Petugas A', 'L', NULL, NULL, NULL, 4, NULL, '2019-01-13 14:11:46', '2019-01-16 07:15:26', NULL, NULL),
-(2, 'yudha', 'yudha@tickel.com', '$2y$10$4RbpaDeqvQACue9ZssoFf.O0SEier6Q5OGFXwvxy3r3CbhqJlikau', 'Yudha Anung', 'L', 'Malang, Jawa Timur', '2000-12-26', '081930065484', 4, '1548209105.png', '2019-01-16 06:02:16', '2019-01-23 02:05:58', NULL, 'GefblY6xtnN8efsepEFv2AuV8nQNh2whPlK2MFVssXZn54NN4K7HDcnxgzuE');
+(4, 'saputra', 'saputra@gmail.com', '$2y$10$1eScfMndVMUPFbLGLh69yeSlPEjOAnktXC.kaJW70jlFo6LNYtMWO', 'Yudha Saputra', 'L', 'Malang, Jawa Timur', '2019-04-21', '08196462844', 4, '1549432655.png', '2019-02-05 22:57:35', '2019-02-06 06:32:02', NULL, 'XkUfQr3NCXlDIgulTttbhuL34hr0K1ND5jpMenPycvlvF5sLMCmgyLC8PLmw');
 
 -- --------------------------------------------------------
 
@@ -375,7 +382,7 @@ CREATE TABLE IF NOT EXISTS `transportasis` (
 
 INSERT INTO `transportasis` (`id_transportasi`, `kode`, `jumlah_kursi`, `nama_transportasi`, `keterangan`, `id_type_transportasi`, `created_at`, `updated_at`, `deleted_at`) VALUES
 (2, 'GI333', 10, 'Garuda Indonesia', NULL, 1, '2019-01-16 08:04:01', '2019-01-24 04:36:48', NULL),
-(3, 'KA333', 7, 'Logawa', NULL, 3, '2019-01-16 19:26:43', '2019-01-30 22:14:25', NULL);
+(3, 'KA333', 4, 'Logawa', NULL, 3, '2019-01-16 19:26:43', '2019-02-05 21:13:15', NULL);
 
 -- --------------------------------------------------------
 
@@ -459,16 +466,31 @@ INSERT INTO `users` (`id`, `username`, `email`, `password`, `is_penumpang`, `cre
 --
 
 --
+-- Ketidakleluasaan untuk tabel `bukti_pembayaran`
+--
+ALTER TABLE `bukti_pembayaran`
+  ADD CONSTRAINT `bukti_pemesanan` FOREIGN KEY (`id_pemesanan`) REFERENCES `pemesanans` (`id_pemesanan`),
+  ADD CONSTRAINT `bukti_penumpang` FOREIGN KEY (`id_penumpang`) REFERENCES `penumpangs` (`id_penumpang`);
+
+--
 -- Ketidakleluasaan untuk tabel `kursis`
 --
 ALTER TABLE `kursis`
   ADD CONSTRAINT `kode_kursi` FOREIGN KEY (`id_transportasi`) REFERENCES `rutes` (`id_rute`);
 
 --
+-- Ketidakleluasaan untuk tabel `pemesanans`
+--
+ALTER TABLE `pemesanans`
+  ADD CONSTRAINT `pemesanan_petugas` FOREIGN KEY (`id_petugas`) REFERENCES `petugass` (`id_petugas`) ON DELETE NO ACTION,
+  ADD CONSTRAINT `pemesanan_rute` FOREIGN KEY (`id_rute`) REFERENCES `rutes` (`id_rute`) ON DELETE CASCADE,
+  ADD CONSTRAINT `pemesanan_user` FOREIGN KEY (`id_pelanggan`) REFERENCES `penumpangs` (`id_penumpang`) ON DELETE CASCADE;
+
+--
 -- Ketidakleluasaan untuk tabel `petugass`
 --
 ALTER TABLE `petugass`
-  ADD CONSTRAINT `level` FOREIGN KEY (`id_level`) REFERENCES `levels` (`id_level`);
+  ADD CONSTRAINT `level` FOREIGN KEY (`id_level`) REFERENCES `levels` (`id_level`) ON DELETE CASCADE;
 
 --
 -- Ketidakleluasaan untuk tabel `rutes`

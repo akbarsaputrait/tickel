@@ -28,23 +28,27 @@
               </tr>
             </thead>
             <tbody>
+              @foreach($pemesanan as $item)
               <tr>
                 <td>
-                  <a href="{{ url('petugas/order/1') }}" class="nav-link">A3313</a>
+                  <a href="{{ route('petugas.order.show', ['order' => $item->kode_pemesanan]) }}" class="btn btn-sm btn-dark">
+                    #{{ $item->kode_pemesanan }}
+                  </a>
                 </td>
                 <td>
-                  <span class="badge badge-warning">Proses</span>
+                  <span class="badge badge-warning">{{ ucfirst($item->status) }}</span>
                 </td>
                 <td>
-                  Rp. 7,000
+                  Rp.{{ $item->total_bayar }}
                 </td>
                 <td>
-                  Petugas A
+                  {{ (is_null($item->petugas)) ? '-' : $item->petugas->nama_petugas }}
                 </td>
                 <td>
-                  Apr 21, 2018
+                  {{ date('d F Y, H:i A', strtotime($item->created_at)) }}
                 </td>
               </tr>
+              @endforeach
             </tbody>
           </table>
         </div>

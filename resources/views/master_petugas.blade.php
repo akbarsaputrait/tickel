@@ -36,13 +36,6 @@
         </a>
       </div>
       <div class="navbar-menu-wrapper d-flex align-items-center">
-				<ul class="navbar-nav navbar-nav-left header-links d-none d-md-flex">
-          <li class="nav-item">
-            <a href="#" class="nav-link">Total Pesanan
-              <span class="badge badge-warning ml-1">33</span>
-            </a>
-          </li>
-        </ul>
         <ul class="navbar-nav navbar-nav-right">
           <li class="nav-item d-none d-xl-inline-block">
             <a class="nav-link" id="UserDropdown" href="{{ route('petugas.profile') }}" aria-expanded="false">
@@ -50,7 +43,7 @@
               @if(is_null(auth()->guard('petugas')->user()->image))
               <img class="img-xs rounded-circle" src="{{ asset('admin/images/faces/face1.jpg') }}" alt="Profile image">
       				@else
-      				<img class="img-xs rounded-circle" src="{{ asset('petugas/uploads/images/avatars/'.auth()->guard('petugas')->user()->image ) }}" alt="Profile image">
+      				<img class="img-xs rounded-circle" src="{{ asset('uploads/images/avatars/'.auth()->guard('petugas')->user()->image ) }}" alt="Profile image">
       				@endif
             </a>
           </li>
@@ -67,13 +60,13 @@
       <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <ul class="nav">
           <li class="nav-item {{ strpos(request()->path(), 'dasbor') !== false ? 'active' : ''}}">
-            <a class="nav-link" href="{{ url('petugas/dashboard') }}">
+            <a class="nav-link" href="{{ route('petugas.dashboard') }}">
               <i class="menu-icon fa fa-home"></i>
               <span class="menu-title">Dasbor</span>
             </a>
           </li>
           <li class="nav-item {{ strpos(request()->path(), 'order') !== false ? 'active' : ''}}">
-            <a class="nav-link" href="{{ url('petugas/order') }}">
+            <a class="nav-link" href="{{ route('petugas.order.index') }}">
               <i class="menu-icon fa fa-usd"></i>
               <span class="menu-title">Pesanan</span>
             </a>

@@ -25,16 +25,16 @@ Route::group(['middleware'=>'guest'], function() {
 });
 
 //ADMIN
-Route::group(['middleware' => 'admin'], function() {
+Route::group(['middleware' => 'admin', 'prefix' => 'admin'], function() {
   Route::get('/admin/keluar', 'AdminController@logoutAdmin')->name('admin.logout');
   Route::get('/admin/dasbor', 'Admin\DashboardController@index')->name('admin.dashboard');
-  Route::resource('admin/petugas', 'Admin\PetugasController');
-  Route::resource('admin/rute', 'Admin\RuteController');
-  Route::resource('admin/transportasi', 'Admin\TransportasiController');
-  Route::resource('admin/tipe-transportasi', 'Admin\TypeTransportasiController');
-  Route::resource('admin/tipe-rute', 'Admin\TypeRuteController');
-  Route::resource('admin/level', 'Admin\LevelController');
-  Route::resource('admin/order', 'Admin\OrderController');
+  Route::resource('petugas', 'Admin\PetugasController', ['as' => 'admin']);
+  Route::resource('rute', 'Admin\RuteController', ['as' => 'admin']);
+  Route::resource('transportasi', 'Admin\TransportasiController', ['as' => 'admin']);
+  Route::resource('tipe-transportasi', 'Admin\TypeTransportasiController', ['as' => 'admin']);
+  Route::resource('tipe-rute', 'Admin\TypeRuteController', ['as' => 'admin']);
+  Route::resource('level', 'Admin\LevelController', ['as' => 'admin']);
+  Route::resource('order', 'Admin\OrderController', ['as' => 'admin']);
   Route::get('admin/level/hapus/{id}', 'Admin\LevelController@destroy');
   Route::get('admin/petugas/hapus/{id}', 'Admin\PetugasController@destroy');
   Route::get('admin/tipe-transportasi/hapus/{id}', 'Admin\TypeTransportasiController@destroy');
@@ -49,7 +49,7 @@ Route::group(['middleware' => 'admin'], function() {
 // PETUGAS
 Route::group(['middleware' => 'petugas'], function() {
   Route::get('petugas/dasbor', 'Petugas\DashboardController@index')->name('petugas.dashboard');
-  Route::resource('petugas/order', 'Petugas\OrderController');
+  Route::resource('petugas/order', 'Petugas\OrderController', ['as' => 'petugas']);
   Route::get('petugas/profil', 'Petugas\ProfileController@index')->name('petugas.profile');
   Route::post('petugas/profil/store', 'Petugas\ProfileController@updateProfile')->name('petugas.profile.store');
   Route::post('petugas/profil/ganti-password', 'Petugas\ProfileController@resetPassword')->name('petugas.profile.reset');
@@ -59,5 +59,7 @@ Route::group(['middleware' => 'petugas'], function() {
 Route::group(['middleware' => 'penumpang'], function() {
   Route::get('/profil/{username}', 'Penumpang\ProfilController@profilShow')->name('profile.show');
   Route::post('/profil/{username}/update', 'Penumpang\ProfilController@profilUpdate')->name('profile.update');
-  Route::get('/pesat-tiket/pembayaran', 'PesanTiketController@pembayaranView')->name('pembayaran.create');
+
+  Route::get('/tiket/{id_pemesanan}/', 'PembayaranController@show')->name('pembayaran.show');
+  Route::post('/tiket/update/{id_pemesanan}', 'PembayaranController@update')->name('pembayaran.update');
 });

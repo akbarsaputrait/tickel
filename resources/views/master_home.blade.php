@@ -29,6 +29,7 @@ URI     : https://colorlib.com
   <link rel="stylesheet" href="{{ asset('home/css/owl.carousel.min.css') }}">
   <!-- Main css -->
   <link rel="stylesheet" href="{{ asset('admin/vendors/sweetalert/sweetalert2.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('admin/vendors/select2/select2.min.css') }}">
   <link href="{{ asset('home/css/style.css') }}" rel="stylesheet">
   <link href="{{ asset('home/css/custom.css') }}" rel="stylesheet">
 </head>
@@ -42,7 +43,7 @@ URI     : https://colorlib.com
       <div class="row">
         <div class="col-md-12">
           <nav class="navbar navbar-dark navbar-expand-lg">
-            <a class="navbar-brand" href="{{ route('home') }}"><img src="{{ asset('home/images/logo.png') }}" class="img-fluid" alt="logo" width="70"></a>
+            <a class="navbar-brand py-0" href="{{ route('home') }}"><img src="{{ asset('home/images/logo.png') }}" class="img-fluid" alt="logo" width="50"></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span> </button>
             <div class="collapse navbar-collapse" id="navbar">
@@ -119,12 +120,17 @@ URI     : https://colorlib.com
   <script src="{{ asset('home/js/jquery-3.2.1.min.js') }}"></script>
   <script src="{{ asset('home/js/bootstrap.bundle.min.js') }}"></script>
   <script src="{{ asset('admin/vendors/sweetalert/sweetalert2.all.min.js') }}" charset="utf-8"></script>
+  <script src="{{ asset('admin/vendors/select2/select2.full.min.js') }}" charset="utf-8"></script>
   <!-- Plugins JS -->
   <script src="{{ asset('home/js/owl.carousel.min.js') }}"></script>
   <!-- Custom JS -->
   <script src="{{ asset('home/js/script.js') }}"></script>
   <script src="{{ asset('home/js/home.js') }}"></script>
-
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $('select#select2').select2();
+    })
+  </script>
 </body>
 
 </html>

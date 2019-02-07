@@ -5,7 +5,7 @@
       <h1>Pesan tiket sekarang!</h1>
       <p class="text-white">Lengkapi data pribadi anda untuk melanjutkan pemesanan.</p>
     </div>
-    <form class="form-horizontal" action="{{ route('pembayaran.update',['id_pemesanan' => $pemesanan->kode_pemesanan]) }}" method="post" enctype="multipart/form-data">
+    <form class="form-horizontal" action="#" method="post" enctype="multipart/form-data">
       <fieldset disabled>
         <div class="row">
           <div class="col-md-12">
@@ -33,7 +33,7 @@
                 <div class="col-md-4">
                   <div class="form-group">
                     <label for="">Rute Akhir</label>
-                    <select class="form-control" name="rute_akhir" disabled>
+                    <select class="form-control" name="rute_akhir"  disabled>
                       <option value="">{{ $rute[0]->rute_akhir }}</option>
                     </select>
                   </div>
@@ -43,7 +43,7 @@
                     <div class="col-md-5">
                       <div class="form-group">
                         <label for="">Tujuan</label>
-                        <input type="text" class="form-control {{ ($errors->has('tujuan')) ? 'is-invalid' : '' }}" name="tujuan" value="{{ $rute[0]->tujuan }}" placeholder="Tujuan" disabled>
+                        <input type="text" class="form-control {{ ($errors->has('tujuan')) ? 'is-invalid' : '' }}" name="tujuan" value="{{ $rute[0]->tujuan }}" placeholder="Tujuan"  disabled>
                       </div>
                     </div>
                     <div class="col-md-7">
@@ -160,7 +160,6 @@
                     </div>
                   </div>
                   <div class="col-md-6">
-                    @if(is_null($pembayaran->file))
                     <p class="text-muted">Nomor Rekening Tujuan</p>
                     <div class="list-group">
                       <div class="list-group-item">
@@ -174,9 +173,6 @@
                         <small class="text-small text-muted">A.N. Akbar Anung Yudha Saputra</small>
                       </div>
                     </div>
-                    @else
-                      <img src="{{ asset('uploads/images/bukti-pembayaran/' . $pembayaran->file) }}" alt="">
-                    @endif
                   </div>
                 </div>
               </div>
@@ -184,11 +180,11 @@
                 @csrf
                 <div class="form-group">
                   <label for="">Unggah file</label>
-                  <input type="file" class="form-control" name="file" value="">
+                  <input type="file" class="form-control" name="" value="">
                 </div>
                 <div class="form-group">
                   <div class="btn-group">
-                    <input type="submit" class="btn btn-primary custom wi-25" name="submit" value="Unggah">
+                    <input type="submit" class="btn btn-primary custom wi-25" name="submit" value="Pesan Tiket">
                     <a href="#" class="btn btn-primary-custom">Batal</a>
                   </div>
                 </div>

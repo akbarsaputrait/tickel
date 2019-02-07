@@ -98,7 +98,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{{ url('admin/logout') }}">
+            <a class="nav-link" href="{{ route('admin.logout') }}">
               <i class="menu-icon fa fa-sign-out"></i>
               <span class="menu-title">Keluar</span>
             </a>
