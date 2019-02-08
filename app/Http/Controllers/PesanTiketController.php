@@ -90,9 +90,18 @@ class PesanTiketController extends Controller
 				$bukti->id_pemesanan = $pemesanan->id_pemesanan;
 				$bukti->save();
 
+				$penumpang = Penumpang::find($pemesanan->id_pelanggan);
+				$penumpang->nama_penumpang = $request->nama_penumpang;
+				$penumpang->email = $request->email;
+				$penumpang->no_identitas = $request->no_identitas;
+				$penumpang->alamat_penumpang = $request->alamat_penumpang;
+				$penumpang->tanggal_lahir = $request->tanggal_lahir;
+				$penumpang->telefone = $request->telefone;
+				$penumpang->save();
+
 				session()->flash('status', 'success');
 				session()->flash('message', 'Untuk melanjutkan pemesanan silahkan unggah bukti pembayaran anda.');
-				return redirect()->route('pembayaran.show', ['id_pemesanan' => $pemesanan->kode_kursi]);
+				return redirect()->route('pembayaran.show', ['id_pemesanan' => $pemesanan->kode_pemesanan])->withInput();
 		} else {
 			session()->flash('status', 'danger');
 			session()->flash('message', 'Maaf tiket yang anda pesan telah habis.');

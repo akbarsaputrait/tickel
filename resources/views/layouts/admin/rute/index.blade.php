@@ -10,10 +10,10 @@
 						</h4>
 					</div>
 					<div class="mb-3">
-            <a href="{{ route('tipe-rute.index') }}" class="btn btn-warning">
+            <a href="{{ route('admin.tipe-rute.index') }}" class="btn btn-warning">
 							<i class="fa fa-rocket"></i> Type Rute
 						</a>
-            <a href="{{ route('rute.create') }}" class="btn btn-primary">
+            <a href="{{ route('admin.rute.create') }}" class="btn btn-primary">
 							<i class="fa fa-plus"></i> Tambah
 						</a>
 					</div>
@@ -26,7 +26,7 @@
                   Tipe
                 </th>
                 <th>
-                  Tujuan
+                  Jam Berangkat
                 </th>
                 <th>
                   Rute Awal
@@ -52,7 +52,7 @@
                   {{ $item->type->nama_type }}
                 </td>
                 <td>
-                  {{ $item->tujuan }}
+                  {{ date('H:i A', strtotime($item->jam_berangkat)) }}
                 </td>
                 <td>
                   {{ $item->rute_awal }}
@@ -68,7 +68,7 @@
                 </td>
                 <td>
                   <div class="btn-group">
-                    <a href="{{ route('rute.edit', ['rute' => $item->id_rute]) }}" class="btn btn-success">
+                    <a href="{{ route('admin.rute.edit', ['rute' => $item->id_rute]) }}" class="btn btn-success">
                       <i class="fa fa-pencil"></i>
                     </a>
                     <button type="button" name="button" id="deleteButton" class="btn btn-danger" data-id="{{ $item->id_rute }}" data-menu="rute">

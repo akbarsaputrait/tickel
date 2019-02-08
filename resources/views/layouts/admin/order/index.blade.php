@@ -5,12 +5,9 @@
       <div class="card-body">
         <h4 class="card-title">Pesanan</h4>
         <div class="table-responsive">
-          <table class="table table-bordered table-striped">
+          <table class="table table-bordered table-striped" id="order">
             <thead>
               <tr>
-                <th>
-                  #
-                </th>
                 <th>
                   Kode Pemesan
                 </th>
@@ -29,25 +26,39 @@
               </tr>
             </thead>
             <tbody>
-              @php
-                $x = 1;
-              @endphp
               @foreach($pemesanan as $item)
               <tr>
-                <td class="font-weight-medium">
-                  {{ $x++ }}
+                <td>
+                  <a href="{{ route('admin.order.show', ['order' => $item->kode_pemesanan]) }}" class="btn btn-sm btn-dark">
+                    #{{ $item->kode_pemesanan }}
+                  </a>
                 </td>
                 <td>
-                  <a href="{{ route('admin.order.show', ['order' => $item->kode_pemesanan]) }}" class="btn btn-dark btn-sm">#{{ $item->kode_pemesanan }}</a>
+                  @switch($item->status)
+                      @case("done")
+                          <span class="badge badge-success">{{ ucfirst($item->status) }}</span>
+                        @break
+
+                      @case("proccess")
+                          <span class="badge badge-primary">{{ ucfirst($item->status) }}</span>
+                        @break
+
+                      @case("pending")
+                        <span class="badge badge-warning">{{ ucfirst($item->status) }}</span>
+                        @break
+
+                      @case("cancel")
+                        <span class="badge badge-danger">{{ ucfirst($item->status) }}</span>
+                        @break
+                      @default
+                          <span class="badge badge-dark">{{ ucfirst($item->status) }}</span>
+                  @endswitch
                 </td>
                 <td>
-                  <span class="badge badge-warning">Proses</span>
+                  Rp.{{ $item->total_bayar }}
                 </td>
                 <td>
-                  Rp. {{ $item->total_bayar }}
-                </td>
-                <td>
-                  -
+                  {{ (is_null($item->petugas)) ? '-' : $item->petugas->nama_petugas }}
                 </td>
                 <td>
                   {{ date('d F Y, H:i A', strtotime($item->created_at)) }}

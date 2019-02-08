@@ -19,7 +19,7 @@ var TIMEOUT = 2000;
 
 					$.ajax({
 						type: 'GET',
-						url: '/admin/'+menu+"/delete/"+id,
+						url: '/admin/admin/'+menu+"/hapus/"+id,
 						success: function(data) {
 							if(data.success) {
 								Swal({

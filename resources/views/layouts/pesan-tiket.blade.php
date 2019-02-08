@@ -24,8 +24,7 @@
               <div class="col-md-4">
                 <div class="form-group">
                   <label for="">Rute Awal</label>
-                  <select class="form-control {{ ($errors->has('rute_awal')) ? 'is-invalid' : '' }}"
-                    name="rute_awal" width="100%">
+                  <select class="form-control {{ ($errors->has('rute_awal')) ? 'is-invalid' : '' }}" name="rute_awal" width="100%">
                     <option value="">Pilih kota asal</option>
                     @foreach($rute_awal as $item)
                     <option value="{{ $item->rute_awal }}" {{ ($item->rute_awal == old('rute_awal')) ? 'selected' : '' }}>{{ $item->rute_awal }}</option>
@@ -150,7 +149,7 @@
         <div class="col-md-12">
           <div class="card users p-4 text-left text-dark">
             <h5 class="card-description">
-            Informasi Penumpang
+            Informasi Pembeli
           </h5>
             <div class="row">
               <div class="col-md-4">

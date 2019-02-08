@@ -17,6 +17,25 @@ URI     : https://colorlib.com
   <meta name="description" content="Mobland - Mobile App Landing Page Template">
   <meta name="keywords" content="HTML5, bootstrap, mobile, app, landing, ios, android, responsive">
 
+  <!-- Favicon -->
+  <link rel="apple-touch-icon" sizes="57x57" href="{{ asset('favicon/apple-icon-57x57.png') }}">
+  <link rel="apple-touch-icon" sizes="60x60" href="{{ asset('favicon/apple-icon-60x60.png') }}">
+  <link rel="apple-touch-icon" sizes="72x72" href="{{ asset('favicon/apple-icon-72x72.png') }}">
+  <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('favicon/apple-icon-76x76.png') }}">
+  <link rel="apple-touch-icon" sizes="114x114" href="{{ asset('favicon/apple-icon-114x114.png') }}">
+  <link rel="apple-touch-icon" sizes="120x120" href="{{ asset('favicon/apple-icon-120x120.png') }}">
+  <link rel="apple-touch-icon" sizes="144x144" href="{{ asset('favicon/apple-icon-144x144.png') }}">
+  <link rel="apple-touch-icon" sizes="152x152" href="{{ asset('favicon/apple-icon-152x152.png') }}">
+  <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('favicon/apple-icon-180x180.png') }}">
+  <link rel="icon" type="image/png" sizes="192x192"  href="{{ asset('favicon/android-icon-192x192.png') }}">
+  <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('favicon/favicon-32x32.png') }}">
+  <link rel="icon" type="image/png" sizes="96x96" href="{{ asset('favicon/favicon-96x96.png') }}">
+  <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('favicon/favicon-16x16.png') }}">
+  <link rel="manifest" href="{{ asset('favicon/manifest.json') }}">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="{{ asset('favicon/ms-icon-144x144.png') }}">
+  <meta name="theme-color" content="#ffffff">
+
   <!-- Font -->
   <link rel="dns-prefetch" href="//fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css?family=Rubik:300,400,500" rel="stylesheet">
@@ -28,6 +47,7 @@ URI     : https://colorlib.com
   <!-- Owl carousel -->
   <link rel="stylesheet" href="{{ asset('home/css/owl.carousel.min.css') }}">
   <!-- Main css -->
+  <link rel="stylesheet" href="{{ asset('admin/vendors/datatables/datatables.min.css') }}">
   <link rel="stylesheet" href="{{ asset('admin/vendors/sweetalert/sweetalert2.min.css') }}">
   <link rel="stylesheet" href="{{ asset('admin/vendors/select2/select2.min.css') }}">
   <link href="{{ asset('home/css/style.css') }}" rel="stylesheet">
@@ -48,9 +68,9 @@ URI     : https://colorlib.com
               <span class="navbar-toggler-icon"></span> </button>
             <div class="collapse navbar-collapse" id="navbar">
               <ul class="navbar-nav ml-auto">
-                <li class="nav-item"> <a class="nav-link text-white" href="/pesan-tiket">PESAN TIKET SEKARANG!</a> </li>
-                <li class="nav-item"><a class="nav-link text-white" href="/#why">MENGAPA TICKEL?</a></li>
-                <li class="nav-item"> <a class="nav-link text-white" href="#contact">KONTAK KAMI</a> </li>
+                <li class="nav-item"> <a class="nav-link" href="/pesan-tiket">PESAN TIKET SEKARANG!</a> </li>
+                <li class="nav-item"><a class="nav-link" href="/#why">MENGAPA TICKEL?</a></li>
+                <li class="nav-item"> <a class="nav-link" href="#contact">KONTAK KAMI</a> </li>
                 <li class="nav-item">
                   <div class="btn-group">
                     @if(!auth()->guard('penumpang')->user())
@@ -118,6 +138,9 @@ URI     : https://colorlib.com
   </footer>
   <!-- jQuery and Bootstrap -->
   <script src="{{ asset('home/js/jquery-3.2.1.min.js') }}"></script>
+  <script src="{{ asset('admin/vendors/datatables/datatables.min.js') }}" charset="utf-8"></script>
+  <script src="{{ asset('admin/vendors/datatables/buttons.bootstrap4.min.js') }}" charset="utf-8"></script>
+  <script src="{{ asset('admin/vendors/datatables/vfs_fonts.js') }}" charset="utf-8"></script>
   <script src="{{ asset('home/js/bootstrap.bundle.min.js') }}"></script>
   <script src="{{ asset('admin/vendors/sweetalert/sweetalert2.all.min.js') }}" charset="utf-8"></script>
   <script src="{{ asset('admin/vendors/select2/select2.full.min.js') }}" charset="utf-8"></script>
@@ -128,6 +151,8 @@ URI     : https://colorlib.com
   <script src="{{ asset('home/js/home.js') }}"></script>
   <script type="text/javascript">
     $(document).ready(function() {
+      $('table').DataTable();
+
       $('select#select2').select2();
     })
   </script>

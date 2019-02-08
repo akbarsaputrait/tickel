@@ -29,7 +29,8 @@ class RuteRequest extends FormRequest
             'rute_akhir' => 'required',
             'harga' => 'required',
             'id_transportasi' => 'required',
-            'id_type_rute' => 'required'
+            'id_type_rute' => 'required',
+            'jam_berangkat' => 'required',
         ];
     }
 
@@ -40,7 +41,8 @@ class RuteRequest extends FormRequest
         'rute_akhir.required' => 'Rute akhir harus diisi!',
         'harga.required' => 'Harga harus diissi!',
         'id_transportasi.required' => 'Transportasi harus diisi!',
-        'id_type_rute.required' => 'Tipe rute harus diisi!'
+        'id_type_rute.required' => 'Tipe rute harus diisi!',
+        'id_type_rute.required' => 'Jam berangkat harus diisi!'
       ];
     }
 }

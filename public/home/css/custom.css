@@ -120,7 +120,8 @@ nav.navbar button.navbar-toggler {
     font-size: 1.25rem;
     line-height: 1;
     background: 0 0;
-    border: 2px solid white;
+    /* border: 2px solid white; */
+		background: #333;
     border-radius: .25rem;
     color: white !important;
 }
@@ -201,4 +202,20 @@ a.btn:hover {
 .select2-container--default .select2-results__option--highlighted[aria-selected] {
     background-color: rgb(99, 57, 159);
     color: white;
+}
+
+.navbar-dark .navbar-nav .nav-link {
+	color: white;
+}
+
+@media (min-width: 992px) {
+	.navbar-expand-lg .navbar-toggler {
+	    display: none;
+	}
+}
+
+@media (max-width: 991px) {
+	.navbar-nav .nav-link {
+    color: #333 !important;
+}
 }

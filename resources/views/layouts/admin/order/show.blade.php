@@ -9,12 +9,12 @@
 				<a href="{{ route('admin.order.index') }}" class="btn btn-danger mr-2">
 					<i class="fa fa-arrow-left"></i> Kembali
 				</a>
-				<a href="#" class="btn btn-primary">
+				<a href="#" class="btn btn-primary" id="printThis">
 					<i class="fa fa-download"></i> Ekspor
 				</a>
 			</div>
 		</div>
-    <div class="card">
+    <div class="card" id="printed">
       <div class="card-body">
         <!-- <h4 class="card-title">A3313</h4> -->
         <form class="form-horizontal" action="{{ route('admin.order.update', ['order' => $pemesanan->kode_pemesanan]) }}">

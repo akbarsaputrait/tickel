@@ -6,14 +6,21 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Pemesanan;
 use App\BuktiPembayaran;
+use App\Rute;
+use App\Transportasi;
+
 
 class PembayaranController extends Controller
 {
 		public function show($kode_pemesanan) {
-			$data['pemesanan'] = Pemesanan::where('kode_pemesanan', '=', $kode_pemesanan)->first();
+			$data['pemesanan'] = Pemesanan::where('kode_pemesanan', '=', $kode_pemesanan)->where('status', '!=', 'cancel')->first();
+			if(is_null($data['pemesanan'])) {
+				session()->flash('status', 'danger');
+				session()->flash('message', 'Tiket tidak ditemukan');
+				return redirect()->route('profile.show', ['username' => auth()->guard('penumpang')->user()->username]);
+			}
 			$data['pembayaran'] = BuktiPembayaran::where('id_pemesanan', '=', $data['pemesanan']->id_pemesanan)->first();
 			$data['rute'] = DB::select('call getDetailsRuteById(?)', [$data['pemesanan']->id_rute]);
-			// dd($data);
 			return view('layouts.pembayaran')->with($data);
 		}
 
@@ -54,5 +61,20 @@ class PembayaranController extends Controller
 						}
 					}
 				}
+		}
+
+		public function cancel($kode_pemesanan) {
+			$tiket = Pemesanan::where('kode_pemesanan','=', $kode_pemesanan)->first();
+			$tiket->status = 'cancel';
+			$tiket->save();
+
+			$rute = Rute::where('id_rute', '=', $tiket->id_rute)->first();
+			$transportasi = Transportasi::find($rute->id_transportasi);
+			$transportasi->jumlah_kursi = $transportasi->jumlah_kursi + 1;
+			$transportasi->save();
+
+			session()->flash('status', 'success');
+			session()->flash('message', 'Tiket berhasil dibatalkan');
+			return redirect()->route('profile.show', ['username' => auth()->guard('penumpang')->user()->username]);
 		}
 }

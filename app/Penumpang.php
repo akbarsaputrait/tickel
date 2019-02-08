@@ -4,10 +4,11 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Penumpang extends Authenticatable
 {
-	use Notifiable;
+	use Notifiable, SoftDeletes;
 
 	protected $table = 'penumpangs';
 	protected $primaryKey = "id_penumpang";
@@ -23,4 +24,7 @@ class Penumpang extends Authenticatable
 	protected $hidden = [
 			'password', 'remember_token',
 	];
+
+	protected $dates = ['created_at', 'updated_at', 'deleted_at'];
+
 }

@@ -67,6 +67,7 @@ class TypeRuteController extends Controller
     public function edit($id)
     {
       $data['type'] = TypeRute::find($id);
+      dd($data);
       return view('layouts.admin.type_rute.show')->with($data);
     }
 

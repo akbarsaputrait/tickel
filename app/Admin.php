@@ -4,10 +4,11 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Admin extends Authenticatable
 {
-	use Notifiable;
+	use Notifiable, SoftDeletes;
 
 	protected $table = 'admins';
 
@@ -22,4 +23,6 @@ class Admin extends Authenticatable
 	protected $hidden = [
 			'password', 'remember_token',
 	];
+	protected $dates = ['created_at', 'updated_at', 'deleted_at'];
+
 }

@@ -44,6 +44,7 @@ $('.select2-selection__arrow').append('<i class="fa fa-angle-down"></i>');
 														'<td>' + v.jam_berangkat + '</td>' +
 														'<td>' + v.jam_tiba + '</td>' +
 														'<td>' + v.type_transportasi + ' - ' + v.nama_transportasi + ' <span class="badge badge-primary">'+ v.nama_type +'</span>' + '</td>' +
+														'<td>' + v.jumlah_kursi + '</td>' +
 														'<td>'+
 															'<button class="btn btn-primary-custom" id="idRute" data-idrute="'+ v.id_rute +'">Pilih</button>'+
 														'</td>' +
@@ -101,6 +102,16 @@ $('.select2-selection__arrow').append('<i class="fa fa-angle-down"></i>');
 				$("#clearButton").addClass('mt-4');
 			}
 		})
+	});
+
+	$(document).on('change', 'select[name="rute_akhir"]', function() {
+		var val = $(this).val();
+		$('input[name="tujuan"]').val(val);
+	});
+
+	$(document).on('change', 'select[name="rute_awal"]', function() {
+		var val = $(this).val();
+		$('input[name="tempat_pemesanan"]').val(val);
 	});
 
 	$(document).on('click', '#clearButton', function() {

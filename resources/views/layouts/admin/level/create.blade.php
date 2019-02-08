@@ -4,7 +4,7 @@
     <div class="card">
       <div class="card-body">
         <h4 class="card-title">Tambah Transportasi</h4>
-        <form class="form-horizontal" action="{{ url('admin/level') }}" method="post">
+        <form class="form-horizontal" action="{{ route('admin.level.store') }}" method="post">
           @csrf
           <h3 class="card-description">
             Informasi Level
@@ -20,7 +20,7 @@
           <div class="form-group">
             <button type="submit" class="btn btn-success" name="button">
               <i class="fa fa-save"></i> Simpan</button>
-            <a href="{{ url('admin/level') }}" class="btn btn-danger">
+            <a href="{{ route('admin.level.index') }}" class="btn btn-danger">
               <i class="fa fa-close"></i> Batal</a>
           </div>
         </form>

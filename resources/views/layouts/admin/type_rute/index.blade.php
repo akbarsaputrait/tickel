@@ -10,7 +10,7 @@
 						</h4>
 					</div>
 					<div class="mb-3">
-            <a href="{{ route('rute.index') }}" class="btn btn-warning">
+            <a href="{{ route('admin.rute.index') }}" class="btn btn-warning">
 							<i class="fa fa-location-arrow"></i> Rute
 						</a>
 						<button data-toggle="modal" data-target="#createType" class="btn btn-primary">
@@ -44,10 +44,10 @@
                 </td>
                 <td>
                   <div class="btn-group">
-                    <a href="{{ route('tipe-rute.edit', ['tipe-rute' => $item->id_type_rute]) }}" class="btn btn-success">
+                    <a href="{{ route('admin.tipe-rute.edit', ['tipe-rute' => $item->id_type_rute]) }}" class="btn btn-success">
                       <i class="fa fa-pencil"></i>
                     </a>
-                    <button type="button" name="button" id="deleteButton" class="btn btn-danger" data-id="{{ $item->id_type_rute }}" data-menu="type-rute">
+                    <button type="button" name="button" id="deleteButton" class="btn btn-danger" data-id="{{ $item->id_type_rute }}" data-menu="tipe-rute">
                       <i class="fa fa-trash"></i>
                     </button>
                   </div>
@@ -73,7 +73,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <form class="form-horizontal" action="{{ route('tipe-rute.store') }}" method="post">
+        <form class="form-horizontal" action="{{ route('admin.tipe-rute.store') }}" method="post">
           @csrf
           <h3 class="card-description">
             Informasi Tipe Rute

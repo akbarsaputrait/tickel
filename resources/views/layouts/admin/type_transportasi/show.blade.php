@@ -3,8 +3,8 @@
   <div class="col-12 grid-margin">
     <div class="card">
       <div class="card-body">
-        <h4 class="card-title">Tambah Transportasi</h4>
-        <form class="form-horizontal" action="{{ route('type-transportasi.update', ['type-transportasi' => $type->id_type_transportasi]) }}" method="post">
+        <h4 class="card-title">Edit Tipe Transportasi</h4>
+        <form class="form-horizontal" action="{{ route('admin.tipe-transportasi.update', ['tipe-transportasi' => $type->id_type_transportasi]) }}" method="post">
           @csrf
           @method('PUT')
           <h3 class="card-description">
@@ -32,7 +32,7 @@
           <div class="form-group">
             <button type="submit" class="btn btn-success" name="button">
               <i class="fa fa-save"></i> Simpan</button>
-            <a href="{{ route('type-transportasi.index') }}" class="btn btn-danger">
+            <a href="{{ route('admin.tipe-transportasi.index') }}" class="btn btn-danger">
               <i class="fa fa-close"></i> Batal</a>
           </div>
         </form>

@@ -2,8 +2,8 @@
 <header class="text-dark pb-4" id="home">
   <div class="container mt-5">
     <div class="my-5">
-      <h1>Pesan tiket sekarang!</h1>
-      <p class="text-white">Lengkapi data pribadi anda untuk melanjutkan pemesanan.</p>
+      <h1>#{{ $pemesanan->kode_pemesanan }}</h1>
+      <p class="text-white">Tanggal Pemesanan : {{ date('d F Y', strtotime($pemesanan->tanggal_pemesanan)) }}</p>
     </div>
     <form class="form-horizontal" action="{{ route('pembayaran.update',['id_pemesanan' => $pemesanan->kode_pemesanan]) }}" method="post" enctype="multipart/form-data">
       <fieldset disabled>
@@ -189,7 +189,7 @@
                 <div class="form-group">
                   <div class="btn-group">
                     <input type="submit" class="btn btn-primary custom wi-25" name="submit" value="Unggah">
-                    <a href="#" class="btn btn-primary-custom">Batal</a>
+                    <a href="{{ route('penumpang.tiket.cancel', ['id_pemesanan' => $pemesanan->kode_pemesanan]) }}" class="btn btn-primary-custom">Batal</a>
                   </div>
                 </div>
               </div>

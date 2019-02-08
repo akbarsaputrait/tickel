@@ -19,3 +19,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::post('/cariTransportasi', 'PesanTiketController@cariTransportasi');
 Route::get('/cariTransportasiBy/{id}', 'PesanTiketController@getRute');
+Route::get('/chartPesanan', 'Admin\DashboardController@chartPesanan');

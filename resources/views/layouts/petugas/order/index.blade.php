@@ -36,7 +36,25 @@
                   </a>
                 </td>
                 <td>
-                  <span class="badge badge-warning">{{ ucfirst($item->status) }}</span>
+                  @switch($item->status)
+                      @case("done")
+                          <span class="badge badge-success">{{ ucfirst($item->status) }}</span>
+                        @break
+
+                      @case("proccess")
+                          <span class="badge badge-primary">{{ ucfirst($item->status) }}</span>
+                        @break
+
+                      @case("pending")
+                        <span class="badge badge-warning">{{ ucfirst($item->status) }}</span>
+                        @break
+
+                      @case("cancel")
+                        <span class="badge badge-danger">{{ ucfirst($item->status) }}</span>
+                        @break
+                      @default
+                          <span class="badge badge-dark">{{ ucfirst($item->status) }}</span>
+                  @endswitch
                 </td>
                 <td>
                   Rp.{{ $item->total_bayar }}
@@ -60,4 +78,13 @@
     </div>
   </div>
 </div>
+@endsection
+@section('script')
+<script type="text/javascript">
+  $(function() {
+    $('table#order').DataTable( {
+      "order": [[ 5, "desc" ]]
+  } );
+  });
+</script>
 @endsection

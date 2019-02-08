@@ -37,13 +37,19 @@ class LevelController extends Controller
      */
     public function store(Request $request)
     {
+      $request->validate([
+        'nama_level' => 'required|unique:levels,nama_level,'.$id.',id_level'
+      ], [
+        'nama_level.required' => 'Nama level harus diisi',
+        'nama_level.unique' => 'Nama level sudah digunakan'
+      ]);
         $level = new Level;
         $level->nama_level = $request->nama_level;
         $level->save();
 
         session()->flash('status', 'success');
         session()->flash('message', 'Level berhasil ditambahkan.');
-        return redirect('admin/level');
+        return redirect()->route('admin.level.index');
     }
 
     /**
@@ -78,13 +84,20 @@ class LevelController extends Controller
      */
     public function update(Request $request, $id)
     {
+      $request->validate([
+        'nama_level' => 'required|unique:levels,nama_level,'.$id.',id_level'
+      ], [
+        'nama_level.required' => 'Nama level harus diisi',
+        'nama_level.unique' => 'Nama level sudah digunakan'
+      ]);
+
       $level = Level::find($id);
       $level->nama_level = $request->nama_level;
       $level->save();
 
       session()->flash('status', 'success');
       session()->flash('message', 'Level berhasil diperbarui.');
-      return redirect('admin/level');
+      return redirect()->route('admin.level.index');
     }
 
     /**

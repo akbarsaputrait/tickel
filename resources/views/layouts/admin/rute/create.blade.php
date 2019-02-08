@@ -4,13 +4,13 @@
     <div class="card">
       <div class="card-body">
         <h4 class="card-title">Tambah Rute</h4>
-        <form class="form-horizontal" action="{{ route('rute.store') }}" method="post">
+        <form class="form-horizontal" action="{{ route('admin.rute.store') }}" method="post">
           @csrf
           <h3 class="card-description">
             Informasi Rute
           </h3>
           <div class="form-row">
-            <div class="col-md-4">
+            <div class="col-md-2">
               <div class="form-group">
                 <label for="">Tujuan</label>
                 <input type="text" class="form-control {{ ($errors->has('tujuan')) ? 'is-invalid' : '' }}" name="tujuan" value="" placeholder="Tujuan">
@@ -19,7 +19,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
               <div class="form-group">
                 <div class="form-group">
                   <label for="">Rute Awal</label>
@@ -30,12 +30,30 @@
                 </div>
               </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
               <div class="form-group">
                 <label for="">Rute Akhir</label>
                 <input type="text" class="form-control {{ ($errors->has('rute_akhir')) ? 'is-invalid' : '' }}" name="rute_akhir" value="" placeholder="Rute Akhir">
                 <div class="invalid-feedback">
                   {{ $errors->first('rute_akhir') }}
+                </div>
+              </div>
+            </div>
+            <div class="col-md-2">
+              <div class="form-group">
+                <label for="">Jam Berangkat</label>
+                <input type="time" class="form-control {{ ($errors->has('jam_berangkat')) ? 'is-invalid' : '' }}" name="jam_berangkat" value="" placeholder="Jam Berangkat">
+                <div class="invalid-feedback">
+                  {{ $errors->first('jam_berangkat') }}
+                </div>
+              </div>
+            </div>
+            <div class="col-md-2">
+              <div class="form-group">
+                <label for="">Jam Tiba</label>
+                <input type="time" class="form-control {{ ($errors->has('jam_tiba')) ? 'is-invalid' : '' }}" name="jam_tiba" value="" placeholder="Jam Tiba">
+                <div class="invalid-feedback">
+                  {{ $errors->first('jam_tiba') }}
                 </div>
               </div>
             </div>
@@ -87,7 +105,7 @@
           <div class="form-group">
             <button type="submit" class="btn btn-success" name="button">
               <i class="fa fa-save"></i> Simpan</button>
-            <a href="{{ route('rute.index') }}" class="btn btn-danger">
+            <a href="{{ route('admin.rute.index') }}" class="btn btn-danger">
               <i class="fa fa-close"></i> Batal</a>
           </div>
         </form>

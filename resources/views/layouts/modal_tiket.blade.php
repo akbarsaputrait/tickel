@@ -1,7 +1,7 @@
 <!-- // end .section -->
 <!-- MODAL -->
 <div class="modal fade" id="showTicket" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-	<div class="modal-dialog modal-dialog-centered modal-lg" role="document" style="max-width: 1000px !important;">
+	<div class="modal-dialog modal-dialog-centered modal-lg" role="document" style="max-width: 1130px !important;">
 		<div class="modal-content">
 			<div class="modal-header">
 				<h5 class="modal-title" id="exampleModalLongTitle">Daftar ketersedian tiket</h5>
@@ -20,6 +20,7 @@
 								<th>Jam Berangkat</th>
 								<th>Jam Tiba</th>
 								<th>Nama Transportasi</th>
+								<th>Jumlah Kursi</th>
 								<th></th>
 							</thead>
 							<tbody id="dataTiket">

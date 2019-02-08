@@ -5,11 +5,11 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Petugas extends Authenticatable
 {
-	use Notifiable;
+	use Notifiable, SoftDeletes;
 
 	protected $table = 'petugass';
 	protected $primaryKey = "id_petugas";
@@ -25,4 +25,6 @@ class Petugas extends Authenticatable
 	protected $hidden = [
 			'password', 'remember_token',
 	];
+	protected $dates = ['created_at', 'updated_at', 'deleted_at'];
+
 }

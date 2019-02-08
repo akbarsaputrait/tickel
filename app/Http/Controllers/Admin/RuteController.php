@@ -46,6 +46,8 @@ class RuteController extends Controller
         $rute->tujuan = $request->tujuan;
         $rute->rute_awal = $request->rute_awal;
         $rute->rute_akhir = $request->rute_akhir;
+        $rute->jam_berangkat = $request->jam_berangkat;
+        $rute->jam_tiba = $request->jam_tiba;
         $rute->harga = $request->harga;
         $rute->id_transportasi = $request->id_transportasi;
         $rute->id_type_rute = $request->id_type_rute;
@@ -94,6 +96,8 @@ class RuteController extends Controller
       $rute->tujuan = $request->tujuan;
       $rute->rute_awal = $request->rute_awal;
       $rute->rute_akhir = $request->rute_akhir;
+      $rute->jam_berangkat = $request->jam_berangkat;
+      $rute->jam_tiba = $request->jam_tiba;
       $rute->harga = $request->harga;
       $rute->id_transportasi = $request->id_transportasi;
       $rute->id_type_rute = $request->id_type_rute;

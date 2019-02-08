@@ -6,11 +6,11 @@
 				<div class="d-flex justify-content-between align-items-center">
 					<div class="">
 						<h4 class="card-title">
-							<b>Type Transportasi</b>
+							<b>Tipe Transportasi</b>
 						</h4>
 					</div>
 					<div class="mb-3">
-            <a href="{{ route('transportasi.index') }}" class="btn btn-warning">
+            <a href="{{ route('admin.transportasi.index') }}" class="btn btn-warning">
 							<i class="fa fa-plane"></i> Transportasi
 						</a>
 						<button data-toggle="modal" data-target="#createType" class="btn btn-primary">
@@ -44,7 +44,7 @@
                 </td>
                 <td>
                   <div class="btn-group">
-                    <a href="{{ route('tipe-transportasi.edit', ['tipe-transportasi' => $item->id_type_transportasi]) }}" class="btn btn-success">
+                    <a href="{{ route('admin.tipe-transportasi.edit', ['tipe-transportasi' => $item->id_type_transportasi]) }}" class="btn btn-success">
                       <i class="fa fa-pencil"></i>
                     </a>
                     <button type="button" name="button" id="deleteButton" class="btn btn-danger" data-id="{{ $item->id_type_transportasi }}" data-menu="type-transportasi">
@@ -73,7 +73,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <form class="form-horizontal" action="{{ route('tipe-transportasi.store') }}" method="post">
+        <form class="form-horizontal" action="{{ route('admin.tipe-transportasi.store') }}" method="post">
           @csrf
           <h3 class="card-description">
             Informasi Tipe Transportasi

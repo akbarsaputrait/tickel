@@ -10,7 +10,7 @@
 						</h4>
 					</div>
 					<div class="mb-3">
-						<a href="{{ url('admin/level/create') }}" class="btn btn-primary">
+						<a href="{{ route('admin.level.create') }}" class="btn btn-primary">
 							<i class="fa fa-plus"></i> Tambah
 						</a>
 					</div>
@@ -35,7 +35,7 @@
                 </td>
                 <td>
                   <div class="btn-group">
-                    <a href="{{ url('admin/level/'.$item->id_level.'/edit') }}" class="btn btn-success">
+                    <a href="{{ route('admin.level.edit', ['level' => $item->id_level]) }}" class="btn btn-success">
                       <i class="fa fa-pencil"></i>
                     </a>
                     <button type="button" name="button" class="btn btn-danger" id="deleteButton"

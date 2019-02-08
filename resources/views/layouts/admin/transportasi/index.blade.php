@@ -10,10 +10,10 @@
 						</h4>
 					</div>
 					<div class="mb-3">
-            <a href="{{ route('tipe-transportasi.index') }}" class="btn btn-warning">
+            <a href="{{ route('admin.tipe-transportasi.index') }}" class="btn btn-warning">
 							<i class="fa fa-rocket"></i> Type Transportasi
 						</a>
-						<a href="{{ route('transportasi.create') }}" class="btn btn-primary">
+						<a href="{{ route('admin.transportasi.create') }}" class="btn btn-primary">
 							<i class="fa fa-plus"></i> Tambah
 						</a>
 					</div>
@@ -46,7 +46,7 @@
               @foreach($transportasi as $item)
               <tr>
                 <td>
-                  {{ $item->kode }}
+                  <span class="badge badge-dark">{{ $item->kode }}</span>
                 </td>
                 <td>
                   {{ $item->jumlah_kursi }}
@@ -62,7 +62,7 @@
                 </td>
                 <td>
                   <div class="btn-group">
-                    <a href="{{ route('transportasi.edit', ['transportasi' => $item->id_transportasi]) }}" class="btn btn-success">
+                    <a href="{{ route('admin.transportasi.edit', ['transportasi' => $item->id_transportasi]) }}" class="btn btn-success">
                       <i class="fa fa-pencil"></i>
                     </a>
                     <button type="button" name="button" id="deleteButton" class="btn btn-danger" data-id="{{ $item->id_transportasi }}" data-menu="transportasi">

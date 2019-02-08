@@ -155,7 +155,7 @@
 <div class="section">
   <div class="section" id="why">
     <div class="container">
-      <div class="row">
+      <div class="row justify-content-center align-items-center">
         <div class="col-md-6">
           <div id="whys">
 

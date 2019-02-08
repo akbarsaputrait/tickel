@@ -3,7 +3,7 @@
   <div class="col-12 grid-margin">
     <div class="card">
       <div class="card-body">
-        <h4 class="card-title">Tambah Transportasi</h4>
+        <h4 class="card-title">Tambah Tipe Transportasi</h4>
         <form class="form-horizontal" action="{{ route('type-transportasi.store') }}" method="post">
           @csrf
           <h3 class="card-description">

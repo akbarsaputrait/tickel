@@ -26,8 +26,8 @@ Route::group(['middleware'=>'guest'], function() {
 
 //ADMIN
 Route::group(['middleware' => 'admin', 'prefix' => 'admin'], function() {
-  Route::get('/admin/keluar', 'AdminController@logoutAdmin')->name('admin.logout');
-  Route::get('/admin/dasbor', 'Admin\DashboardController@index')->name('admin.dashboard');
+  Route::get('/keluar', 'AdminController@logoutAdmin')->name('admin.logout');
+  Route::get('/dasbor', 'Admin\DashboardController@index')->name('admin.dashboard');
   Route::resource('petugas', 'Admin\PetugasController', ['as' => 'admin']);
   Route::resource('rute', 'Admin\RuteController', ['as' => 'admin']);
   Route::resource('transportasi', 'Admin\TransportasiController', ['as' => 'admin']);
@@ -41,7 +41,7 @@ Route::group(['middleware' => 'admin', 'prefix' => 'admin'], function() {
   Route::get('admin/transportasi/hapus/{id}', 'Admin\TransportasiController@destroy');
   Route::get('admin/rute/hapus/{id}', 'Admin\RuteController@destroy');
   Route::get('admin/tipe-rute/hapus/{id}', 'Admin\TypeRuteController@destroy');
-  Route::get('admin/profil', 'Admin\ProfileController@index')->name('admin.profile');
+  Route::get('/profil', 'Admin\ProfileController@index')->name('admin.profile');
   Route::post('admin/profil/store', 'Admin\ProfileController@updateProfile')->name('admin.profile.store');
   Route::post('admin/profil/ganti-password', 'Admin\ProfileController@resetPassword')->name('admin.profile.reset');
 });
@@ -53,6 +53,8 @@ Route::group(['middleware' => 'petugas'], function() {
   Route::get('petugas/profil', 'Petugas\ProfileController@index')->name('petugas.profile');
   Route::post('petugas/profil/store', 'Petugas\ProfileController@updateProfile')->name('petugas.profile.store');
   Route::post('petugas/profil/ganti-password', 'Petugas\ProfileController@resetPassword')->name('petugas.profile.reset');
+
+  Route::get('/export/pdf/{kode_pemesanan}', 'Petugas\OrderController@export')->name('petugas.export.pdf');
 });
 
 // PENUMPANG
@@ -62,4 +64,11 @@ Route::group(['middleware' => 'penumpang'], function() {
 
   Route::get('/tiket/{id_pemesanan}/', 'PembayaranController@show')->name('pembayaran.show');
   Route::post('/tiket/update/{id_pemesanan}', 'PembayaranController@update')->name('pembayaran.update');
+  Route::get('/tiket/cancel/{id_pemesanan}', 'PembayaranController@cancel')->name('penumpang.tiket.cancel');
 });
+
+
+// Route::get('/generatePass', function() {
+//   $password = "admin";
+//   dd(bcrypt($password));
+// });
