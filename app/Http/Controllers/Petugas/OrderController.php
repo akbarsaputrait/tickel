@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Mail;
 use Illuminate\Notifications\Messages\MailMessage;
 use PDF;
+use Snowfire\Beautymail\Beautymail;
 use App\Mail\TicketMail;
 use App\Pemesanan;
 use App\Penumpang;
@@ -85,24 +86,35 @@ class OrderController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $pesanan = Pemesanan::where('kode_pemesanan', '=', $id)->where('status', '=', 'cancel')->first();
-        $pesanan->status = $request->status;
-        $pesanan->id_petugas = auth()->guard('petugas')->user()->id_petugas;
-        $pesanan->save();
+      $pesanan = Pemesanan::with(['pelanggan'])->where('kode_pemesanan', '=', $id)->where('status', '!=', 'cancel')->first();
+      $pesanan->status = $request->status;
+      $pesanan->id_petugas = auth()->guard('petugas')->user()->id_petugas;
+      $pesanan->keterangan = $request->keterangan;
+      $pesanan->save();
 
         // SEND EMAIL TO USER
         $to = "akbarsaputra-548bce@inbox.mailtrap.io";
-        Mail::to($to)->send(new TicketMail(
-          auth()->guard('petugas')->user()->email, // EMAIL PETUGAS
-          "Tiket telah kami konfirmasi. Terima kasih telah menggunakan jasa kami :)", // CONTENT EMAIL
-          'success', // STATUS VERIFIKASI
-          $to, // TO USER
-          'https://web.snmptn.ac.id'
-        ));
+        $beautymail = app()->make(Beautymail::class);
+          $beautymail->send('email.ticket', [
+            // DATA
+            'rute' => Rute::with(['transportasi', 'type', 'typeTrans'])->where('id_rute', '=', $pesanan->id_rute)->first(),
+            'pemesanan' => $pesanan,
+            'keterangan' => $request->keterangan
+          ], function($message)
+          {
+              $message
+          			->from(auth()->guard('petugas')->user()->email)
+          			->to('akbarsaputra-548bce@inbox.mailtrap.io')
+          			->subject('Informasi Pesanan | Tickel');
+          });
+
+          $bukti = BuktiPembayaran::where('id_pemesanan', '=', $pesanan->id_pemesanan)->first();
+          $bukti->id_petugas = auth()->guard('petugas')->user()->id_petugas;
+          $bukti->save();
 
         session()->flash('status','success');
         session()->flash('message', 'Pesanan berhasil diperbarui dan email berhasil dikirim!');
-        return redirect()->route('petugas.order.index');
+        return redirect()->route('admin.order.show', ['order' => $id]);
     }
 
     /**
@@ -127,9 +139,10 @@ class OrderController extends Controller
       $pdf = PDF::loadView('templates.export_pdf_pesanan', $data);
 
       // If you want to store the generated pdf to the server then you can use the store function
-      $pdf->save(public_path('export/pdf/').$data['pemesanan']->kode_pemesanan.'-'. time() .'.pdf');
+      // $pdf->save(public_path('export/pdf/').$data['pemesanan']->kode_pemesanan.'-'. time() .'.pdf');
 
       // Finally, you can download the file using download function
       return $pdf->download($data['pemesanan']->kode_pemesanan.'-'. date('Y-m-d') .'.pdf');
     }
+
 }

@@ -23,6 +23,7 @@
                 <th>
                   Tanggal Pemesanan
                 </th>
+                <th></th>
               </tr>
             </thead>
             <tbody>
@@ -62,6 +63,12 @@
                 </td>
                 <td>
                   {{ date('d F Y, H:i A', strtotime($item->created_at)) }}
+                </td>
+                <td>
+                  <button type="button" name="button" class="btn btn-danger" id="deleteButton"
+                          data-id="{{ $item->id_pemesanan }}" data-menu="pemesanan">
+                    <i class="fa fa-trash"></i>
+                  </button>
                 </td>
               </tr>
               @endforeach

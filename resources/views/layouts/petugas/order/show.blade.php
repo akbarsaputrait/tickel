@@ -16,11 +16,31 @@
     </div>
     <div class="card">
       <div class="card-body">
-        <form class="form-horizontal" action="{{ route('petugas.order.update', ['order' => $pemesanan->kode_pemesanan]) }}">
+        <form class="form-horizontal" method="post" action="{{ route('petugas.order.update', ['order' => $pemesanan->kode_pemesanan]) }}">
+          @csrf
+          @method('PUT')
           <fieldset disabled>
             <div class="printIt">
               <div class="mb-4">
-                <span class="badge badge-dark" style="font-size: 15px;">{{ ucfirst($pemesanan->status) }}</span>
+                @switch($pemesanan->status)
+                    @case("done")
+                        <span class="badge badge-success" style="font-size: 15px;">{{ ucfirst($pemesanan->status) }}</span>
+                      @break
+
+                    @case("proccess")
+                        <span class="badge badge-primary" style="font-size: 15px;">{{ ucfirst($pemesanan->status) }}</span>
+                      @break
+
+                    @case("pending")
+                      <span class="badge badge-warning" style="font-size: 15px;">{{ ucfirst($pemesanan->status) }}</span>
+                      @break
+
+                    @case("cancel")
+                      <span class="badge badge-danger" style="font-size: 15px;">{{ ucfirst($pemesanan->status) }}</span>
+                      @break
+                    @default
+                    <span class="badge badge-dark" style="font-size: 15px;">{{ ucfirst($pemesanan->status) }}</span>
+                @endswitch
               </div>
               <h3 class="card-description">
 	            Informasi Pesanan
@@ -199,19 +219,19 @@
             <div class="col-md-4">
               <div class="form-group">
                 <label for="">Nama Lengkap</label>
-                <input type="text" class="form-control" name="" value="">
+                <input type="text" class="form-control" name="" value="{{ $petugas->nama_petugas }}">
               </div>
             </div>
             <div class="col-md-4">
               <div class="form-group">
                 <label for="">Jenis Kelamin</label>
-                <input type="text" class="form-control" name="" value="Laki-laki">
+                <input type="text" class="form-control" name="" value="{{ $petugas->jenis_kelamin }}">
               </div>
             </div>
             <div class="col-md-4">
               <div class="form-group">
                 <label for="">Nomor Telepon</label>
-                <input type="text" class="form-control" name="" value="085852448548">
+                <input type="text" class="form-control" name="" value="{{ $petugas->telefone }}">
               </div>
             </div>
           </div>
@@ -219,19 +239,24 @@
             <div class="col-md-4">
               <div class="form-group">
                 <label for="">Alamat</label>
-                <textarea name="" class="form-control" rows="8" cols="80">Surabaya, Jawa Timur</textarea>
+                <textarea name="" class="form-control" rows="8" cols="80">{{ $petugas->alamat_petugas }}</textarea>
               </div>
             </div>
             <div class="col-md-4">
               <div class="form-group">
                 <label for="">Tanggal Lahir</label>
-                <input type="text" class="form-control" name="" value="26 Desember 1995">
+                <input type="text" class="form-control" name="" value="{{ date('d F Y', strtotime($petugas->tanggal_lahir)) }}">
               </div>
             </div>
             <div class="col-md-4">
               <div class="form-group">
                 <label for="">Foto Profil</label>
-                <img src="" alt="">
+                <br>
+                @if(is_null($petugas->image))
+                <img class="img-lg rounded-circle" src="{{ asset('admin/images/faces/face1.jpg') }}" alt="Profile image">
+        				@else
+        				<img class="img-lg rounded-circle" src="{{ asset('uploads/images/avatars/'.$petugas->image ) }}" alt="Profile image">
+        				@endif
               </div>
             </div>
           </div>
@@ -245,15 +270,15 @@
                 <label for="">Status</label>
                 <select class="form-control" name="status">
                   <option value="">-- Pilih Status</option>
-                  <option value="done">Diterima</option>
-                  <option value="canceled">Tidak Diterima</option>
+                  <option value="done" {{ ($pemesanan->status == "done") ? 'selected' : '' }}>Diterima</option>
+                  <option value="canceled" {{ ($pemesanan->status == "cancel") ? 'selected' : '' }}>Tidak Diterima</option>
                 </select>
               </div>
             </div>
             <div class="col-md-4">
               <div class="form-group">
                 <label for="">Keterangan</label>
-                <textarea name="keterangan" class="form-control" rows="8" cols="80"></textarea>
+                <textarea name="keterangan" class="form-control" rows="8" cols="80">{{ $pemesanan->keterangan }}</textarea>
               </div>
             </div>
           </div>

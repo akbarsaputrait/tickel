@@ -3,7 +3,13 @@
   <div class="container mt-5">
     <div class="my-5">
       <h1>#{{ $pemesanan->kode_pemesanan }}</h1>
+      <h4 class="text-white display-5">Kode Kursi : <span class="badge badge-dark">{{ $pemesanan->kode_kursi }}</span></h4>
       <p class="text-white">Tanggal Pemesanan : {{ date('d F Y', strtotime($pemesanan->tanggal_pemesanan)) }}</p>
+      @if($pemesanan->status == "done")
+      <div class="alert alert-success">
+        <span class="ti ti-check"></span> Pesanan anda telah diverifikasi! Silahkan cek email anda.
+      </div>
+      @endif
     </div>
     <form class="form-horizontal" action="{{ route('pembayaran.update',['id_pemesanan' => $pemesanan->kode_pemesanan]) }}" method="post" enctype="multipart/form-data">
       <fieldset disabled>
@@ -145,6 +151,7 @@
         </div>
       </fieldset>
 
+      @if($pemesanan->status != "done" || $pemesanan->status == "pending")
       <div class="row">
         <div class="col-md-12">
           <div class="card features p-4 text-left text-dark">
@@ -175,8 +182,7 @@
                       </div>
                     </div>
                     @else
-                      <img src="{{ asset('uploads/images/bukti-pembayaran/' . $pembayaran->file) }}" alt="">
-                    @endif
+                    <img src="{{ asset('uploads/images/bukti-pembayaran/' . $pembayaran->file) }}" alt=""> @endif
                   </div>
                 </div>
               </div>
@@ -197,6 +203,7 @@
           </div>
         </div>
       </div>
+      @endif
     </form>
   </div>
 </header>

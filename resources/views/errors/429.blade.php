@@ -1,11 +1,7 @@
-@extends('errors::illustrated-layout')
+@extends('errors.layout')
 
+@section('bgcolor', 'success')
 @section('code', '429')
-@section('title', __('Too Many Requests'))
+@section('title', 'Terlalu Banyak Permintaan')
 
-@section('image')
-    <div style="background-image: url({{ asset('/svg/403.svg') }});" class="absolute pin bg-cover bg-no-repeat md:bg-left lg:bg-center">
-    </div>
-@endsection
-
-@section('message', __('Sorry, you are making too many requests to our servers.'))
+@section('message', 'Maaf, Anda membuat terlalu banyak permintaan ke server kami.')

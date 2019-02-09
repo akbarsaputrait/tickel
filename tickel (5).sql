@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Waktu pembuatan: 08 Feb 2019 pada 15.11
+-- Waktu pembuatan: 09 Feb 2019 pada 15.58
 -- Versi server: 5.7.21
 -- Versi PHP: 7.1.16
 
@@ -91,7 +91,7 @@ CREATE TABLE IF NOT EXISTS `admins` (
 --
 
 INSERT INTO `admins` (`id`, `username`, `email`, `password`, `remember_token`, `name`, `image`, `id_level`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 'admin', 'admin@admin.com', '$2y$10$pLSxCFmhYqz4id5B9v6/HOKFFHu4LfsmTr5ytC9HR..GKPF70OxBu', 'osC94m9Ak7sCu5oWS1m1C5e0j3TFzl1NLe1TcjJ5NN2ans8YNhYgauYfrUcW', 'Admin Tickel', '1549508651.png', 1, '2019-01-13 15:04:23', '2019-02-07 13:26:51', NULL);
+(1, 'admin', 'admin@admin.com', '$2y$10$pLSxCFmhYqz4id5B9v6/HOKFFHu4LfsmTr5ytC9HR..GKPF70OxBu', 'Jh1wOWBBvGaam6lylm7eoheMo1R4kN0YiJAwjujvTnYryGmpAxLMPeYwqFgE', 'Admin Tickel', '1549508651.png', 1, '2019-01-13 15:04:23', '2019-02-09 15:56:07', NULL);
 
 -- --------------------------------------------------------
 
@@ -120,7 +120,7 @@ CREATE TABLE IF NOT EXISTS `bukti_pembayaran` (
 --
 
 INSERT INTO `bukti_pembayaran` (`id_bukti`, `id_penumpang`, `id_pemesanan`, `file`, `id_petugas`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 1, 6, '1549436666.png', NULL, '2019-02-05 21:13:15', '2019-02-06 00:04:26', NULL),
+(1, 1, 6, '1549436666.png', 4, '2019-02-05 21:13:15', '2019-02-09 15:57:24', NULL),
 (2, 2, 7, NULL, NULL, '2019-02-06 20:36:25', '2019-02-06 20:36:25', NULL),
 (3, 1, 8, NULL, NULL, '2019-02-06 21:13:11', '2019-02-06 21:13:11', NULL),
 (4, 1, 9, NULL, NULL, '2019-02-06 21:13:57', '2019-02-06 21:13:57', NULL);
@@ -242,6 +242,7 @@ CREATE TABLE IF NOT EXISTS `pemesanans` (
   `jam_berangkat` time NOT NULL,
   `total_bayar` varchar(255) NOT NULL,
   `id_petugas` int(11) DEFAULT NULL,
+  `keterangan` text,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `deleted_at` timestamp NULL DEFAULT NULL,
@@ -255,11 +256,11 @@ CREATE TABLE IF NOT EXISTS `pemesanans` (
 -- Dumping data untuk tabel `pemesanans`
 --
 
-INSERT INTO `pemesanans` (`id_pemesanan`, `kode_pemesanan`, `tanggal_pemesanan`, `tempat_pemesanan`, `status`, `id_pelanggan`, `kode_kursi`, `id_rute`, `tujuan`, `tanggal_berangkat`, `jam_cekin`, `jam_berangkat`, `total_bayar`, `id_petugas`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(6, '5c5a5edb5e12a', '2019-02-06 00:00:00', 'Pasuruan', 'proccess', 1, 'KA333-5', 2, 'Yogyakarta', '2019-04-21', '00:00:00', '07:30:00', '75.000', NULL, '2019-02-05 21:13:15', '2019-02-07 06:28:04', NULL),
-(7, '5c5ba7b90f2d5', '2019-02-07 00:00:00', 'Pasuruan', 'cancel', 2, 'KA333-4', 2, 'Yogyakarta', '2019-04-21', '00:00:00', '07:30:00', '75.000', NULL, '2019-02-06 20:36:25', '2019-02-06 20:53:38', NULL),
-(8, '5c5bb057b6eb1', '2019-02-07 00:00:00', 'Pasuruan', 'pending', 1, 'KA333-4', 2, 'Yogyakarta', '2019-02-20', '00:00:00', '07:30:00', '75.000', NULL, '2019-02-06 21:13:11', '2019-02-06 21:13:11', NULL),
-(9, '5c5bb08535bf1', '2019-02-07 00:00:00', 'Pasuruan', 'cancel', 1, 'KA333-3', 2, 'Yogyakarta', '2019-02-20', '00:00:00', '07:30:00', '75.000', NULL, '2019-02-06 21:13:57', '2019-02-06 21:39:59', NULL);
+INSERT INTO `pemesanans` (`id_pemesanan`, `kode_pemesanan`, `tanggal_pemesanan`, `tempat_pemesanan`, `status`, `id_pelanggan`, `kode_kursi`, `id_rute`, `tujuan`, `tanggal_berangkat`, `jam_cekin`, `jam_berangkat`, `total_bayar`, `id_petugas`, `keterangan`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(6, '5c5a5edb5e12a', '2019-02-06 00:00:00', 'Pasuruan', 'done', 1, 'KA333-5', 2, 'Yogyakarta', '2019-04-21', '00:00:00', '07:30:00', '75.000', 4, 'Tiket telah diverifikasi. Terima kasih telah menggunakan Tickel!', '2019-02-05 21:13:15', '2019-02-08 22:20:34', NULL),
+(7, '5c5ba7b90f2d5', '2019-02-07 00:00:00', 'Pasuruan', 'cancel', 2, 'KA333-4', 2, 'Yogyakarta', '2019-04-21', '00:00:00', '07:30:00', '75.000', NULL, NULL, '2019-02-06 20:36:25', '2019-02-06 20:53:38', NULL),
+(8, '5c5bb057b6eb1', '2019-02-07 00:00:00', 'Pasuruan', 'pending', 1, 'KA333-4', 2, 'Yogyakarta', '2019-02-20', '00:00:00', '07:30:00', '75.000', NULL, NULL, '2019-02-06 21:13:11', '2019-02-06 21:13:11', NULL),
+(9, '5c5bb08535bf1', '2019-02-07 00:00:00', 'Pasuruan', 'cancel', 1, 'KA333-3', 2, 'Yogyakarta', '2019-02-20', '00:00:00', '07:30:00', '75.000', NULL, NULL, '2019-02-06 21:13:57', '2019-02-09 08:29:37', '2019-02-09 08:29:37');
 
 -- --------------------------------------------------------
 
@@ -327,7 +328,7 @@ CREATE TABLE IF NOT EXISTS `petugass` (
 --
 
 INSERT INTO `petugass` (`id_petugas`, `username`, `email`, `password`, `nama_petugas`, `jenis_kelamin`, `alamat_petugas`, `tanggal_lahir`, `telefone`, `id_level`, `image`, `created_at`, `updated_at`, `deleted_at`, `remember_token`) VALUES
-(4, 'saputra', 'saputra@gmail.com', '$2y$10$1eScfMndVMUPFbLGLh69yeSlPEjOAnktXC.kaJW70jlFo6LNYtMWO', 'Yudha Saputra', 'L', 'Malang, Jawa Timur', '2019-04-21', '08196462844', 4, '1549432655.png', '2019-02-05 22:57:35', '2019-02-08 15:11:10', NULL, 'SIa4FW59NxWulRBG6jKmbqXC8PWXseFP3uNLr05PzCDulbKLmhLexiO4gADK');
+(4, 'saputra', 'saputra@gmail.com', '$2y$10$1eScfMndVMUPFbLGLh69yeSlPEjOAnktXC.kaJW70jlFo6LNYtMWO', 'Yudha Saputra', 'L', 'Malang, Jawa Timur', '2019-04-21', '08196462844', 4, '1549432655.png', '2019-02-05 22:57:35', '2019-02-09 15:10:05', NULL, 'NY27eUdYtkozRPSEPnJPE8qM35KRkHyHEDC0abDMTHSJkPA1XtpIcl22OX8w');
 
 -- --------------------------------------------------------
 
@@ -477,7 +478,8 @@ INSERT INTO `users` (`id`, `username`, `email`, `password`, `is_penumpang`, `cre
 --
 ALTER TABLE `bukti_pembayaran`
   ADD CONSTRAINT `bukti_pemesanan` FOREIGN KEY (`id_pemesanan`) REFERENCES `pemesanans` (`id_pemesanan`),
-  ADD CONSTRAINT `bukti_penumpang` FOREIGN KEY (`id_penumpang`) REFERENCES `penumpangs` (`id_penumpang`);
+  ADD CONSTRAINT `bukti_penumpang` FOREIGN KEY (`id_penumpang`) REFERENCES `penumpangs` (`id_penumpang`),
+  ADD CONSTRAINT `bukti_petugas` FOREIGN KEY (`id_petugas`) REFERENCES `petugass` (`id_petugas`);
 
 --
 -- Ketidakleluasaan untuk tabel `kursis`

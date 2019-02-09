@@ -35,6 +35,9 @@ Route::group(['middleware' => 'admin', 'prefix' => 'admin'], function() {
   Route::resource('tipe-rute', 'Admin\TypeRuteController', ['as' => 'admin']);
   Route::resource('level', 'Admin\LevelController', ['as' => 'admin']);
   Route::resource('order', 'Admin\OrderController', ['as' => 'admin']);
+  Route::get('/export/pdf/{kode_pemesanan}', 'Admin\OrderController@export')->name('admin.export.pdf');
+
+  Route::get('admin/pemesanan/hapus/{id}', 'Admin\OrderController@destroy');
   Route::get('admin/level/hapus/{id}', 'Admin\LevelController@destroy');
   Route::get('admin/petugas/hapus/{id}', 'Admin\PetugasController@destroy');
   Route::get('admin/tipe-transportasi/hapus/{id}', 'Admin\TypeTransportasiController@destroy');

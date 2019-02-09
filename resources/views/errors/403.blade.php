@@ -1,11 +1,7 @@
-@extends('errors::illustrated-layout')
+@extends('errors.layout')
 
+@section('bgcolor', 'warning')
 @section('code', '403')
-@section('title', __('Forbidden'))
+@section('title', 'Terlarang')
 
-@section('image')
-    <div style="background-image: url({{ asset('/svg/403.svg') }});" class="absolute pin bg-cover bg-no-repeat md:bg-left lg:bg-center">
-    </div>
-@endsection
-
-@section('message', __($exception->getMessage() ?: __('Sorry, you are forbidden from accessing this page.')))
+@section('message', __($exception->getMessage() ?: 'Maaf, Anda dilarang mengakses halaman ini.'))

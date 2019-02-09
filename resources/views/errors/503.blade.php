@@ -1,11 +1,7 @@
-@extends('errors::illustrated-layout')
+@extends('errors.layout')
 
+@section('bgcolor', 'dark')
 @section('code', '503')
-@section('title', __('Service Unavailable'))
+@section('title', 'Layanan tidak tersedia')
 
-@section('image')
-    <div style="background-image: url({{ asset('/svg/503.svg') }});" class="absolute pin bg-cover bg-no-repeat md:bg-left lg:bg-center">
-    </div>
-@endsection
-
-@section('message', __($exception->getMessage() ?: __('Sorry, we are doing some maintenance. Please check back soon.')))
+@section('message', __($exception->getMessage() ?: 'Maaf, kami sedang melakukan beberapa pemeliharaan. Silakan periksa kembali nanti.'))

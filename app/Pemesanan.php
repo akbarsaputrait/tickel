@@ -20,6 +20,10 @@ class Pemesanan extends Model
       return $this->hasOne('App\Petugas', 'id_petugas', 'id_petugas');
     }
 
+    public function pelanggan() {
+      return $this->hasOne('App\Penumpang', 'id_penumpang', 'id_pelanggan');
+    }
+
     protected $dates = ['created_at', 'updated_at', 'deleted_at'];
 
 }

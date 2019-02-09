@@ -176,15 +176,21 @@
   <script src="{{ asset('admin/vendors/datatables/buttons.bootstrap4.min.js') }}" charset="utf-8"></script>
   <script src="{{ asset('admin/vendors/datatables/vfs_fonts.js') }}" charset="utf-8"></script>
   <script src="{{ asset('admin/vendors/select2/select2.full.min.js') }}" charset="utf-8"></script>
-  <script src="{{ asset('admin/vendors/datatables/printThis.js') }}" charset="utf-8"></script>
+  <script src="{{ asset('admin/js/printThis.js') }}" charset="utf-8"></script>
   <script src="{{ asset('admin/js/script.js') }}" charset="utf-8"></script>
   <script type="text/javascript">
     $(document).ready(function() {
       $('table').DataTable();
       $('select').select2();
 
-      $(document).on('click', '#printThis', function() {
-        $('div#printed').printThis();
+      $('#printThis').on("click", function () {
+        $('div.printIt').printThis({
+          loadCSS: [
+            "{{ asset('admin/css/style.css') }}",
+            "{{ asset('admin/vendors/css/vendor.bundle.base.css') }}",
+            "{{ asset('admin/vendors/css/vendor.bundle.addons.css') }}"
+          ]
+        });
       });
     })
   </script>
