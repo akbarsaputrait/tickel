@@ -19,7 +19,7 @@
             <h5 class="card-description">
             Informasi Rute
           </h5> @csrf
-            <input type="hidden" name="id_rutes" id="id_rute" value="">
+            <input type="hidden" name="id_rutes" id="id_rute" value="{{ old('id_rute') }}">
             <div class="row">
               <div class="col-md-4">
                 <div class="form-group">
@@ -63,7 +63,7 @@
                   <div class="col-md-7">
                     <div class="form-group">
                       <label for="">Tanggal Berangkat</label>
-                      <input type="date" class="form-control {{ ($errors->has('tanggal_berangkat')) ? 'is-invalid' : '' }}" name="tanggal_berangkat" value="{{ old('tanggal_berangkat') }}" {{ (old( 'tanggal_berangkat')) ? '' : '' }}>
+                      <input type="text" class="form-control datepicker {{ ($errors->has('tanggal_berangkat')) ? 'is-invalid' : '' }}" name="tanggal_berangkat" value="{{ old('tanggal_berangkat') }}" placeholder="Tanggal Berangkat" {{ (old( 'tanggal_berangkat')) ? '' : '' }}>
                       <div class="invalid-feedback">
                         {{ $errors->first('tanggal_berangkat') }}
                       </div>
@@ -119,7 +119,7 @@
                   <div class="col-md-6">
                     <div class="form-group">
                       <label for="">Tempat Pemesanan</label>
-                      <input type="text" class="form-control" name="tempat_pemesanan" value="{{ old('tempat_pemesanan') }}" {{ (old( 'tempat_pemesanan')) ? '' : 'disabled' }}>
+                      <input type="text" class="form-control" name="tempat_pemesanan" value="{{ old('tempat_pemesanan') }}" {{ (old('tempat_pemesanan')) ? '' : 'readonly' }} readonly>
                       <div class="invalid-feedback">
                         {{ $errors->first('tempat_pemesanan') }}
                       </div>
@@ -128,7 +128,7 @@
                   <div class="col-md-6">
                     <div class="form-group">
                       <label for="">Total Harga</label>
-                      <input type="text" class="form-control" name="harga" value="{{ old('harga') }}" disabled>
+                      <input type="text" class="form-control" name="harga" value="{{ old('harga') }}" readonly>
                     </div>
                   </div>
                 </div>
@@ -155,31 +155,56 @@
               <div class="col-md-4">
                 <div class="form-group">
                   <label for="">Nama Lengkap</label>
-                  <input type="text" class="form-control" name="nama_penumpang" placeholder="Nama lengkap" value="{{ (auth()->guard('penumpang')->check()) ? auth()->guard('penumpang')->user()->nama_penumpang : old('nama_penumpang') }}">
+                  <input type="text" class="form-control {{ $errors->has('nama_penumpang') ? 'is-invalid' : '' }}" name="nama_penumpang"
+                  placeholder="Nama lengkap"
+                  value="{{ (auth()->guard('penumpang')->check()) ? (is_null(auth()->guard('penumpang')->user()->nama_penumpang) ? old('nama_penumpang') : auth()->guard('penumpang')->user()->nama_penumpang) : old('nama_penumpang') }}">
+                  <div class="invalid-feedback">
+                    {{ $errors->first('nama_penumpang') }}
+                  </div>
                 </div>
                 <div class="form-group">
                   <label for="">Nomor Identitas (KTP/SIM)</label>
-                  <input type="number" class="form-control" name="no_identitas" placeholder="Nomor identitas" value="{{ (auth()->guard('penumpang')->check()) ? auth()->guard('penumpang')->user()->no_identitas : old('no_identitas') }}">
+                  <input type="number" class="form-control {{ $errors->has('no_identitas') ? 'is-invalid' : '' }}"
+                  name="no_identitas" placeholder="Nomor identitas" value="{{ (auth()->guard('penumpang')->check()) ? (is_null(auth()->guard('penumpang')->user()->no_identitas) ? old('no_identitas') : auth()->guard('penumpang')->user()->no_identitas) : old('no_identitas') }}">
+                  <div class="invalid-feedback">
+                    {{ $errors->first('no_identitas') }}
+                  </div>
                 </div>
                 <div class="form-group">
                   <label for="">Nomor Telepon</label>
-                  <input type="tel" class="form-control" name="telefone" placeholder="Nomor telepon" value="{{ (auth()->guard('penumpang')->check()) ? auth()->guard('penumpang')->user()->telefone : old('telefone') }}">
+                  <input type="tel" class="form-control  {{ $errors->has('telefone') ? 'is-invalid' : '' }}"
+                  name="telefone" placeholder="Nomor telepon" value="{{ (auth()->guard('penumpang')->check()) ? (is_null(auth()->guard('penumpang')->user()->telefone) ? old('telefone') : auth()->guard('penumpang')->user()->telefone) : old('telefone') }}">
+                  <div class="invalid-feedback">
+                    {{ $errors->first('telefone') }}
+                  </div>
                 </div>
               </div>
               <div class="col-md-4">
                 <div class="form-group">
                   <label for="">Alamat Email</label>
-                  <input type="email" class="form-control" name="email" placeholder="Alamaat email" value="{{ (auth()->guard('penumpang')->check()) ? auth()->guard('penumpang')->user()->email : old('email') }}">
+                  <input type="email" class="form-control  {{ $errors->has('email') ? 'is-invalid' : '' }}"
+                   name="email" placeholder="Alamaat email" value="{{ (auth()->guard('penumpang')->check()) ? (is_null(auth()->guard('penumpang')->user()->email) ? old('email') : auth()->guard('penumpang')->user()->email) : old('email') }}">
+                   <div class="invalid-feedback">
+                     {{ $errors->first('email') }}
+                   </div>
                 </div>
                 <div class="form-group">
                   <label for="">Tanggal Lahir</label>
-                  <input type="date" class="form-control" name="tanggal_lahir" value="{{ (auth()->guard('penumpang')->check()) ? auth()->guard('penumpang')->user()->tanggal_lahir : old('tanggal_lahir') }}">
+                <input type="text" class="form-control {{ $errors->has('tanggal_lahir') ? 'is-invalid' : '' }} datepicker"
+                name="tanggal_lahir" value="{{ (auth()->guard('penumpang')->check()) ? (is_null(auth()->guard('penumpang')->user()->tanggal_lahir) ? old('tanggal_lahir') : auth()->guard('penumpang')->user()->tanggal_lahir) : old('tanggal_lahir') }}"
+                placeholder="Tanggal lahir">
+                <div class="invalid-feedback">
+                  {{ $errors->first('tanggal_lahir') }}
+                </div>
                 </div>
               </div>
               <div class="col-md-4">
                 <div class="form-group">
                   <label for="">Alamat Lengkap</label>
-                  <textarea name="alamat_penumpang" class="form-control" rows="8" cols="80" placeholder="Alamat lengkap">{{ (auth()->guard('penumpang')->check()) ? auth()->guard('penumpang')->user()->alamat_penumpang : old('alamat_penumpang') }}</textarea>
+                  <textarea name="alamat_penumpang" class="form-control {{ $errors->has('alamat_penumpang') ? 'is-invalid' : '' }}" rows="8" cols="80" placeholder="Alamat lengkap">{{ (auth()->guard('penumpang')->check()) ? (is_null(auth()->guard('penumpang')->user()->alamat_penumpang) ? old('alamat_penumpang') : auth()->guard('penumpang')->user()->alamat_penumpang) : old('alamat_penumpang') }}</textarea>
+                  <div class="invalid-feedback">
+                    {{ $errors->first('alamat_penumpang') }}
+                  </div>
                 </div>
               </div>
             </div>

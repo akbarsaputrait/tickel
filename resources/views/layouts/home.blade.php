@@ -54,7 +54,7 @@
                   <div class="col-md-7">
                     <div class="form-group">
                       <label for="">Tanggal Berangkat</label>
-                      <input type="date" class="form-control {{ ($errors->has('tanggal_berangkat')) ? 'is-invalid' : '' }}" name="tanggal_berangkat" value="{{ old('tanggal_berangkat') }}" {{ (old( 'tanggal_berangkat')) ? '' : '' }}>
+                      <input type="text" class="form-control datepicker {{ ($errors->has('tanggal_berangkat')) ? 'is-invalid' : '' }}" name="tanggal_berangkat" value="{{ old('tanggal_berangkat') }}" placeholder="Tanggal Berangkat" {{ (old( 'tanggal_berangkat')) ? '' : '' }}>
                       <div class="invalid-feedback">
                         {{ $errors->first('tanggal_berangkat') }}
                       </div>
@@ -119,7 +119,7 @@
                   <div class="col-md-6">
                     <div class="form-group">
                       <label for="">Total Harga</label>
-                      <input type="text" class="form-control" name="harga" value="{{ old('harga') }}" disabled>
+                      <input type="text" class="form-control" name="harga" value="{{ old('harga') }}" readonly style="cursor:not-allowed;">
                     </div>
                   </div>
                 </div>
@@ -139,7 +139,7 @@
                 <div class="form-group">
                   <div class="btn-group w-100">
                     <input type="button" id="cariTiket" class="mt-4 btn btn-primary custom" name="submit" value="Cari Tiket">
-                    <button type="submit" class="btn btn-primary-custom mt-4" name="button" id="pesanTiketButton">Pesan</button>
+                    <button type="submit" class="btn btn-primary-custom mt-4 d-none" name="button" id="pesanTiketButton">Pesan</button>
                     <button type="button" id="clearButton" class="btn btn-primary custom d-none" name="button">Batal</button>
                   </div>
                 </div>
@@ -221,32 +221,26 @@
   <!-- // end .section -->
 
 
-  <div class="section" id="testimonials">
+  <div class="section"  id="testimoni">
     <div class="container">
       <div class="section-title">
         <small>TESTIMONI</small>
-        <h3>Apa yang mereka katakan?</h3>
+        <h3 class="text-dark">Apa yang mereka katakan?</h3>
       </div>
 
       <div class="testimonials owl-carousel">
+        @forelse($testimoni as $item)
         <div class="testimonials-single">
-          <img src="{{ asset('home/images/client.png') }}" alt="client" class="client-img">
-          <blockquote class="blockquote">Uniquely streamline highly efficient scenarios and 24/7 initiatives. Conveniently embrace multifunctional ideas through proactive customer service. Distinctively conceptualize 2.0 intellectual capital via user-centric partnerships.</blockquote>
-          <h5 class="mt-4 mb-2">Crystal Gordon</h5>
-          <p class="text-primary">United States</p>
+          <img src="{{ is_null($item->user->image) ? asset('home/images/client.png') : asset('uploads/images/avatars/'. $item->user->image) }}" alt="client" class="client-img">
+          <blockquote class="blockquote">{{ $item->content }}</blockquote>
+          <h5 class="mt-4 mb-2">{{ $item->user->nama_penumpang }}</h5>
+          <p class="text-primary">{{ $item->user->email }}</p>
         </div>
-        <div class="testimonials-single">
-          <img src="{{ asset('home/images/client.png') }}" alt="client" class="client-img">
-          <blockquote class="blockquote">Uniquely streamline highly efficient scenarios and 24/7 initiatives. Conveniently embrace multifunctional ideas through proactive customer service. Distinctively conceptualize 2.0 intellectual capital via user-centric partnerships.</blockquote>
-          <h5 class="mt-4 mb-2">Crystal Gordon</h5>
-          <p class="text-primary">United States</p>
+        @empty
+        <div class="alert alert-warning">
+          <h3>Mohon maaf testimoni tidak ditemukan.</h3>
         </div>
-        <div class="testimonials-single">
-          <img src="{{ asset('home/images/client.png') }}" alt="client" class="client-img">
-          <blockquote class="blockquote">Uniquely streamline highly efficient scenarios and 24/7 initiatives. Conveniently embrace multifunctional ideas through proactive customer service. Distinctively conceptualize 2.0 intellectual capital via user-centric partnerships.</blockquote>
-          <h5 class="mt-4 mb-2">Crystal Gordon</h5>
-          <p class="text-primary">United States</p>
-        </div>
+        @endforelse
       </div>
 
     </div>

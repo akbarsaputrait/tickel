@@ -24,7 +24,7 @@ class OrderController extends Controller
      */
     public function index()
     {
-      $data['pemesanan'] = Pemesanan::with('petugas')->orderBy('id_pemesanan', 'DESC')->limit(10)->get();
+      $data['pemesanan'] = Pemesanan::with(['petugas', 'admin'])->orderBy('id_pemesanan', 'DESC')->get();
       return view('layouts.petugas.order.index')->with($data);
     }
 
@@ -57,7 +57,7 @@ class OrderController extends Controller
      */
     public function show($id)
     {
-      $data['pemesanan'] = Pemesanan::where('kode_pemesanan', '=', $id)->first();
+      $data['pemesanan'] = Pemesanan::with(['petugas', 'admin'])->where('kode_pemesanan', '=', $id)->first();
       $data['pembayaran'] = BuktiPembayaran::where('id_pemesanan', '=', $data['pemesanan']->id_pemesanan)->first();
       $data['penumpang'] = Penumpang::find($data['pemesanan']->id_pelanggan)->first();
       $data['rute'] = Rute::with(['transportasi', 'type'])->where('id_rute', '=', $data['pemesanan']->id_rute)->first();
@@ -97,7 +97,7 @@ class OrderController extends Controller
         $beautymail = app()->make(Beautymail::class);
           $beautymail->send('email.ticket', [
             // DATA
-            'rute' => Rute::with(['transportasi', 'type', 'typeTrans'])->where('id_rute', '=', $pesanan->id_rute)->first(),
+            'rute' => Rute::with(['transportasi', 'type'])->where('id_rute', '=', $pesanan->id_rute)->first(),
             'pemesanan' => $pesanan,
             'keterangan' => $request->keterangan
           ], function($message)
@@ -114,7 +114,7 @@ class OrderController extends Controller
 
         session()->flash('status','success');
         session()->flash('message', 'Pesanan berhasil diperbarui dan email berhasil dikirim!');
-        return redirect()->route('admin.order.show', ['order' => $id]);
+        return redirect()->route('petugas.order.show', ['order' => $id]);
     }
 
     /**

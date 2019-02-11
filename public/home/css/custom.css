@@ -219,3 +219,16 @@ a.btn:hover {
     color: #333 !important;
 }
 }
+
+.datepicker-dropdown {
+	padding: 9px;
+}
+
+td.day.active, span.month.active, span.year.active {
+	background: #8500ff !important;
+}
+
+.datepicker table tr td.day:hover, .datepicker table tr td span:hover {
+    color: white;
+    background: #333;
+}

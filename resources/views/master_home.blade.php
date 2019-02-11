@@ -49,7 +49,9 @@ URI     : https://colorlib.com
   <!-- Main css -->
   <link rel="stylesheet" href="{{ asset('admin/vendors/datatables/datatables.min.css') }}">
   <link rel="stylesheet" href="{{ asset('admin/vendors/sweetalert/sweetalert2.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('admin/vendors/datepicker/css/datepicker.css') }}">
   <link rel="stylesheet" href="{{ asset('admin/vendors/select2/select2.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('admin/vendors/iconfonts/mdi/css/materialdesignicons.min.css') }}">
   <link href="{{ asset('home/css/style.css') }}" rel="stylesheet">
   <link href="{{ asset('home/css/custom.css') }}" rel="stylesheet">
 </head>
@@ -68,9 +70,9 @@ URI     : https://colorlib.com
               <span class="navbar-toggler-icon"></span> </button>
             <div class="collapse navbar-collapse" id="navbar">
               <ul class="navbar-nav ml-auto">
-                <li class="nav-item"> <a class="nav-link" href="/pesan-tiket">PESAN TIKET SEKARANG!</a> </li>
+                <li class="nav-item"> <a class="nav-link" href="{{ route('pesan.create') }}">PESAN TIKET SEKARANG!</a> </li>
                 <li class="nav-item"><a class="nav-link" href="/#why">MENGAPA TICKEL?</a></li>
-                <li class="nav-item"> <a class="nav-link" href="#contact">KONTAK KAMI</a> </li>
+                <li class="nav-item"> <a class="nav-link" href="/#testimoni">TESTIMONI</a> </li>
                 <li class="nav-item">
                   <div class="btn-group">
                     @if(!auth()->guard('penumpang')->user())
@@ -97,34 +99,6 @@ URI     : https://colorlib.com
     </div>
   </div>
   @yield('content')
-
-  <div class="light-bg py-5" id="contact">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-6 text-center text-lg-left">
-          <p class="mb-2"> <span class="ti-location-pin mr-2"></span> 1485 Pacific St, Brooklyn, NY 11216 USA</p>
-          <div class=" d-block d-sm-inline-block">
-            <p class="mb-2">
-              <span class="ti-email mr-2"></span> <a class="mr-4" href="mailto:support@mobileapp.com">support@mobileapp.com</a>
-            </p>
-          </div>
-          <div class="d-block d-sm-inline-block">
-            <p class="mb-0">
-              <span class="ti-headphone-alt mr-2"></span> <a href="tel:51836362800">518-3636-2800</a>
-            </p>
-          </div>
-
-        </div>
-        <div class="col-lg-6">
-          <div class="social-icons">
-            <a href="#"><span class="ti-facebook"></span></a>
-            <a href="#"><span class="ti-twitter-alt"></span></a>
-            <a href="#"><span class="ti-instagram"></span></a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
   <!-- // end .section -->
   <footer class="my-5 text-center">
     <!-- Copyright removal is not prohibited! -->
@@ -144,6 +118,8 @@ URI     : https://colorlib.com
   <script src="{{ asset('home/js/bootstrap.bundle.min.js') }}"></script>
   <script src="{{ asset('admin/vendors/sweetalert/sweetalert2.all.min.js') }}" charset="utf-8"></script>
   <script src="{{ asset('admin/vendors/select2/select2.full.min.js') }}" charset="utf-8"></script>
+  <script src="{{ asset('admin/vendors/datepicker/js/bootstrap-datepicker.js') }}" charset="utf-8"></script>
+  <script src="{{ asset('admin/vendors/datepicker/js/locales/bootstrap-datepicker.id.js') }}" charset="utf-8"></script>
   <!-- Plugins JS -->
   <script src="{{ asset('home/js/owl.carousel.min.js') }}"></script>
   <!-- Custom JS -->
@@ -151,9 +127,12 @@ URI     : https://colorlib.com
   <script src="{{ asset('home/js/home.js') }}"></script>
   <script type="text/javascript">
     $(document).ready(function() {
-      $('table').DataTable();
-
+      $('table#datatable').DataTable();
       $('select#select2').select2();
+      $('.datepicker').datepicker({
+        todayBtn: 'linked',
+        format: 'yyyy-mm-dd'
+      });
     })
   </script>
 </body>

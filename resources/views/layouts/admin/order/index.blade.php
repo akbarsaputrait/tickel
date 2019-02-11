@@ -40,7 +40,7 @@
                           <span class="badge badge-success">{{ ucfirst($item->status) }}</span>
                         @break
 
-                      @case("proccess")
+                      @case("process")
                           <span class="badge badge-primary">{{ ucfirst($item->status) }}</span>
                         @break
 
@@ -59,7 +59,15 @@
                   Rp.{{ $item->total_bayar }}
                 </td>
                 <td>
-                  {{ (is_null($item->petugas)) ? '-' : $item->petugas->nama_petugas }}
+                  @if(is_null($item->petugas))
+                    @if(is_null($item->admin))
+                      -
+                    @else
+                      {{ $item->admin->name }} <span class="badge badge-outline-danger">admin</span>
+                    @endif
+                  @else
+                    {{ $item->petugas->nama_petugas }} <span class="badge badge-outline-primary">petugas</span>
+                  @endif
                 </td>
                 <td>
                   {{ date('d F Y, H:i A', strtotime($item->created_at)) }}

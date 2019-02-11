@@ -5,6 +5,25 @@
       <h1>#{{ $pemesanan->kode_pemesanan }}</h1>
       <h4 class="text-white display-5">Kode Kursi : <span class="badge badge-dark">{{ $pemesanan->kode_kursi }}</span></h4>
       <p class="text-white">Tanggal Pemesanan : {{ date('d F Y', strtotime($pemesanan->tanggal_pemesanan)) }}</p>
+      @switch($pemesanan->status)
+          @case("done")
+              <span class="badge badge-success" style="font-size: 15px;">{{ ucfirst($pemesanan->status) }}</span>
+            @break
+
+          @case("process")
+              <span class="badge badge-primary" style="font-size: 15px;">{{ ucfirst($pemesanan->status) }}</span>
+            @break
+
+          @case("pending")
+            <span class="badge badge-warning" style="font-size: 15px;">{{ ucfirst($pemesanan->status) }}</span>
+            @break
+
+          @case("cancel")
+            <span class="badge badge-danger" style="font-size: 15px;">{{ ucfirst($pemesanan->status) }}</span>
+            @break
+          @default
+              <span class="badge badge-dark" style="font-size: 15px;">{{ ucfirst($pemesanan->status) }}</span>
+      @endswitch
       @if($pemesanan->status == "done")
       <div class="alert alert-success">
         <span class="ti ti-check"></span> Pesanan anda telah diverifikasi! Silahkan cek email anda.
@@ -158,7 +177,13 @@
             <h5 class="card-description">Konfirmasi Pembayaran</h5>
             <div class="row">
               <div class="col-md-8">
-                <p class="alert alert-warning">Silahkan transfer sesuai dengan nominal di bawah ini dan pastikan nomor rekening yang dituju tidak salah. Lalu unggah bukti pembayaran.</p>
+                @if(is_null($pembayaran->file))
+                <p class="alert alert-warning">
+                  <span class="ti-info"></span> Silahkan transfer sesuai dengan nominal di bawah ini dan pastikan nomor rekening yang dituju tidak salah. Lalu unggah bukti pembayaran.</p>
+                @else
+                <p class="alert alert-success">
+                  <span class="ti-check"></span> Bukti pembayaran telah di unggah. Kami akan segera memverifikasi dan akan segera dikirim ke alamat email anda. Terima kasih.</p>
+                @endif
                 <div class="row text-center">
                   <div class="col-md-6 d-flex align-items-center justify-content-center">
                     <div class="">
@@ -167,37 +192,50 @@
                     </div>
                   </div>
                   <div class="col-md-6">
-                    @if(is_null($pembayaran->file))
-                    <p class="text-muted">Nomor Rekening Tujuan</p>
+                    <h6 class="text-muted">Nomor Rekening Tujuan</h6>
                     <div class="list-group">
+                      @forelse($rekening as $item)
                       <div class="list-group-item">
-                        <p class="font-weight-bold">BNI</p>
-                        <h5 class="display-5" id="totalPembayaran">07979****</h5>
-                        <small class="text-small text-muted">A.N. Akbar Anung Yudha Saputra</small>
+                        <p class="font-weight-bold">{{ $item->nama_bank }}</p>
+                        <h5 class="display-5" id="totalPembayaran">{{ $item->no_rekening }}</h5>
+                        <small class="text-small text-muted">A.N. {{ $item->atas_nama }}</small>
                       </div>
-                      <div class="list-group-item">
-                        <p class="font-weight-bold">BCA</p>
-                        <h5 class="display-5" id="totalPembayaran">09494****</h5>
-                        <small class="text-small text-muted">A.N. Akbar Anung Yudha Saputra</small>
+                      @empty
+                      <div class="alert alert-danger">
+                        Alamat rekening belum tersedia.
                       </div>
+                      @endforelse
                     </div>
-                    @else
-                    <img src="{{ asset('uploads/images/bukti-pembayaran/' . $pembayaran->file) }}" alt=""> @endif
                   </div>
                 </div>
               </div>
               <div class="col-md-4">
                 @csrf
+                @if(is_null($pembayaran->file))
                 <div class="form-group">
-                  <label for="">Unggah file</label>
-                  <input type="file" class="form-control" name="file" value="">
-                </div>
-                <div class="form-group">
-                  <div class="btn-group">
-                    <input type="submit" class="btn btn-primary custom wi-25" name="submit" value="Unggah">
-                    <a href="{{ route('penumpang.tiket.cancel', ['id_pemesanan' => $pemesanan->kode_pemesanan]) }}" class="btn btn-primary-custom">Batal</a>
+                  <h6>Unggah bukti pembayaran</h6>
+                  <div class="row">
+                    <div class="col-md-9">
+                      <input type="file" class="form-control" name="file" value="">
+                    </div>
+                    <div class="col-md-3">
+                      <button type="submit" class="btn btn-primary custom" name="button">
+                        <span class="ti-upload"></span>
+                      </button>
+                    </div>
                   </div>
                 </div>
+                <div class="form-group mt-3">
+                  <h6>Batalkan pesanan?</h6>
+                  <button type="button" id="cancelOrder" data-link="{{ route('penumpang.tiket.cancel', ['id_pemesanan' => $pemesanan->kode_pemesanan]) }}" class="btn btn-danger" name="button">Batal</button>
+                </div>
+                @else
+                <div class="form-group">
+                  <a href="{{ asset('uploads/images/bukti-pembayaran/' . $pembayaran->file) }}" target="_blank">
+                    <img src="{{ asset('uploads/images/bukti-pembayaran/' . $pembayaran->file) }}" class="img-fluid">
+                  </a>
+                </div>
+                @endif
               </div>
             </div>
           </div>

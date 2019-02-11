@@ -12,6 +12,9 @@
 	<h4 class="secondary"><strong>Halo, {{ $pemesanan->pelanggan->nama_penumpang }}</strong></h4>
 	<p>Kode Pemesanan : </p>
 	<h1 class="secondary">#{{ $pemesanan->kode_pemesanan }}</h1>
+	<br><br>
+	<p>Kode Kursi : </p>
+	<h1 class="secondary">#{{ $pemesanan->kode_kursi }}</h1>
 	@switch($pemesanan->status)
 			@case("done")
 					<h3 class="secondary" style="color: green;">{{ ucfirst($pemesanan->status) }}</h3>
@@ -51,7 +54,7 @@
 							<td>{{ $rute->rute_akhir }}</td>
 							<td>Rp. {{ $pemesanan->total_bayar }}</td>
 							<td>{{ $rute->jam_berangkat }}</td>
-							<td>{{ $rute->typeTrans->nama_type }} - {{ $rute->transportasi->nama_transportasi }} - {{ $rute->type->nama_type }}</td>
+							<td>{{ $rute->transportasi->nama_transportasi }} - {{ $rute->type->nama_type }}</td>
 						</tr>
 					</tbody>
         </table>

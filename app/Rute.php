@@ -21,8 +21,4 @@ class Rute extends Model
       return $this->hasOne('App\TypeRute', 'id_type_rute', 'id_type_rute');
     }
 
-    public function typetrans() {
-      return $this->hasOne('App\TypeTransportasi', 'id_type_transportasi', 'id_transportasi');
-    }
-
 }

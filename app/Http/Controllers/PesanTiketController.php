@@ -33,6 +33,8 @@ class PesanTiketController extends Controller
 	}
 
 	public function pesanTiket(PesanTiketRequest $request) {
+
+		$request->flash();
 		if($request->has('id_rute')) {
 			return redirect()->route('pesan.create')->withInput();
 		}
@@ -57,7 +59,7 @@ class PesanTiketController extends Controller
 			return redirect()->back();
 		}
 
-		$idrute =  $request->id_rutes;
+		$idrute = $request->id_rutes;
 		$pemesanan = new Pemesanan;
 		$rute = Rute::with('transportasi')->where('id_rute', '=', $idrute)->first();
 		$transportasi = Transportasi::find($rute->id_transportasi);
@@ -89,6 +91,22 @@ class PesanTiketController extends Controller
 				$bukti->id_penumpang = auth()->guard('penumpang')->user()->id_penumpang;
 				$bukti->id_pemesanan = $pemesanan->id_pemesanan;
 				$bukti->save();
+
+				$request->validate([
+					'nama_penumpang' => 'required',
+					'email' => 'required',
+					'no_identitas' => 'required',
+					'alamat_penumpang' => 'required',
+					'tanggal_lahir' => 'required',
+					'telefone' => 'required'
+				], [
+					'nama_penumpang.required' => 'Nama penumpang harus diisi',
+					'email.required' => 'Alamat email harus diisi',
+					'no_identitas.required' => 'Nomor indentitas harus diisi',
+					'alamat_penumpang.required' => 'Alamat penumpang harus diisi',
+					'tanggal_lahir.required' => 'Tanggal lahir harus diisi',
+					'telefone.required' => 'Nomor telepon harus diisi'
+				]);
 
 				$penumpang = Penumpang::find($pemesanan->id_pelanggan);
 				$penumpang->nama_penumpang = $request->nama_penumpang;

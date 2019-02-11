@@ -55,7 +55,7 @@ class RuteController extends Controller
 
         session()->flash('status', 'success');
         session()->flash('message', 'Rute berhasil ditambahkan.');
-        return redirect()->route('rute.index');
+        return redirect()->route('admin.rute.index');
     }
 
     /**
@@ -105,7 +105,7 @@ class RuteController extends Controller
 
       session()->flash('status', 'success');
       session()->flash('message', 'Rute berhasil diperbarui.');
-      return redirect()->route('rute.index');
+      return redirect()->route('admin.rute.edit',['rute' => $id]);
     }
 
     /**

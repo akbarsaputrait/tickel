@@ -20,7 +20,7 @@
 								<th>Jam Berangkat</th>
 								<th>Jam Tiba</th>
 								<th>Nama Transportasi</th>
-								<th>Jumlah Kursi</th>
+								<th>Jumlah Kursi Tersedia</th>
 								<th></th>
 							</thead>
 							<tbody id="dataTiket">

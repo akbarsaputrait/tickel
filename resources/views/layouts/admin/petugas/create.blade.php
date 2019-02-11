@@ -47,7 +47,8 @@
             <div class="col-md-4">
               <div class="form-group">
                 <label for="">Tanggal Lahir</label>
-                <input type="date" class="form-control" name="tanggal_lahir" value="">
+                <!-- <input type="date" class="form-control" name="tanggal_lahir" value=""> -->
+                <input type="text" class="form-control datepicker" name="tanggal_lahir" value="" placeholder="Tanggal lahir">
               </div>
             </div>
             <div class="col-md-4">

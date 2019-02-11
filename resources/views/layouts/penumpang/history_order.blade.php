@@ -1,6 +1,6 @@
 <div class="row">
 	<div class="col-md-12">
-		<table class="table table-stripped">
+		<table class="table table-stripped" id="datatable">
 			<thead class="thead-dark">
 				<th>Kode Pemesanan</th>
 				<th>Status</th>
@@ -22,7 +22,7 @@
 										<span class="badge badge-success">{{ ucfirst($item->status) }}</span>
 									@break
 
-								@case("proccess")
+								@case("process")
 										<span class="badge badge-primary">{{ ucfirst($item->status) }}</span>
 									@break
 

@@ -78,7 +78,11 @@
 						</div>
 					</div>
 					<div class="form-group text-center">
-						<button type="submit" class="btn btn-primary custom w-50" name="button">Simpan</button>
+						<button type="submit" class="btn btn-primary custom w-50" name="button">
+							<span class="ti-save"></span> Simpan</button>
+					</div>
+					<div class="form-group text-center">
+						<button type="button" data-target="#resetPassword" data-toggle="modal" class="btn btn-dark">Ganti Kata Sandi</button>
 					</div>
 				</div>
 			</div>

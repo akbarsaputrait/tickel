@@ -80,19 +80,19 @@
         <ul class="nav">
           <li class="nav-item {{ strpos(request()->path(), 'dasbor') !== false ? 'active' : ''}}">
             <a class="nav-link" href="{{ route('petugas.dashboard') }}">
-              <i class="menu-icon fa fa-home"></i>
+              <i class="menu-icon mdi mdi-home"></i>
               <span class="menu-title">Dasbor</span>
             </a>
           </li>
           <li class="nav-item {{ strpos(request()->path(), 'order') !== false ? 'active' : ''}}">
             <a class="nav-link" href="{{ route('petugas.order.index') }}">
-              <i class="menu-icon fa fa-usd"></i>
+              <i class="menu-icon mdi mdi-cart"></i>
               <span class="menu-title">Pesanan</span>
             </a>
           </li>
           <li class="nav-item">
             <a href="{{ route('petugas.logout') }}" class="nav-link">
-              <i class="menu-icon fa fa-sign-out"></i>
+              <i class="menu-icon mdi mdi-logout"></i>
               <span class="menu-title">Keluar</span>
             </a>
           </li>

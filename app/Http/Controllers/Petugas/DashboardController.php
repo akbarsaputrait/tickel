@@ -14,7 +14,7 @@ use App\Petugas;
 class DashboardController extends Controller
 {
     public function index() {
-      $data['pemesanan'] = Pemesanan::with('petugas')->orderBy('id_pemesanan', 'DESC')->limit(10)->get();
+      $data['pemesanan'] = Pemesanan::with(['petugas', 'admin'])->orderBy('id_pemesanan', 'DESC')->limit(10)->get();
 			return view('layouts.petugas.dashboard')->with($data);
 		}
 }

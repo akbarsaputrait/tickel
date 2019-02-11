@@ -24,6 +24,10 @@ class Pemesanan extends Model
       return $this->hasOne('App\Penumpang', 'id_penumpang', 'id_pelanggan');
     }
 
+    public function admin() {
+      return $this->hasOne('App\Admin', 'id', 'id_admin');
+    }
+
     protected $dates = ['created_at', 'updated_at', 'deleted_at'];
 
 }

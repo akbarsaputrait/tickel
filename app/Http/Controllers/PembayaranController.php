@@ -8,11 +8,12 @@ use App\Pemesanan;
 use App\BuktiPembayaran;
 use App\Rute;
 use App\Transportasi;
-
+use App\Rekening;
 
 class PembayaranController extends Controller
 {
 		public function show($kode_pemesanan) {
+			$data['rekening'] = Rekening::all();
 			$data['pemesanan'] = Pemesanan::where('kode_pemesanan', '=', $kode_pemesanan)->where('status', '!=', 'cancel')->first();
 			if(is_null($data['pemesanan'])) {
 				session()->flash('status', 'danger');
@@ -21,7 +22,7 @@ class PembayaranController extends Controller
 			}
 			$data['pembayaran'] = BuktiPembayaran::where('id_pemesanan', '=', $data['pemesanan']->id_pemesanan)->first();
 			$data['rute'] = DB::select('call getDetailsRuteById(?)', [$data['pemesanan']->id_rute]);
-			return view('layouts.pembayaran')->with($data);
+			return view('layouts.penumpang.pembayaran')->with($data);
 		}
 
     public function update(Request $request, $id) {
@@ -50,7 +51,7 @@ class PembayaranController extends Controller
 							$bukti->file = $filename;
 
 							// CHANGE STATUS PEMESANAN
-							$pemesanan->status = 'Proccess';
+							$pemesanan->status = 'process';
 
 							$bukti->save();
 							$pemesanan->save();

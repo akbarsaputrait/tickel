@@ -47,7 +47,7 @@ class TransportasiController extends Controller
         session()->flash('message', 'Kode transportasi sudah digunakan');
         return redirect()->back()->withInput();
       }
-      
+
       $trans = new Transportasi;
       $trans->kode = $request->kode;
       $trans->nama_transportasi = $request->nama_transportasi;
@@ -58,7 +58,7 @@ class TransportasiController extends Controller
 
       session()->flash('status', 'success');
       session()->flash('message', 'Transportasi berhasil ditambahkan.');
-      return redirect()->route('transportasi.index');
+      return redirect()->route('admin.transportasi.index');
     }
 
     /**
@@ -104,7 +104,7 @@ class TransportasiController extends Controller
 
       session()->flash('status', 'success');
       session()->flash('message', 'Transportasi berhasil diperbarui.');
-      return redirect()->route('transportasi.index');
+      return redirect()->route('admin.transportasi.edit', ['transportasi'=> $id]);
     }
 
     /**

@@ -40,6 +40,7 @@
   <link rel="stylesheet" href="{{ asset('admin/vendors/datatables/datatables.min.css') }}">
   <link rel="stylesheet" href="{{ asset('admin/vendors/sweetalert/sweetalert2.min.css') }}">
   <link rel="stylesheet" href="{{ asset('admin/vendors/select2/select2.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('admin/vendors/datepicker/css/datepicker.css') }}">
   <link rel="stylesheet" href="{{ asset('admin/css/custom.css') }}">
   @yield('style')
   <link rel="shortcut icon" href="{{ asset('admin/images/favicon.png') }}" />
@@ -82,44 +83,56 @@
       <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <ul class="nav">
           <li class="nav-item {{ strpos(request()->path(), 'dasbor') !== false ? 'active' : ''}}">
-            <a class="nav-link" href="{{ url('admin/dasbor') }}">
-              <i class="menu-icon fa fa-home"></i>
+            <a class="nav-link" href="{{ route('admin.dashboard') }}">
+              <i class="menu-icon mdi mdi-home"></i>
               <span class="menu-title">Dasbor</span>
             </a>
           </li>
           <li class="nav-item {{ strpos(request()->path(), 'order') !== false ? 'active' : ''}}">
-            <a class="nav-link" href="{{ url('admin/order') }}">
-              <i class="menu-icon fa fa-usd"></i>
+            <a class="nav-link" href="{{ route('admin.order.index') }}">
+              <i class="menu-icon mdi mdi-cart"></i>
               <span class="menu-title">Pesanan</span>
             </a>
           </li>
           <li class="nav-item {{ strpos(request()->path(), 'petugas') !== false ? 'active' : ''}}">
-            <a class="nav-link" href="{{ url('admin/petugas') }}">
-              <i class="menu-icon fa fa-users"></i>
+            <a class="nav-link" href="{{ route('admin.petugas.index') }}">
+              <i class="menu-icon mdi mdi-human"></i>
               <span class="menu-title">Petugas</span>
             </a>
           </li>
           <li class="nav-item {{ strpos(request()->path(), 'rute') !== false ? 'active' : ''}}">
-            <a class="nav-link" href="{{ url('admin/rute') }}">
-              <i class="menu-icon fa fa-location-arrow"></i>
+            <a class="nav-link" href="{{ route('admin.rute.index') }}">
+              <i class="menu-icon mdi mdi-crosshairs-gps"></i>
               <span class="menu-title">Rute</span>
             </a>
           </li>
           <li class="nav-item {{ strpos(request()->path(), 'transportasi') !== false ? 'active' : ''}}">
-            <a class="nav-link" href="{{ url('admin/transportasi') }}">
-              <i class="menu-icon fa fa-plane"></i>
+            <a class="nav-link" href="{{ route('admin.transportasi.index') }}">
+              <i class="menu-icon mdi mdi-airplane"></i>
               <span class="menu-title">Transportasi</span>
             </a>
           </li>
+          <li class="nav-item {{ strpos(request()->path(), 'rekening') !== false ? 'active' : ''}}">
+            <a class="nav-link" href="{{ route('admin.rekening.index') }}">
+              <i class="menu-icon mdi mdi-credit-card"></i>
+              <span class="menu-title">Rekening</span>
+            </a>
+          </li>
           <li class="nav-item {{ strpos(request()->path(), 'level') !== false ? 'active' : ''}}">
-            <a class="nav-link" href="{{ url('admin/level') }}">
-              <i class="menu-icon fa fa-key"></i>
+            <a class="nav-link" href="{{ route('admin.level.index') }}">
+              <i class="menu-icon mdi mdi-key"></i>
               <span class="menu-title">Level</span>
+            </a>
+          </li>
+          <li class="nav-item {{ strpos(request()->path(), 'testimoni') !== false ? 'active' : ''}}">
+            <a class="nav-link" href="{{ route('admin.testimoni.index') }}">
+              <i class="menu-icon mdi mdi-file-document"></i>
+              <span class="menu-title">Testimoni</span>
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="{{ route('admin.logout') }}">
-              <i class="menu-icon fa fa-sign-out"></i>
+              <i class="menu-icon mdi mdi-logout"></i>
               <span class="menu-title">Keluar</span>
             </a>
           </li>
@@ -160,8 +173,14 @@
   </div>
   <!-- container-scroller -->
   <!-- plugins:js -->
-  <script src="{{ asset('admin/vendors/js/vendor.bundle.base.js') }}"></script>
-  <script src="{{ asset('admin/vendors/js/vendor.bundle.addons.js') }}"></script>
+  <script src="{{ asset('admin/js/jquery-3.3.1.js') }}" charset="utf-8"></script>
+  <script src="{{ asset('admin/vendors/datatables/jquery.dataTables.min.js') }}" charset="utf-8"></script>
+  <script src="{{ asset('admin/vendors/datatables/datatables.min.js') }}" charset="utf-8"></script>
+  <script src="{{ asset('admin/vendors/datatables/jszip.min.js') }}" charset="utf-8"></script>
+  <script src="{{ asset('admin/vendors/datatables/pdfmake.min.js') }}" charset="utf-8"></script>
+  <script src="{{ asset('admin/vendors/datatables/vfs_fonts.js') }}" charset="utf-8"></script>
+  <script src="{{ asset('admin/vendors/datatables/buttons.html5.min.js') }}" charset="utf-8"></script>
+  <script src="{{ asset('admin/vendors/datatables/buttons.bootstrap4.min.js') }}" charset="utf-8"></script>
   <!-- endinject -->
   <!-- Plugin js for this page-->
   <!-- End plugin js for this page-->
@@ -172,16 +191,29 @@
   <!-- Custom js for this page-->
   <!-- End custom js for this page-->
   <script src="{{ asset('admin/vendors/sweetalert/sweetalert2.all.min.js') }}" charset="utf-8"></script>
-  <script src="{{ asset('admin/vendors/datatables/datatables.min.js') }}" charset="utf-8"></script>
-  <script src="{{ asset('admin/vendors/datatables/buttons.bootstrap4.min.js') }}" charset="utf-8"></script>
-  <script src="{{ asset('admin/vendors/datatables/vfs_fonts.js') }}" charset="utf-8"></script>
   <script src="{{ asset('admin/vendors/select2/select2.full.min.js') }}" charset="utf-8"></script>
+  <script src="{{ asset('admin/vendors/datepicker/js/bootstrap-datepicker.js') }}" charset="utf-8"></script>
+  <script src="{{ asset('admin/vendors/datepicker/js/locales/bootstrap-datepicker.id.js') }}" charset="utf-8"></script>
   <script src="{{ asset('admin/js/printThis.js') }}" charset="utf-8"></script>
   <script src="{{ asset('admin/js/script.js') }}" charset="utf-8"></script>
   <script type="text/javascript">
     $(document).ready(function() {
-      $('table').DataTable();
+      $('table').DataTable({
+        dom: 'Bfrtip',
+        buttons: [
+            'copyHtml5',
+            'excelHtml5',
+            'csvHtml5',
+            'pdfHtml5'
+        ]
+      });
+
       $('select').select2();
+
+      $('.datepicker').datepicker({
+        todayBtn: 'linked',
+        format: 'yyyy-mm-dd'
+      });
 
       $('#printThis').on("click", function () {
         $('div.printIt').printThis({

@@ -27,7 +27,7 @@
                         <span class="badge badge-success" style="font-size: 15px;">{{ ucfirst($pemesanan->status) }}</span>
                       @break
 
-                    @case("proccess")
+                    @case("process")
                         <span class="badge badge-primary" style="font-size: 15px;">{{ ucfirst($pemesanan->status) }}</span>
                       @break
 
@@ -204,10 +204,13 @@
           <div class="d-flex justify-content-center align-items-center my-3">
             <div class="">
               <h5 class="display-5">Bukti Pembayaran</h5>
-              <img src="{{ asset('uploads/images/bukti-pembayaran/'.$pembayaran->file) }}" alt="">
+              <img src="{{ asset('uploads/images/bukti-pembayaran/'.$pembayaran->file) }}" class="img-fluid" alt="">
             </div>
           </div>
-          @endif @if(is_null($petugas))
+          @endif
+          @if(is_null($pemesanan->admin))
+          <!-- BERARTI PETUGAS YANG VERIFIKASI -->
+          @if(is_null($petugas))
           <div class="alert alert-warning">
             <span class="fa fa-warning"></span> Tiket belum diverifikasi oleh Petugas.
           </div>
@@ -261,6 +264,11 @@
             </div>
           </div>
           @endif
+          @else
+          <div class="alert alert-success">
+            <span class="mdi mdi-check"></span> Pesanan telah diverifikasi oleh {{ $pemesanan->admin->name }}.
+          </div>
+          @endif
           <h3 class="card-description">
             Verifikasi Pesanan
           </h3>
@@ -282,10 +290,12 @@
               </div>
             </div>
           </div>
+          @if($pemesanan->status != "done" || $pemesanan->status == "cancel")
           <div class="form-group">
             <button type="submit" class="btn btn-success" name="button">
               <i class="fa fa-check"></i> Verifikasi</button>
           </div>
+          @endif
           @else
           <div class="alert alert-danger">
             <span class="fa fa-close"></span> Pesanan dibatalkan oleh pembeli.

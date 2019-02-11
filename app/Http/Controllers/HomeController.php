@@ -10,6 +10,7 @@ use App\Rute;
 use App\TypeRute;
 use App\Transportasi;
 use App\Pemesanan;
+use App\Testimoni;
 
 class HomeController extends Controller
 {
@@ -18,6 +19,7 @@ class HomeController extends Controller
 			$data['rute_awal'] = Rute::distinct()->select('rute_awal')->get(['id_rute','rute_awal']);
 			$data['rute_akhir'] = Rute::distinct()->select('rute_akhir')->get(['id_rute','rute_akhir']);
 			$data['transportasi'] = Transportasi::with(['jenis'])->orderBy('id_transportasi', 'DESC')->get();
+      $data['testimoni'] = Testimoni::with(['user'])->inRandomOrder()->get();
 			return view('layouts.home')->with($data);
 		}
 }

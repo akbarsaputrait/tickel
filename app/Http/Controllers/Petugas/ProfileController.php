@@ -42,7 +42,7 @@ class ProfileController extends Controller
 		if($request->hasFile('file')) {
 			$image = $request->file('file');
 			$filename = time() . '.' . $image->getClientOriginalExtension();
-			$request->file('file')->move(public_path('petugas/uploads/images/avatars'), $filename);
+			$request->file('file')->move(public_path('uploads/images/avatars'), $filename);
 			$petugas->image = $filename;
 		}
 		$petugas->save();

@@ -16,16 +16,16 @@ class DashboardController extends Controller
 		$data['penumpang'] = Penumpang::all();
 		$data['pesanan'] = Pemesanan::where('status', '=', 'done')->get();
 		$data['pemasukan'] = Pemesanan::where('status', '=', 'done')->get(['total_bayar']);
-		$data['pemesanan'] = Pemesanan::limit(10)->get();
+		$data['pemesanan'] = Pemesanan::with(['petugas', 'admin'])->limit(10)->get();
+		$data['total_bayar'] = DB::table('pemesanans')
+															->where('pemesanans.status', '=', 'done')
+															->sum(DB::raw('replace(pemesanans.total_bayar, \'.\', "")'));
 		// dd($data);
 		return view('layouts.admin.dashboard')->with($data);
 	}
 
 	public function chartPesanan() {
-		$data['pemesanan'] = DB::table('pemesanans')
-														->select(DB::raw('COUNT(pemesanans.id_pemesanan) as jumlah, MONTH(pemesanans.created_at) as bulan'))
-														->groupBy(DB::raw('MONTH(pemesanans.created_at)'))
-														->get();
+		$data = DB::select('call chartRute()');
 		return response()->json($data);
 	}
 }
