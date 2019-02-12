@@ -87,3 +87,20 @@
   </div>
 </div>
 @endsection
+
+@section('script')
+<script type="text/javascript">
+  $(document).ready(function(){
+    $('table').DataTable({
+      dom: 'Bfrtip',
+      buttons: [
+          'copyHtml5',
+          'excelHtml5',
+          'csvHtml5',
+          'pdfHtml5'
+      ],
+      "order": [[ 4, "desc" ]]
+    });
+  });
+</script>
+@endsection

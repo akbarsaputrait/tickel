@@ -37,6 +37,14 @@ class TypeRuteController extends Controller
      */
     public function store(Request $request)
     {
+
+      $request->validate([
+        'nama_type' => 'required|alpha_spaces|unique:type_rute, nama_type'
+      ], [
+        'nama_type.required' => 'Nama tipe harus diisi',
+        'nama_type.alpha_spaces' => 'Nama tipe harus berupa huruf dan tanpa tanda baca'
+      ]);
+
         $type = new TypeRute;
         $type->nama_type = $request->nama_type;
         $type->keterangan = $request->keterangan;
@@ -80,6 +88,13 @@ class TypeRuteController extends Controller
      */
     public function update(Request $request, $id)
     {
+      $request->validate([
+        'nama_type' => 'required|alpha_spaces|unique:type_rute, nama_type,' . $id . ', id_type_rute'
+      ], [
+        'nama_type.required' => 'Nama tipe harus diisi',
+        'nama_type.alpha_spaces' => 'Nama tipe harus berupa huruf dan tanpa tanda baca'
+      ]);
+
       $type = TypeRute::find($id);
       $type->nama_type = $request->nama_type;
       $type->keterangan = $request->keterangan;

@@ -37,15 +37,18 @@ class RekeningController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-          'atas_nama' => 'required',
-          'nama_bank' => 'required',
-          'no_rekening' => 'required'
-        ], [
-          'atas_nama.required' => 'Nama pemilik rekening harus diisi',
-          'nama_bank.required' => 'Nama bank harus diisi',
-          'no_rekening' => 'Nomor rekening harus diisi'
-        ]);
+      $request->validate([
+        'atas_nama' => 'alpha_spaces|required',
+        'nama_bank' => 'alpha_spaces|required',
+        'no_rekening' => 'string|required|unique:rekenings,no_rekening'
+      ], [
+        'atas_nama.required' => 'Nama pemilik rekening harus diisi',
+        'ata_nama.alpha_spaces' => 'Nama pemilik harus berupa huruf dan tanpa tanda baca',
+        'nama_bank.alpha_spaces' => 'Nama pemilik harus berupa huruf dan tanpa tanda baca',
+        'nama_bank.required' => 'Nama bank harus diisi',
+        'no_rekening.required' => 'Nomor rekening harus diisi',
+        'no_rekening.unique' => 'Nomor rekening sudah terpakai'
+      ]);
 
         $rekening = new Rekening;
         $rekening->atas_nama = $request->atas_nama;
@@ -91,13 +94,16 @@ class RekeningController extends Controller
     public function update(Request $request, $id)
     {
       $request->validate([
-        'atas_nama' => 'required',
-        'nama_bank' => 'required',
-        'no_rekening' => 'required'
+        'atas_nama' => 'alpha_spaces|required',
+        'nama_bank' => 'alpha_spaces|required',
+        'no_rekening' => 'required|unique:rekenings,no_rekening,' .$id . ',id_rekening'
       ], [
         'atas_nama.required' => 'Nama pemilik rekening harus diisi',
+        'ata_nama.alpha_spaces' => 'Nama pemilik harus berupa huruf dan tanpa tanda baca',
+        'nama_bank.alpha_spaces' => 'Nama pemilik harus berupa huruf dan tanpa tanda baca',
         'nama_bank.required' => 'Nama bank harus diisi',
-        'no_rekening' => 'Nomor rekening harus diisi'
+        'no_rekening.required' => 'Nomor rekening harus diisi',
+        'no_rekening.unique' => 'Nomor rekening sudah terpakai'
       ]);
 
       $rekening = Rekening::find($id);

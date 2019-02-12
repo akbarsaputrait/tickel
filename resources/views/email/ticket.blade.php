@@ -58,6 +58,14 @@
 						</tr>
 					</tbody>
         </table>
+				<br>
+				<br>
+
+				<h4 class="secondary"><strong>Bukti pembayaran :</strong></h4>
+				<br>
+				<a href="{{ asset('uploads/images/bukti-pembayaran/'.$bukti->file) }}" target="_blank" style="text-align:center;">
+					<img src="{{ asset('uploads/images/bukti-pembayaran/'.$bukti->file) }}" width="150" alt="">
+				</a>
 
   @include('beautymail::templates.ark.contentEnd')
 

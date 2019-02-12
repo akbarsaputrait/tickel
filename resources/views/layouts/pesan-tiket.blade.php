@@ -54,7 +54,7 @@
                   <div class="col-md-5">
                     <div class="form-group">
                       <label for="">Tujuan</label>
-                      <input type="text" class="form-control {{ ($errors->has('tujuan')) ? 'is-invalid' : '' }}" name="tujuan" value="{{ old('tujuan') }}" {{ (old( 'tujuan')) ? '' : '' }} placeholder="Tujuan">
+                      <input type="text" class="form-control {{ ($errors->has('tujuan')) ? 'is-invalid' : '' }}" name="tujuan" value="{{ old('tujuan') }}" {{ (old( 'tujuan')) ? 'readonly' : 'readonly' }} placeholder="Tujuan" readonly>
                       <div class="invalid-feedback">
                         {{ $errors->first('tujuan') }}
                       </div>
@@ -119,7 +119,7 @@
                   <div class="col-md-6">
                     <div class="form-group">
                       <label for="">Tempat Pemesanan</label>
-                      <input type="text" class="form-control" name="tempat_pemesanan" value="{{ old('tempat_pemesanan') }}" {{ (old('tempat_pemesanan')) ? '' : 'readonly' }} readonly>
+                      <input type="text" class="form-control" name="tempat_pemesanan" value="{{ old('tempat_pemesanan') }}" {{ (old('tempat_pemesanan')) ? '' : 'readonly' }} placeholder="Tempat pemesanan" readonly>
                       <div class="invalid-feedback">
                         {{ $errors->first('tempat_pemesanan') }}
                       </div>

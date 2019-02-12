@@ -48,6 +48,20 @@ class TransportasiController extends Controller
         return redirect()->back()->withInput();
       }
 
+      $request->validate([
+        'kode' => 'required|unique:transportasis,kode',
+        'nama_transportasi' => 'required',
+        'jumlah_kursi' => 'required|numeric',
+        'id_type_transportasi' => 'required'
+      ], [
+        'kode.required' => 'Kode harus diisi',
+        'nama_transportasi.required' => 'Nama transportasi harus diisi',
+        'jumlah_kursi.required' => 'Jumlah kursi harus diisi',
+        'id_type_transportasi.required' => 'Tipe transportasi harus diisi',
+        'kode.unique' => 'Kode sudah digunakan',
+        'jumlah.numeric' => 'Jumlah kursi harus berupa angka',
+      ]);
+
       $trans = new Transportasi;
       $trans->kode = $request->kode;
       $trans->nama_transportasi = $request->nama_transportasi;
@@ -94,6 +108,21 @@ class TransportasiController extends Controller
      */
     public function update(Request $request, $id)
     {
+
+      $request->validate([
+        'kode' => 'required|unique:transportasis,kode,'. $id .', id_transportasi',
+        'nama_transportasi' => 'required',
+        'jumlah_kursi' => 'required|numeric',
+        'id_type_transportasi' => 'required'
+      ], [
+        'kode.required' => 'Kode harus diisi',
+        'nama_transportasi.required' => 'Nama transportasi harus diisi',
+        'jumlah_kursi.required' => 'Jumlah kursi harus diisi',
+        'id_type_transportasi.required' => 'Tipe transportasi harus diisi',
+        'kode.unique' => 'Kode sudah digunakan',
+        'jumlah.numeric' => 'Jumlah kursi harus berupa angka',
+      ]);
+
       $trans = Transportasi::find($id);
       $trans->kode = $request->kode;
       $trans->nama_transportasi = $request->nama_transportasi;

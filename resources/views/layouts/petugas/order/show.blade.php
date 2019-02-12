@@ -204,7 +204,9 @@
           <div class="d-flex justify-content-center align-items-center my-3">
             <div class="">
               <h5 class="display-5">Bukti Pembayaran</h5>
-              <img src="{{ asset('uploads/images/bukti-pembayaran/'.$pembayaran->file) }}" class="img-fluid" alt="">
+              <a href="{{ asset('uploads/images/bukti-pembayaran/'.$pembayaran->file) }}" target="_blank">
+                <img src="{{ asset('uploads/images/bukti-pembayaran/'.$pembayaran->file) }}" width="300" class="img-fluid" alt="">
+              </a>
             </div>
           </div>
           @endif
@@ -276,11 +278,14 @@
             <div class="col-md-3">
               <div class="form-group">
                 <label for="">Status</label>
-                <select class="form-control" name="status">
+                <select class="form-control {{ $errors->has('status') ? 'is-invalid' : ''  }}" name="status">
                   <option value="">-- Pilih Status</option>
                   <option value="done" {{ ($pemesanan->status == "done") ? 'selected' : '' }}>Diterima</option>
                   <option value="canceled" {{ ($pemesanan->status == "cancel") ? 'selected' : '' }}>Tidak Diterima</option>
                 </select>
+                <div class="invalid-feedback">
+                  {{ $errors->first('status') }}
+                </div>
               </div>
             </div>
             <div class="col-md-4">

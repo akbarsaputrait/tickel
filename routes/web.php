@@ -4,6 +4,8 @@ Auth::routes();
 Route::group(['middleware'=>'guest'], function() {
   Route::get('/', 'HomeController@index')->name('home');
 
+  Route::get('/masuk', 'Controller@formMasuk')->name('masuk');
+
   // AUTH ADMIN
   Route::get('/admin/masuk', 'AdminController@showLoginForm')->name('admin.login');
   Route::post('/admin/masuk', 'AdminController@loginAdmin')->name('admin.login.post');
@@ -19,6 +21,8 @@ Route::group(['middleware'=>'guest'], function() {
   Route::get('/penumpang/keluar', 'PenumpangController@logoutPenumpang')->name('penumpang.logout');
   Route::get('/penumpang/daftar', 'PenumpangController@registerForm')->name('penumpang.register');
   Route::post('/penumpang/daftar', 'PenumpangController@registerPost')->name('penumpang.register.post');
+  Route::get('/penumpang/verify/{token}', 'PenumpangController@verifying_email')->name('penumpang.verify');
+  Route::post('/penumpang/resend/', 'PenumpangController@resendToken')->name('penumpang.resend');
 
   Route::post('/pesan-tiket/proses', 'PesanTiketController@pesanTiket')->name('pesan.store');
   Route::get('/pesan-tiket', 'PesanTiketController@formPesanTiket')->name('pesan.create');
@@ -92,6 +96,6 @@ Route::group(['middleware' => 'penumpang'], function() {
 
 
 // Route::get('/generatePass', function() {
-//   $password = "admin";
+//   $password = "saputra";
 //   dd(bcrypt($password));
 // });

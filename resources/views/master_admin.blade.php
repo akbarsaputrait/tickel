@@ -61,12 +61,13 @@
       <div class="navbar-menu-wrapper d-flex align-items-center">
         <ul class="navbar-nav navbar-nav-right">
           <li class="nav-item d-none d-xl-inline-block">
-            <a href="{{ route('admin.profile') }}" class="nav-link" aria-expanded="false">
+            <a href="{{ route('admin.profile') }}" class="nav-link d-flex align-items-center" aria-expanded="false">
               <span class="profile-text">Hello, {{ auth()->guard('admin')->user()->name }} !</span>
               @if(is_null(auth()->guard('admin')->user()->image))
               <img class="img-xs rounded-circle" src="{{ asset('admin/images/faces/face1.jpg') }}" alt="Profile image">
       				@else
-      				<img class="img-xs rounded-circle" src="{{ asset('admin/uploads/images/avatars/'.auth()->guard('admin')->user()->image ) }}" alt="Profile image">
+              <div style="width: 37px;
+    height: 37px;background: url('{{ asset('admin/uploads/images/avatars/'.auth()->guard('admin')->user()->image ) }}'); background-size: cover; background-position: center top; max-width: 100%;"></div>
       				@endif
             </a>
           </li>
@@ -198,21 +199,11 @@
   <script src="{{ asset('admin/js/script.js') }}" charset="utf-8"></script>
   <script type="text/javascript">
     $(document).ready(function() {
-      $('table').DataTable({
-        dom: 'Bfrtip',
-        buttons: [
-            'copyHtml5',
-            'excelHtml5',
-            'csvHtml5',
-            'pdfHtml5'
-        ]
-      });
-
       $('select').select2();
 
       $('.datepicker').datepicker({
         todayBtn: 'linked',
-        format: 'yyyy-mm-dd'
+        format: 'yyyy-mm-dd',
       });
 
       $('#printThis').on("click", function () {

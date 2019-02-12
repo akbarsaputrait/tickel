@@ -216,7 +216,10 @@
                   <h6>Unggah bukti pembayaran</h6>
                   <div class="row">
                     <div class="col-md-9">
-                      <input type="file" class="form-control" name="file" value="">
+                      <input type="file" class="form-control {{ $errors->has('file') ? 'is-invalid' : '' }}" name="file" value="">
+                      <div class="invalid-feedback">
+                        {{ $errors->first('file') }}
+                      </div>
                     </div>
                     <div class="col-md-3">
                       <button type="submit" class="btn btn-primary custom" name="button">

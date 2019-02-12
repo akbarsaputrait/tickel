@@ -79,11 +79,12 @@ URI     : https://colorlib.com
                     <a href="{{ route('penumpang.login') }}" class="btn btn-outline-dark">Masuk</a>
                     <a href="{{ route('penumpang.register') }}" class="btn btn-outline-dark">Daftar</a>
                     @else
-                    <a href="{{ route('profile.show', ['username' => auth()->guard('penumpang')->user()->username]) }}" class="btn btn-dark text-lowercase">
+                    <a href="{{ route('profile.show', ['username' => auth()->guard('penumpang')->user()->username]) }}" class="btn btn-dark text-lowercase d-flex align-items-center">
                       @if(is_null(auth()->guard('penumpang')->user()->image))
                       <img src="{{ asset('home/images/client.png') }}" class="img-fluid" style="border-radius: 50%;" alt="" width="20">
                       @else
-                      <img src="{{ asset('uploads/images/avatars/' . auth()->guard('penumpang')->user()->image) }}" class="img-fluid" style="border-radius: 50%;" alt="" width="20">
+                      <div id="avatar-image-sm" style="background: url('{{ asset('uploads/images/avatars/' . auth()->guard('penumpang')->user()->image) }}'); background-size: cover; background-position: center top; max-width: 100%;">
+        							</div>
                       @endif
                       {{ '@'. auth()->guard('penumpang')->user()->username }}
                     </a>
@@ -112,9 +113,13 @@ URI     : https://colorlib.com
   </footer>
   <!-- jQuery and Bootstrap -->
   <script src="{{ asset('home/js/jquery-3.2.1.min.js') }}"></script>
+  <script src="{{ asset('admin/vendors/datatables/jquery.dataTables.min.js') }}" charset="utf-8"></script>
   <script src="{{ asset('admin/vendors/datatables/datatables.min.js') }}" charset="utf-8"></script>
-  <script src="{{ asset('admin/vendors/datatables/buttons.bootstrap4.min.js') }}" charset="utf-8"></script>
+  <script src="{{ asset('admin/vendors/datatables/jszip.min.js') }}" charset="utf-8"></script>
+  <script src="{{ asset('admin/vendors/datatables/pdfmake.min.js') }}" charset="utf-8"></script>
   <script src="{{ asset('admin/vendors/datatables/vfs_fonts.js') }}" charset="utf-8"></script>
+  <script src="{{ asset('admin/vendors/datatables/buttons.html5.min.js') }}" charset="utf-8"></script>
+  <script src="{{ asset('admin/vendors/datatables/buttons.bootstrap4.min.js') }}" charset="utf-8"></script>
   <script src="{{ asset('home/js/bootstrap.bundle.min.js') }}"></script>
   <script src="{{ asset('admin/vendors/sweetalert/sweetalert2.all.min.js') }}" charset="utf-8"></script>
   <script src="{{ asset('admin/vendors/select2/select2.full.min.js') }}" charset="utf-8"></script>
@@ -127,7 +132,6 @@ URI     : https://colorlib.com
   <script src="{{ asset('home/js/home.js') }}"></script>
   <script type="text/javascript">
     $(document).ready(function() {
-      $('table#datatable').DataTable();
       $('select#select2').select2();
       $('.datepicker').datepicker({
         todayBtn: 'linked',
@@ -135,6 +139,7 @@ URI     : https://colorlib.com
       });
     })
   </script>
+  @yield('script')
 </body>
 
 </html>

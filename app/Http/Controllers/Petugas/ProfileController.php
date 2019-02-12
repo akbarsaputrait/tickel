@@ -18,18 +18,32 @@ class ProfileController extends Controller
 	public function updateProfile(Request $request) {
 		$id = auth()->guard('petugas')->user()->id_petugas;
 		$request->validate([
-			'nama_petugas' => 'required',
-			'email' => 'required|unique:petugass,email,' . $id . ',id_petugas',
-			'username' => 'required',
-			'jenis_kelamin' => 'required',
-			'telefone' => 'required'
+			'nama_petugas' => 'alpha_spaces|required|unique:petugass,nama_petugas,'.$id.',id_petugas',
+			'email' => 'required|email|unique:petugass,email,'.$id.',id_petugas',
+			'username' => 'alpha_spaces|required|min:5|max:20',
+			'jenis_kelamin' => 'alpha_spaces|required',
+			'telefone' => 'numeric|required',
+			'file' => 'mimes:jpeg,jpg,png|dimensions:max_width=3000,max_height=3000'
 		], [
 			'nama_petugas.required' => 'Nama harus diisi',
 			'email.required' => 'Alamat email harus diisi',
 			'email.unique' => 'Alamat email sudah digunakan',
 			'username.required' => 'Nama pengguna harus diisi',
+			'email.alpha_spaces' => 'Email harus berupa huruf',
+			'username.min' => 'Nama pengguna harus lebih dari :min karakter',
+			'username.max' => 'Nama pengguna harus kurang dari :max karakter',
+			'username.alpha_spaces' => 'Nama pengguna harus berupa huruf',
 			'jenis_kelamin.required'  => 'Jenis kelamin harus diisi',
-			'telefone.required' => 'Nomor Telepon harus diisi'
+			'jenis_kelamin.alpha_spaces' => 'Jenis kelamin harus berupa huruf',
+			'telefone.required' => 'Nomor telepon harus diisi',
+			'telefone.numeric' => 'Nomor telepon harus berupa angka',
+			'nama_petugas.required' => 'Nama petugas harus diisi',
+			'nama_petugas.unique' => 'Nama petugas sudah digunakan',
+			'file.mimes' => 'Gambar harus berupa :mimes',
+			// 'file.max' => 'Gambar harus kurang dari :max kb',
+			'file.dimensions' => 'Ukuran gambar harus kurang dari :max_width px dan :max_height px',
+			'file.uploaded' => 'Gambar tidak dapat diunggah.',
+			'file.file' => 'File tidak berhasil diunggah'
 		]);
 
 		$petugas = Petugas::find($id);
@@ -40,6 +54,13 @@ class ProfileController extends Controller
 		$petugas->telefone = $request->telefone;
 
 		if($request->hasFile('file')) {
+			$maxSize = 3000000;
+			if($request->file('file')->getSize() > $maxSize) {
+				session()->flash('status', 'danger');
+				session()->flash('message', 'Ukuran file terlalu besar.');
+
+				return redirect()->back();
+			}
 			$image = $request->file('file');
 			$filename = time() . '.' . $image->getClientOriginalExtension();
 			$request->file('file')->move(public_path('uploads/images/avatars'), $filename);

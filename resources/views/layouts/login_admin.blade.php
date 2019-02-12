@@ -6,7 +6,7 @@
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Login | Tickle</title>
+  <title>Admin | Tickle</title>
   <!-- plugins:css -->
 	<link rel="stylesheet" href="{{ asset('admin/vendors/iconfonts/mdi/css/materialdesignicons.min.css') }}">
   <link rel="stylesheet" href="{{ asset('admin/vendors/css/vendor.bundle.base.css') }}">
@@ -38,8 +38,7 @@
 						@if(session()->has('message'))
 								<div class="alert alert-{{ session()->get('status') }} alert-dissmissible fade show">
 										<button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
-										<i class="material-icons">
-										session()->get('status') == 'success' ? 'check' : 'close'
+										<i class="mdi mdi-{{ session()->get('status') == 'success' ? 'check' : 'close' }}">
 										</i>
 										{{ session()->get('message') }}
 								</div>

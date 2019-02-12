@@ -94,6 +94,7 @@ $(function() {
 					$('input[name="harga"]').val(data.harga).attr("readonly", true);
 					$('input[name="tujuan"]').val(data.tujuan);
 					$('#id_rute').val(idrute);
+					$('input[name="id_rutes"]').val(idrute);
 					$('input[name="tanggal_berangkat"]').focus();
 					$("#cariTiket").hide();
 					$("#pesanTiketButton").removeClass('d-none');

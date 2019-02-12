@@ -1,6 +1,6 @@
 <div class="row">
 	<div class="col-md-12">
-		<table class="table table-stripped" id="datatable">
+		<table class="table table-stripped">
 			<thead class="thead-dark">
 				<th>Kode Pemesanan</th>
 				<th>Status</th>

@@ -17,7 +17,7 @@
   <link rel="apple-touch-icon" sizes="144x144" href="{{ asset('favicon/apple-icon-144x144.png') }}">
   <link rel="apple-touch-icon" sizes="152x152" href="{{ asset('favicon/apple-icon-152x152.png') }}">
   <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('favicon/apple-icon-180x180.png') }}">
-  <link rel="icon" type="image/png" sizes="192x192"  href="{{ asset('favicon/android-icon-192x192.png') }}">
+  <link rel="icon" type="image/png" sizes="192x192" href="{{ asset('favicon/android-icon-192x192.png') }}">
   <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('favicon/favicon-32x32.png') }}">
   <link rel="icon" type="image/png" sizes="96x96" href="{{ asset('favicon/favicon-96x96.png') }}">
   <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('favicon/favicon-16x16.png') }}">
@@ -38,15 +38,16 @@
   <link rel="stylesheet" href="{{ asset('admin/css/style.css') }}">
   <!-- endinject -->
   <link rel="stylesheet" href="{{ asset('admin/vendors/datatables/datatables.min.css') }}">
-  <link rel="stylesheet" href="{{ asset('admin/css/custom.css') }}">
-  @yield('style')
+  <link rel="stylesheet" href="{{ asset('admin/vendors/datepicker/css/datepicker.css') }}">
+
+  <link rel="stylesheet" href="{{ asset('admin/css/custom.css') }}"> @yield('style')
 </head>
 
 <body>
   <div class="container-scroller">
     <!-- partial:../../partials/_navbar.html -->
     <nav class="navbar default-layout navbar-grad-1 col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
-			<div class="text-center navbar-brand-wrapper d-flex align-items-top justify-content-center">
+      <div class="text-center navbar-brand-wrapper d-flex align-items-top justify-content-center">
         <a class="navbar-brand brand-logo" href="{{ route('petugas.dashboard') }}">
           <img src="{{ asset('home/images/logo.png') }}" alt="logo" />
         </a>
@@ -57,13 +58,12 @@
       <div class="navbar-menu-wrapper d-flex align-items-center">
         <ul class="navbar-nav navbar-nav-right">
           <li class="nav-item d-none d-xl-inline-block">
-            <a class="nav-link" id="UserDropdown" href="{{ route('petugas.profile') }}" aria-expanded="false">
-              <span class="profile-text">Hello, {{ auth()->guard('petugas')->user()->nama_petugas }} !</span>
-              @if(is_null(auth()->guard('petugas')->user()->image))
-              <img class="img-xs rounded-circle" src="{{ asset('admin/images/faces/face1.jpg') }}" alt="Profile image">
-      				@else
-      				<img class="img-xs rounded-circle" src="{{ asset('uploads/images/avatars/'.auth()->guard('petugas')->user()->image ) }}" alt="Profile image">
-      				@endif
+            <a class="nav-link d-flex align-items-center" id="UserDropdown" href="{{ route('petugas.profile') }}" aria-expanded="false">
+              <span class="profile-text">Hello, {{ auth()->guard('petugas')->user()->nama_petugas }} !</span> @if(is_null(auth()->guard('petugas')->user()->image))
+              <img class="img-xs rounded-circle" src="{{ asset('admin/images/faces/face1.jpg') }}" alt="Profile image"> @else
+              <div style="width: 37px;
+    height: 37px;background: url('{{ asset('uploads/images/avatars/' . auth()->guard('petugas')->user()->image) }}'); background-size: cover; background-position: center top; max-width: 100%;"></div>
+              @endif
             </a>
           </li>
         </ul>
@@ -104,14 +104,13 @@
         <div class="content-wrapper bg-2">
           <!-- Begin Validation -->
           @if(session()->has('message'))
-              <div class="alert alert-{{ session()->get('status') }} alert-dissmissible fade show">
-                  <button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
-                  <i class="fa fa-{{ session()->get('status') == 'success' ? 'check' : 'close' }}">
-                  </i>
-                  {{ session()->get('message') }}
-              </div>
-      @endif
-      <!-- End Validation -->
+          <div class="alert alert-{{ session()->get('status') }} alert-dissmissible fade show">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
+            <i class="fa fa-{{ session()->get('status') == 'success' ? 'check' : 'close' }}">
+                  </i> {{ session()->get('message') }}
+          </div>
+          @endif
+          <!-- End Validation -->
           @yield('content')
         </div>
         <!-- content-wrapper ends -->
@@ -148,19 +147,23 @@
   <script src="{{ asset('admin/vendors/datatables/buttons.bootstrap4.min.js') }}" charset="utf-8"></script>
   <script src="{{ asset('admin/vendors/datatables/vfs_fonts.js') }}" charset="utf-8"></script>
   <script src="{{ asset('admin/js/printThis.js') }}" charset="utf-8"></script>
+  <script src="{{ asset('admin/vendors/datepicker/js/bootstrap-datepicker.js') }}" charset="utf-8"></script>
+  <script src="{{ asset('admin/vendors/datepicker/js/locales/bootstrap-datepicker.id.js') }}" charset="utf-8"></script>
   <script type="text/javascript">
     $(document).ready(function() {
-      $('table#datatable').DataTable();
-
-      $('#printThis').on("click", function () {
-      $('div.printIt').printThis({
-        loadCSS: [
-          "{{ asset('admin/css/style.css') }}",
-          "{{ asset('admin/vendors/css/vendor.bundle.base.css') }}",
-          "{{ asset('admin/vendors/css/vendor.bundle.addons.css') }}"
-        ]
+      $('.datepicker').datepicker({
+        todayBtn: 'linked',
+        format: 'yyyy-mm-dd'
       });
-    });
+      $('#printThis').on("click", function() {
+        $('div.printIt').printThis({
+          loadCSS: [
+            "{{ asset('admin/css/style.css') }}",
+            "{{ asset('admin/vendors/css/vendor.bundle.base.css') }}",
+            "{{ asset('admin/vendors/css/vendor.bundle.addons.css') }}"
+          ]
+        });
+      });
     })
   </script>
   @yield('script')

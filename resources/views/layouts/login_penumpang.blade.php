@@ -34,10 +34,40 @@
               <span class="text-small font-weight-semibold">Tidak mempunyai akun ?</span>
               <a href="{{ route('penumpang.register') }}" class="text-black text-small">Daftar di sini</a>
             </div>
+            <div class="text-block text-center">
+              <button type="button" class="btn btn-default" data-target="#resendToken" data-toggle="modal">
+                Kirim ulang kode verifikasi
+              </button>
+            </div>
           </div>
         </div>
       </div>
     </form>
   </div>
 </header>
+<div class="modal fade" id="resendToken" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Kirim Kode Ulang</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal" action="{{ route('penumpang.resend') }}" method="post">
+          @csrf
+          <div class="form-group">
+            <label for="">Alamat email</label>
+            <input type="email" name="email_resend" class="form-control" value="" required autofocus>
+          </div>
+          <div class="form-group">
+            <button type="submit" class="btn btn-primary-custom" name="button">Kirim</button>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>
 @endsection

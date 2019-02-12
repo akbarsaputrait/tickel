@@ -43,7 +43,10 @@ class AdminController extends Controller
       if (Auth::guard('admin')->attempt(['email' => $request->email, 'password' => $request->password])) {
         // if successful, then redirect to their intended location
         return redirect()->route('admin.dashboard');
-      }
+      } else {
+				session()->flash('status', 'danger');
+				session()->flash('message', 'Email atau kata sandi anda salah.');
+			}
       // if unsuccessful, then redirect back to the login with the form data
       return redirect()->back()->withInput($request->only('email'));
     }

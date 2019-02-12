@@ -28,4 +28,9 @@ class DashboardController extends Controller
 		$data = DB::select('call chartRute()');
 		return response()->json($data);
 	}
+
+	public function chartTrans() {
+		$data = DB::select('call chartTrans()');
+		return response()->json($data);
+	}
 }

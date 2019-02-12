@@ -58,7 +58,7 @@
 					</div>
 					<div class="form-group">
 						<label for="">Tangga Lahir</label>
-						<input type="date" class="form-control" name="tanggal_lahir" value="{{ is_null(auth()->guard('penumpang')->user()->tanggal_lahir) ? '' : auth()->guard('penumpang')->user()->tanggal_lahir }}">
+						<input type="text" class="form-control datepicker {{ ($errors->has('tanggal_lahir')) ? 'is-invalid' : '' }}" name="tanggal_lahir" value="{{ is_null(auth()->guard('penumpang')->user()->tanggal_lahir) ? '' : auth()->guard('penumpang')->user()->tanggal_lahir }}" placeholder="Tanggal Lahir" {{ (old( 'tanggal_lahir')) ? '' : '' }}>
 					</div>
 					<div class="form-group">
 						<label for="">Alamat lengkap</label>
@@ -74,7 +74,9 @@
 						<div class="">
 							@if(is_null(auth()->guard('penumpang')->user()->image))
 							<img src="{{ asset('home/images/client.png') }}" class="img-fluid" style="border-radius: 50%;" alt=""> @else
-							<img src="{{ asset('uploads/images/avatars/' . auth()->guard('penumpang')->user()->image) }}" class="img-fluid" style="border-radius: 50%;" alt="" width="100"> @endif
+							<div id="avatar-image" style="background: url('{{ asset('uploads/images/avatars/' . auth()->guard('penumpang')->user()->image) }}'); background-size: cover; background-position: center top; max-width: 100%;">
+							</div>
+							 @endif
 						</div>
 					</div>
 					<div class="form-group text-center">

@@ -24,13 +24,14 @@ class TypeTransportasiRequest extends FormRequest
     public function rules()
     {
         return [
-            'nama_type' => 'required|unique:type_transportasi,nama_type'
+            'nama_type' => 'alpha_spaces|required|unique:type_transportasi,nama_type'
         ];
     }
 
     public function messages() {
       return [
-        'nama_type.required' => 'Nama tipe transportasi harus diisi!'
+        'nama_type.required' => 'Nama tipe transportasi harus diisi!',
+        'nama_type.alpha_spaces' => 'Nama tipe transportasi harus berupa huruf dan tanpa tanda baca'
       ];
     }
 }

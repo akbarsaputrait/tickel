@@ -33,8 +33,7 @@
                   {{ date('d F Y, H:i A', strtotime($item->created_at)) }}
                 </td>
                 <td>
-                  <button type="button" name="button" class="btn btn-danger" id="deleteButton"
-                          data-id="{{ $item->id }}" data-menu="testimoni">
+                  <button type="button" name="button" class="btn btn-danger" id="deleteButton" data-id="{{ $item->id }}" data-menu="testimoni">
                     <i class="fa fa-trash"></i>
                   </button>
                 </td>
@@ -47,4 +46,21 @@
     </div>
   </div>
 </div>
+@endsection @section('script')
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('table').DataTable({
+      dom: 'Bfrtip',
+      buttons: [
+        'copyHtml5',
+        'excelHtml5',
+        'csvHtml5',
+        'pdfHtml5'
+      ],
+      order: [
+        [2, "desc"]
+      ]
+    });
+  });
+</script>
 @endsection

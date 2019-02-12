@@ -54,7 +54,10 @@
             <div class="col-md-4">
               <div class="form-group">
                 <label for="">Foto Profil</label>
-                <input type="file" class="form-control" name="image" value="">
+                <input type="file" class="form-control {{ ($errors->has('image')) ? 'is-invalid' : '' }}" name="image" value="">
+                <div class="invalid-feedback">
+                  {{ $errors->first('image') }}
+                </div>
               </div>
             </div>
           </div>

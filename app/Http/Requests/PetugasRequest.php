@@ -25,11 +25,12 @@ class PetugasRequest extends FormRequest
     {
         return [
             'username' => 'required|min:5|max:20',
-            'password' => 'required',
-            'email' => 'required|email|unique:petugass,email',
-            'nama_petugas' => 'required|unique:petugass,nama_petugas',
-            'jenis_kelamin' => 'required',
-            'id_level' => 'required'
+            'password' => 'alpha_spaces|required',
+            'email' => 'alpha_spaces|required|email|unique:petugass,email,6,id_petugas',
+            'nama_petugas' => 'alpha_spaces|required|unique:petugass,nama_petugas,6,id_petugas',
+            'jenis_kelamin' => 'alpha_spaces|required',
+            'id_level' => 'alpha_spaces|required',
+            'image' => 'file|mimes:jpeg,jpg,png|max:2000|dimensions:min_width=400,min_height=600'
         ];
     }
 
@@ -40,16 +41,21 @@ class PetugasRequest extends FormRequest
         'email' => 'Email',
         'nama_petugas' => 'Nama lengkap',
         'jenis_kelamin' => 'Jenis kelamin',
-        'id_level' => 'Level'
+        'id_level' => 'Level',
+        'image' => 'Gambar'
       ];
     }
 
     public function messages() {
       return [
-        'required' => ':attributes harus diisi!',
-        'min' => ':attributes harus lebih dari :min',
-        'max' => ':attributes harus kurang dari :max',
-        'unique' => ':attributes sudah digunakan'
+        'required' => ':attribute harus diisi!',
+        'min' => ':attribute harus lebih dari :min',
+        'max' => ':attribute harus kurang dari :max',
+        'unique' => ':attribute sudah digunakan',
+        'mimes' => ':attribute harus berupa file :mimes',
+        'min_width' => 'Ukuran :attribute harus kurang dari :min_width px dan :min_height px',
+        'file' => 'Gambar tidak dapat diunggah',
+        'alpha_spaces' => ':attribute harus berupa huruf dan tanpa tanda baca'
       ];
     }
 }

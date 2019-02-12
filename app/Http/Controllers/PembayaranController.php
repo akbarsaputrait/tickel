@@ -9,6 +9,7 @@ use App\BuktiPembayaran;
 use App\Rute;
 use App\Transportasi;
 use App\Rekening;
+use File;
 
 class PembayaranController extends Controller
 {
@@ -42,7 +43,22 @@ class PembayaranController extends Controller
 							session()->flash('message', 'Bukti pembayaran gagal diunggah. Silahkan coba lagi.');
 							return redirect()->back();
 						}else {
+							$request->validate([
+								'file' => 'mimes:jpeg,jpg,png|dimensions:max_width=2000,max_height=2000'
+							], [
+								'file.mimes' => 'Gambar harus berupa :mimes',
+				        'file.dimensions' => 'Ukuran gambar harus kurang dari :max_width px dan :max_height px',
+				        'file.uploaded' => 'Gambar tidak dapat diunggah'
+							]);
+
 							$file = $request->file('file');
+							$maxSize = 3000000;
+							if($request->file('file')->getSize() > $maxSize) {
+								session()->flash('status', 'danger');
+								session()->flash('message', 'Ukuran file terlalu besar.');
+
+								return redirect()->back();
+							}
 							$filename = time()  .'.'. $file->getClientOriginalExtension();
 							$request->file('file')->move(public_path('uploads/images/bukti-pembayaran'), $filename);
 

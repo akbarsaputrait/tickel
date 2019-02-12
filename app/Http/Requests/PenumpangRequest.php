@@ -25,8 +25,8 @@ class PenumpangRequest extends FormRequest
     {
         return [
             'username' => 'required|min:8|max:20|unique:penumpangs,username,' . auth()->guard('penumpang')->user()->id_penumpang . ',id_penumpang',
-            'email' => 'required|email|unique:penumpangs,email,' . auth()->guard('penumpang')->user()->id_penumpang . ',id_penumpang',
-            'nama_penumpang' => 'required'
+            'email' => 'alpha_spaces|required|email|unique:penumpangs,email,' . auth()->guard('penumpang')->user()->id_penumpang . ',id_penumpang',
+            'nama_penumpang' => 'alpha_spaces|required'
         ];
     }
 
@@ -40,11 +40,12 @@ class PenumpangRequest extends FormRequest
 
     public function messages() {
       return [
-        'required' => ':attributes harus diisi',
-        'min' => ':attributes harus lebih dari :min',
-        'max' => ':attributes harus kurang dari :max',
-        'unique' => ':attributes sudah digunakan',
-        'email' => 'Format email tidak valid'
+        'required' => ':attribute harus diisi',
+        'min' => ':attribute harus lebih dari :min',
+        'max' => ':attribute harus kurang dari :max',
+        'unique' => ':attribute sudah digunakan',
+        'email' => 'Format email tidak valid',
+        'alpha_spaces' => ':attribute harus berupa huruf dan tanpa tanda baca'
       ];
     }
 }

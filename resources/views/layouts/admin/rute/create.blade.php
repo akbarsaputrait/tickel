@@ -13,7 +13,7 @@
             <div class="col-md-2">
               <div class="form-group">
                 <label for="">Tujuan</label>
-                <input type="text" class="form-control {{ ($errors->has('tujuan')) ? 'is-invalid' : '' }}" name="tujuan" value="" placeholder="Tujuan">
+                <input type="text" class="form-control {{ ($errors->has('tujuan')) ? 'is-invalid' : '' }}" name="tujuan" value="{{ old('tujuan') }}" placeholder="Tujuan">
                 <div class="invalid-feedback">
                   {{ $errors->first('tujuan') }}
                 </div>
@@ -23,7 +23,7 @@
               <div class="form-group">
                 <div class="form-group">
                   <label for="">Rute Awal</label>
-                  <input type="text" class="form-control {{ ($errors->has('rute_awal')) ? 'is-invalid' : '' }}" name="rute_awal" value="" placeholder="Rute Awal">
+                  <input type="text" class="form-control {{ ($errors->has('rute_awal')) ? 'is-invalid' : '' }}" name="rute_awal" value="{{ old('rute_awal') }}" placeholder="Rute Awal">
                   <div class="invalid-feedback">
                     {{ $errors->first('rute_awal') }}
                   </div>
@@ -33,7 +33,7 @@
             <div class="col-md-3">
               <div class="form-group">
                 <label for="">Rute Akhir</label>
-                <input type="text" class="form-control {{ ($errors->has('rute_akhir')) ? 'is-invalid' : '' }}" name="rute_akhir" value="" placeholder="Rute Akhir">
+                <input type="text" class="form-control {{ ($errors->has('rute_akhir')) ? 'is-invalid' : '' }}" name="rute_akhir" value="{{ old('rute_akhir') }}" placeholder="Rute Akhir">
                 <div class="invalid-feedback">
                   {{ $errors->first('rute_akhir') }}
                 </div>
@@ -42,7 +42,7 @@
             <div class="col-md-2">
               <div class="form-group">
                 <label for="">Jam Berangkat</label>
-                <input type="time" class="form-control {{ ($errors->has('jam_berangkat')) ? 'is-invalid' : '' }}" name="jam_berangkat" value="" placeholder="Jam Berangkat">
+                <input type="time" class="form-control {{ ($errors->has('jam_berangkat')) ? 'is-invalid' : '' }}" name="jam_berangkat" value="{{ old('jam_berangkat') }}" placeholder="Jam Berangkat">
                 <div class="invalid-feedback">
                   {{ $errors->first('jam_berangkat') }}
                 </div>
@@ -51,7 +51,7 @@
             <div class="col-md-2">
               <div class="form-group">
                 <label for="">Jam Tiba</label>
-                <input type="time" class="form-control {{ ($errors->has('jam_tiba')) ? 'is-invalid' : '' }}" name="jam_tiba" value="" placeholder="Jam Tiba">
+                <input type="time" class="form-control {{ ($errors->has('jam_tiba')) ? 'is-invalid' : '' }}" name="jam_tiba" value="{{ old('jam_tiba') }}" placeholder="Jam Tiba">
                 <div class="invalid-feedback">
                   {{ $errors->first('jam_tiba') }}
                 </div>
@@ -66,7 +66,7 @@
                   <div class="input-group-prepend">
                     <span class="input-group-text">Rp.</span>
                   </div>
-                  <input type="text" class="form-control {{ ($errors->has('harga')) ? 'is-invalid' : '' }}" name="harga" value="" id="hargaRute" placeholder="Harga">
+                  <input type="text" class="form-control {{ ($errors->has('harga')) ? 'is-invalid' : '' }}" name="harga" value="{{ old('harga') }}" id="hargaRute" placeholder="Harga">
                 </div>
                 <div class="invalid-feedback">
                   {{ $errors->first('harga') }}

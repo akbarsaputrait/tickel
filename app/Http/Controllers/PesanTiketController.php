@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Notifications\Messages\MailMessage;
+use Mail;
+use PDF;
+use Snowfire\Beautymail\Beautymail;
 use App\Http\Requests\PesanTiketRequest;
 use App\Penumpang;
 use App\Rute;
@@ -11,6 +15,7 @@ use App\TypeRute;
 use App\Transportasi;
 use App\Pemesanan;
 use App\BuktiPembayaran;
+use App\Rekening;
 
 class PesanTiketController extends Controller
 {
@@ -117,9 +122,24 @@ class PesanTiketController extends Controller
 				$penumpang->telefone = $request->telefone;
 				$penumpang->save();
 
+				$beautymail = app()->make(Beautymail::class);
+          $beautymail->send('email.invoice', [
+            // DATA
+            'rute' => Rute::with(['transportasi', 'type'])->where('id_rute', '=', $idrute)->first(),
+            'pemesanan' => $pemesanan,
+						'penumpang' => $penumpang,
+						'rekening' => Rekening::all()
+          ], function($message)
+          {
+              $message
+          			->from("admin@tickel.com")
+          			->to('akbarsaputra-548bce@inbox.mailtrap.io')
+          			->subject('Konfirmasi Pembayaran | Tickel');
+          });
+
 				session()->flash('status', 'success');
-				session()->flash('message', 'Untuk melanjutkan pemesanan silahkan unggah bukti pembayaran anda.');
-				return redirect()->route('pembayaran.show', ['id_pemesanan' => $pemesanan->kode_pemesanan])->withInput();
+				session()->flash('message', 'Periksa email anda untuk konfirmasi pembayaran.');
+				return redirect()->route('pesan.create');
 		} else {
 			session()->flash('status', 'danger');
 			session()->flash('message', 'Maaf tiket yang anda pesan telah habis.');

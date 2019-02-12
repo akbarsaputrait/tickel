@@ -24,11 +24,11 @@ class RegisterRequest extends FormRequest
     public function rules()
     {
         return [
-            'username' => 'required|min:3|max:20',
-            'password' => 'required',
-            'confirm_password' => 'required|same:password',
-            'email' => 'required|unique:penumpangs,email',
-            'nama_penumpang' => 'required',
+            'username' => 'min:3|max:20',
+            'password' => 'alpha_spaces|required|min:8',
+            'confirm_password' => 'alpha_spaces|required|same:password',
+            'email' => 'alpha_spaces|email|required|unique:penumpangs,email',
+            'nama_penumpang' => 'alpha_spaces|required',
         ];
     }
 
@@ -44,11 +44,13 @@ class RegisterRequest extends FormRequest
 
     public function messages() {
       return [
-        'required' => ':attributes harus diisi!',
-        'min' => ':attributes harus lebih dari :min karakter',
-        'max' => ':attributes harus kurang dari :max karakter',
+        'required' => ':attribute harus diisi!',
+        'min' => ':attribute harus lebih dari :min karakter',
+        'max' => ':attribute harus kurang dari :max karakter',
         'unique' => ':attribute sudah digunakan',
-        'same' => ':attribute harus sama'
+        'same' => ':attribute harus sama',
+        'alpha_spaces' => ':attribute harus berupa huruf dan tanpa tanda baca',
+        'email' => 'Format email salah'
       ];
     }
 }

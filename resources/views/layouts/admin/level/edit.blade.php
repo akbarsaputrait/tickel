@@ -14,7 +14,10 @@
             <div class="col-md-4">
               <div class="form-group">
                 <label for="">Nama</label>
-                <input type="text" class="form-control" name="nama_level" value="{{ $level->nama_level }}" placeholder="Nama Level">
+                <input type="text" class="form-control {{ $errors->has('nama_level') ? 'is-invalid' : '' }}" name="nama_level" value="{{ $level->nama_level }}" placeholder="Nama Level">
+                <div class="invalid-feedback">
+                  {{ $errors->first('nama_level') }}
+                </div>
               </div>
             </div>
           </div>

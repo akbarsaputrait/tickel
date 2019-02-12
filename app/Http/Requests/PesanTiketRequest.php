@@ -24,12 +24,12 @@ class PesanTiketRequest extends FormRequest
     public function rules()
     {
         return [
-            'rute_awal' => 'required',
-            'rute_akhir' => 'required',
-            'tanggal_berangkat' => 'required',
+            'rute_awal' => 'alpha_spaces|required',
+            'rute_akhir' => 'alpha_spaces|required',
+            'tanggal_berangkat' => 'date|required',
             'jam_berangkat' => 'required',
-            'transportasi' => 'required',
-            'kelas' => 'required'
+            'transportasi' => 'alpha_spaces|required',
+            'kelas' => 'alpha_spaces|required'
         ];
     }
 
@@ -46,7 +46,9 @@ class PesanTiketRequest extends FormRequest
 
     public function messages() {
       return [
-        'required' => ':attributes harus diisi!'
+        'required' => ':attribute harus diisi!',
+        'alpha_spaces' => ':attribute harus berupa huruf dan tanpa tanda baca',
+        'date' => ':attribute memiliki format yang salah'
       ];
     }
 }

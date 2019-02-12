@@ -54,10 +54,14 @@
             <div class="col-md-4">
               <div class="form-group">
                 <label for="">Foto Profil</label>
-                <input type="file" class="form-control" name="image" value="">
+                <input type="file" class="form-control {{ ($errors->has('image')) ? 'is-invalid' : '' }}" name="image" value="">
+                <div class="invalid-feedback">
+                  {{ $errors->first('image') }}
+                </div>
               </div>
               <div class="d-flex justify-content-center align-items-center">
-                <img src="{{ asset('uploads/images/avatars/' . $petugas->image) }}" class="rounded-circle" height="100" alt="">
+                <!-- <img src="" class="rounded-circle" height="100" alt=""> -->
+                <div id="avatar-image" style="background: url('{{ asset('uploads/images/avatars/' . $petugas->image) }}'); background-size: cover; background-position: center top; max-width: 100%;"></div>
               </div>
             </div>
           </div>

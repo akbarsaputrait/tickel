@@ -33,6 +33,13 @@ class ProfilController extends Controller
 		$penum->telefone = $request->telefone;
 
 		if($request->hasFile('file')) {
+			$maxSize = 3000000;
+			if($request->file('file')->getSize() > $maxSize) {
+				session()->flash('status', 'danger');
+				session()->flash('message', 'Ukuran file terlalu besar.');
+
+				return redirect()->back();
+			}
 			$file = $request->file('file');
 			$filename = time()  .'.'. $file->getClientOriginalExtension();
 			$request->file('file')->move(public_path('uploads/images/avatars'), $filename);

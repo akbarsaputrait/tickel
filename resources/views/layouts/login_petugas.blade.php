@@ -6,7 +6,7 @@
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Login | Tickle</title>
+  <title>Petugas | Tickle</title>
   <!-- plugins:css -->
 	<link rel="stylesheet" href="{{ asset('admin/vendors/iconfonts/mdi/css/materialdesignicons.min.css') }}">
   <link rel="stylesheet" href="{{ asset('admin/vendors/css/vendor.bundle.base.css') }}">
@@ -37,15 +37,14 @@
       <div class="content-wrapper d-flex align-items-center auth auth-bg-1 theme-one">
         <div class="row w-100">
           <div class="col-lg-4 mx-auto">
-						@if(session()->has('message'))
-								<div class="alert alert-{{ session()->get('status') }} alert-dissmissible fade show">
-										<button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
-										<i class="material-icons">
-										session()->get('status') == 'success' ? 'check' : 'close'
-										</i>
-										{{ session()->get('message') }}
-								</div>
-						@endif
+          @if(session()->has('message'))
+              <div class="alert alert-{{ session()->get('status') }} alert-dissmissible fade show">
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
+                  <i class="mdi mdi-{{ session()->get('status') == 'success' ? 'check' : 'close' }}">
+                  </i>
+                  {{ session()->get('message') }}
+              </div>
+          @endif
             <div class="auto-form-wrapper">
               <h3 class="text-center">Masuk Petugas</h3>
               <form action="{{ route('petugas.login.post') }}" method="post">

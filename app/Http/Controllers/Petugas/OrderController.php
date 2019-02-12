@@ -86,6 +86,12 @@ class OrderController extends Controller
      */
     public function update(Request $request, $id)
     {
+      $request->validate([
+        'status' => 'required'
+      ], [
+        'status.required' => 'Status harus diisi'
+      ]);
+
       $pesanan = Pemesanan::with(['pelanggan'])->where('kode_pemesanan', '=', $id)->where('status', '!=', 'cancel')->first();
       $pesanan->status = $request->status;
       $pesanan->id_petugas = auth()->guard('petugas')->user()->id_petugas;
@@ -99,7 +105,8 @@ class OrderController extends Controller
             // DATA
             'rute' => Rute::with(['transportasi', 'type'])->where('id_rute', '=', $pesanan->id_rute)->first(),
             'pemesanan' => $pesanan,
-            'keterangan' => $request->keterangan
+            'keterangan' => $request->keterangan,
+            'bukti' => BuktiPembayaran::where('id_pemesanan', '=', $pesanan->id_pemesanan)->first()
           ], function($message)
           {
               $message
@@ -134,12 +141,14 @@ class OrderController extends Controller
       $data['penumpang'] = Penumpang::find($data['pemesanan']->id_pelanggan)->first();
       $data['rute'] = Rute::with(['transportasi', 'type'])->where('id_rute', '=', $data['pemesanan']->id_rute)->first();
       $data['petugas'] = Petugas::find($data['pemesanan']->id_petugas);
+      // $data['bukti'] = BuktiPembayaran::where('id_pemesanan', '=', $data['pemesanan']->id_pemesanan)->first();
+
 
       // Send data to the view using loadView function of PDF facade
       $pdf = PDF::loadView('templates.export_pdf_pesanan', $data);
 
       // If you want to store the generated pdf to the server then you can use the store function
-      // $pdf->save(public_path('export/pdf/').$data['pemesanan']->kode_pemesanan.'-'. time() .'.pdf');
+      $pdf->save(public_path('export/pdf/').$data['pemesanan']->kode_pemesanan.'-'. time() .'.pdf');
 
       // Finally, you can download the file using download function
       return $pdf->download($data['pemesanan']->kode_pemesanan.'-'. date('Y-m-d') .'.pdf');

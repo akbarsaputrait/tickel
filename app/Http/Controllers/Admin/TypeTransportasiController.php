@@ -38,6 +38,13 @@ class TypeTransportasiController extends Controller
      */
     public function store(TypeTransportasiRequest $request)
     {
+      $request->validate([
+        'nama_type' => 'required|alpha_spaces|unique:type_transportasi, nama_type,' . $id . ', id_type_rute'
+      ], [
+        'nama_type.required' => 'Nama tipe harus diisi',
+        'nama_type.alpha_spaces' => 'Nama tipe harus berupa huruf dan tanpa tanda baca'
+      ]);
+
       $type = new TypeTransportasi;
       $type->nama_type = $request->nama_type;
       $type->keterangan = $request->keterangan;
@@ -80,6 +87,12 @@ class TypeTransportasiController extends Controller
      */
     public function update(Request $request, $id)
     {
+      $request->validate([
+        'nama_type' => 'required|alpha_spaces|unique:type_transportasi, nama_type,' . $id . ', id_type_rute'
+      ], [
+        'nama_type.required' => 'Nama tipe harus diisi',
+        'nama_type.alpha_spaces' => 'Nama tipe harus berupa huruf dan tanpa tanda baca'
+      ]);
       $type = TypeTransportasi::find($id);
       $type->nama_type = $request->nama_type;
       $type->keterangan = $request->keterangan;

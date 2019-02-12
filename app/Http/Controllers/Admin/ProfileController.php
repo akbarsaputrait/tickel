@@ -17,13 +17,15 @@ class ProfileController extends Controller
 
 		public function updateProfile(Request $request) {
 			$request->validate([
-				'name' => 'required',
-				'email' => 'required',
+				'name' => 'alpha_spaces|required',
+				'email' => 'required|email',
 				'username' => 'required'
 			], [
 				'name.required' => 'Nama harus diisi!',
 				'email.required' => 'Alamat email harus diisi!',
-				'username.required' => 'Nama pengguna harus diisi!'
+        'email.email' => 'Format email salah',
+				'username.required' => 'Nama pengguna harus diisi!',
+        'name.alpha_spaces' => 'Nama harus berupa huruf dan tanpa tanda baca'
 			]);
 
 			$id = auth()->guard('admin')->user()->id;
@@ -33,6 +35,14 @@ class ProfileController extends Controller
 			$admin->email = $request->email;
 
 			if($request->hasFile('file')) {
+        if($request->hasFile('file')) {
+    			$maxSize = 3000000;
+    			if($request->file('file')->getSize() > $maxSize) {
+    				session()->flash('status', 'danger');
+    				session()->flash('message', 'Ukuran file terlalu besar.');
+
+    				return redirect()->back();
+    			}
 				$image = $request->file('file');
 				$filename = time() . '.' . $image->getClientOriginalExtension();
 				$request->file('file')->move(public_path('admin/uploads/images/avatars'), $filename);

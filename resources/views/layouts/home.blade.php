@@ -231,7 +231,8 @@
       <div class="testimonials owl-carousel">
         @forelse($testimoni as $item)
         <div class="testimonials-single">
-          <img src="{{ is_null($item->user->image) ? asset('home/images/client.png') : asset('uploads/images/avatars/'. $item->user->image) }}" alt="client" class="client-img">
+          <div id="avatar-image" class="client-img" style="background: url('{{ is_null($item->user->image) ? asset('home/images/client.png') : asset('uploads/images/avatars/'. $item->user->image) }}'); background-size: cover; background-position: center top; max-width: 100%;"></div>
+          <!-- <img src="" alt="client" class="client-img"> -->
           <blockquote class="blockquote">{{ $item->content }}</blockquote>
           <h5 class="mt-4 mb-2">{{ $item->user->nama_penumpang }}</h5>
           <p class="text-primary">{{ $item->user->email }}</p>

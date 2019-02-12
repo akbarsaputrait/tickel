@@ -38,10 +38,11 @@ class LevelController extends Controller
     public function store(Request $request)
     {
       $request->validate([
-        'nama_level' => 'required|unique:levels,nama_level,'.$id.',id_level'
+        'nama_level' => 'alpha_spaces|required|unique:levels,nama_level'
       ], [
         'nama_level.required' => 'Nama level harus diisi',
-        'nama_level.unique' => 'Nama level sudah digunakan'
+        'nama_level.unique' => 'Nama level sudah digunakan',
+        'nama_level.alpha_spaces' => 'Nama level harus berupa huruf dan tanpa tanda baca'
       ]);
         $level = new Level;
         $level->nama_level = $request->nama_level;
@@ -85,10 +86,11 @@ class LevelController extends Controller
     public function update(Request $request, $id)
     {
       $request->validate([
-        'nama_level' => 'required|unique:levels,nama_level,'.$id.',id_level'
+        'nama_level' => 'alpha_spaces|required|unique:levels,nama_level,'.$id.',id_level'
       ], [
         'nama_level.required' => 'Nama level harus diisi',
-        'nama_level.unique' => 'Nama level sudah digunakan'
+        'nama_level.unique' => 'Nama level sudah digunakan',
+        'nama_level.alpha_spaces' => 'Nama level harus berupa huruf tanpa tanda baca'
       ]);
 
       $level = Level::find($id);

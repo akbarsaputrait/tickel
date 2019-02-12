@@ -51,7 +51,10 @@
               </div>
               <div class="form-group">
                 <label for="">Foto profil</label>
-                <input type="file" class="form-control" name="file" value="" accept="image/*">
+                <input type="file" class="form-control {{ ($errors->has('file')) ? 'is-invalid' : '' }}" name="file" value="" accept="image/*">
+                <div class="invalid-feedback">
+                  {{ $errors->first('file') }}
+                </div>
               </div>
             </div>
             <div class="col-md-6">
@@ -78,7 +81,12 @@
                   <div class="col-md-12">
                     <div class="form-group">
                       <label for="">Tanggal lahir</label>
-                      <input type="date" class="form-control" name="tanggal_lahir" value="{{ auth()->guard('petugas')->user()->tanggal_lahir }}">
+                      <input type="text" class="form-control {{ $errors->has('tanggal_lahir') ? 'is-invalid' : '' }} datepicker"
+                      name="tanggal_lahir" value="{{ (auth()->guard('petugas')->check()) ? (is_null(auth()->guard('petugas')->user()->tanggal_lahir) ? old('tanggal_lahir') : auth()->guard('petugas')->user()->tanggal_lahir) : old('tanggal_lahir') }}"
+                      placeholder="Tanggal lahir">
+                      <div class="invalid-feedback">
+                        {{ $errors->first('tanggal_lahir') }}
+                      </div>
                     </div>
                   </div>
                   <div class="col-md-12">

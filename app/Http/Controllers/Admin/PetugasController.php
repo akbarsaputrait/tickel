@@ -38,8 +38,36 @@ class PetugasController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(PetugasRequest $request)
+    public function store(Request $request)
     {
+      $request->validate([
+        'username' => 'alpha_spaces|required|min:5|max:20',
+        'email' => 'required|email|unique:petugass,email',
+        'nama_petugas' => 'alpha_spaces|required|unique:petugass,nama_petugas',
+        'jenis_kelamin' => 'alpha_spaces|required',
+        'id_level' => 'required',
+        'image' => 'file|mimes:jpeg,jpg,png|max:3000|dimensions:min_width=400,min_height=600'
+      ], [
+        'username.required' => 'Nama pengguna harus diisi',
+        'username.min' => 'Nama pengguna harus lebih dari :min karakter',
+        'username.max' => 'Nama pengguna harus kurang dari :max karakter',
+        'username.alpha_spaces' => 'Nama pengguna harus berupa huruf dan tanpa tanda baca',
+        'email.required' => 'Email harus diisi',
+        'email.email' => 'Format email salah',
+        'email.unique' => 'Email sudah digunakan',
+        'nama_petugas.required' => 'Nama petugas harus diisi',
+        'nama_petugas.unique' => 'Nama petugas sudah digunakan',
+        'nama_petugas.alpha_spaces' => 'Nama petugas harus berupa huruf dan tanpa tanda baca',
+        'jenis_kelamin.required' => 'Jenis kelamin harus diisi',
+        'jenis_kelamin.alpha_spaces' => 'Jenis kelamin harus berupa huruf dan tanpa tanda baca',
+        'id_level.required' => 'Level harus diisi',
+        'image.mimes' => 'Gambar harus berupa :mimes',
+        'image.max' => 'Gambar harus kurang dari :max kb',
+        'image.dimensions' => 'Ukuran gambar harus kurang dari :min_width px dan :min_height px',
+        'image.uploaded' => 'Gambar tidak dapat diunggah.',
+        'image.file' => 'File tidak berhasil diunggah'
+      ]);
+
       $petugas = new Petugas;
       $petugas->username = $request->username;
       $petugas->email = $request->email;
@@ -97,6 +125,35 @@ class PetugasController extends Controller
      */
     public function update(Request $request, $id)
     {
+      $request->validate([
+        'username' => 'alpha_spaces|required|min:5|max:20',
+        'email' => 'required|email|unique:petugass,email,'.$id.',id_petugas',
+        'nama_petugas' => 'alpha_spaces|required|unique:petugass,nama_petugas,'.$id.',id_petugas',
+        'jenis_kelamin' => 'alpha_spaces|required',
+        'id_level' => 'required',
+        'image' => 'file|mimes:jpeg,jpg,png|max:2000|dimensions:min_width=400,min_height=600'
+      ], [
+        'username.required' => 'Nama pengguna harus diisi',
+        'username.min' => 'Nama pengguna harus lebih dari :min karakter',
+        'username.max' => 'Nama pengguna harus kurang dari :max karakter',
+        'username.alpha_spaces' => 'Nama pengguna harus berupa huruf dan tanpa tanda baca',
+        'email.required' => 'Email harus diisi',
+        'email.email' => 'Format email salah',
+        'email.unique' => 'Email sudah digunakan',
+        'email.alpha_spaces' => 'Email harus berupa huruf',
+        'nama_petugas.required' => 'Nama petugas harus diisi',
+        'nama_petugas.unique' => 'Nama petugas sudah digunakan',
+        'nama_petugas.alpha_spaces' => 'Nama petugas harus berupa huruf dan tanpa tanda baca',
+        'jenis_kelamin.required' => 'Jenis kelamin harus diisi',
+        'jenis_kelamin.alpha_spaces' => 'Jenis kelamin harus berupa huruf dan tanpa tanda baca',
+        'id_level.required' => 'Level harus diisi',
+        'image.mimes' => 'Gambar harus berupa :mimes',
+        'image.max' => 'Gambar harus kurang dari :max kb',
+        'image.dimensions' => 'Ukuran gambar harus kurang dari :min_width px dan :min_height px',
+        'image.uploaded' => 'Gambar tidak dapat diunggah.',
+        'image.file' => 'File tidak berhasil diunggah'
+      ]);
+
       $petugas = Petugas::find($id);
       $petugas->username = $request->username;
       $petugas->email = $request->email;
@@ -118,7 +175,7 @@ class PetugasController extends Controller
 
       session()->flash('status', 'success');
       session()->flash('message', 'Petugas berhasil diperbarui.');
-      return redirect()->route('petugas.index');
+      return redirect()->route('admin.petugas.index');
     }
 
     /**

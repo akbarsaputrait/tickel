@@ -89,7 +89,7 @@
       <div class="card-body">
         <h4 class="card-title">Pesanan</h4>
         <div class="table-responsive">
-          <table class="table table-bordered table-striped" id="order">
+          <table class="table table-bordered table-striped" id="orderByDate">
             <thead>
               <tr>
                 <th>
@@ -118,39 +118,18 @@
                   </a>
                 </td>
                 <td>
-                  @switch($item->status)
-                      @case("done")
-                          <span class="badge badge-success">{{ ucfirst($item->status) }}</span>
-                        @break
-
-                      @case("process")
-                          <span class="badge badge-primary">{{ ucfirst($item->status) }}</span>
-                        @break
-
-                      @case("pending")
-                        <span class="badge badge-warning">{{ ucfirst($item->status) }}</span>
-                        @break
-
-                      @case("cancel")
-                        <span class="badge badge-danger">{{ ucfirst($item->status) }}</span>
-                        @break
-                      @default
-                          <span class="badge badge-dark">{{ ucfirst($item->status) }}</span>
-                  @endswitch
+                  @switch($item->status) @case("done")
+                  <span class="badge badge-success">{{ ucfirst($item->status) }}</span> @break @case("process")
+                  <span class="badge badge-primary">{{ ucfirst($item->status) }}</span> @break @case("pending")
+                  <span class="badge badge-warning">{{ ucfirst($item->status) }}</span> @break @case("cancel")
+                  <span class="badge badge-danger">{{ ucfirst($item->status) }}</span> @break @default
+                  <span class="badge badge-dark">{{ ucfirst($item->status) }}</span> @endswitch
                 </td>
                 <td>
                   Rp.{{ $item->total_bayar }}
                 </td>
                 <td>
-                  @if(is_null($item->petugas))
-                    @if(is_null($item->admin))
-                      -
-                    @else
-                      {{ $item->admin->name }} <span class="badge badge-outline-danger">admin</span>
-                    @endif
-                  @else
-                    {{ $item->petugas->nama_petugas }} <span class="badge badge-outline-primary">petugas</span>
-                  @endif
+                  @if(is_null($item->petugas)) @if(is_null($item->admin)) - @else {{ $item->admin->name }} <span class="badge badge-outline-danger">admin</span> @endif @else {{ $item->petugas->nama_petugas }} <span class="badge badge-outline-primary">petugas</span>                  @endif
                 </td>
                 <td>
                   {{ date('d F Y, H:i A', strtotime($item->created_at)) }}
@@ -169,78 +148,131 @@
   </div>
 </div>
 <div class="row">
-  <div class="col-lg-12 grid-margin stretch-card">
+  <div class="col-lg-6 grid-margin stretch-card">
     <div class="card">
       <div class="card-body">
-				<h4 class="card-title">Jumlah pemesanan tiap harinya</h4>
-				<canvas id="canvass" style="height:230px"></canvas>
+        <h4 class="card-title" style="font-wfont-weight: bold;">Jumlah pemesanan tiap harinya.</h4>
+        <canvas id="canvass" style="height:230px"></canvas>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-6 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title" style="font-wfont-weight: bold;">Transportasi yang sering dipesan.</h4>
+        <canvas id="canvas2" style="height:230px"></canvas>
       </div>
     </div>
   </div>
 </div>
-@endsection
-
-@section('script')
+@endsection @section('script')
 <script src="{{ asset('admin/vendors/js/vendor.bundle.addons.js') }}"></script>
 <script type="text/javascript">
-
   document.getElementById("total_bayar_view").innerHTML = formatRupiah('{{ $total_bayar }}', 'Rp.');
 
-  $(document).ready(function() {
-    var url = "{{url('api/chartPesanan')}}";
-        var Years = new Array();
-        var Labels = new Array();
-        var Prices = new Array();
-        $(document).ready(function(){
-          $.get(url, function(data){
+  var Tanggal = new Array();
+  var Jumlah = new Array();
 
-            $.each(data, function(k,v){
-                Years.push(v.created_at);
-                Labels.push(v.rute_awal);
-                Prices.push(v.rute);
-            });
-            var ctx = document.getElementById("canvass").getContext('2d');
-                var myChart = new Chart(ctx, {
-                  type: 'bar',
-                  data: {
-                      labels:Years,
-                      datasets: [{
-                          label: 'Jumlah pemesanan',
-                          data: Prices,
-                          borderWidth: 1,
-                          backgroundColor: [
-                              'rgba(255, 99, 132, 0.2)',
-                              'rgba(54, 162, 235, 0.2)',
-                              'rgba(255, 206, 86, 0.2)',
-                              'rgba(75, 192, 192, 0.2)',
-                              'rgba(153, 102, 255, 0.2)',
-                              'rgba(255, 159, 64, 0.2)',
-                              'rgb(47, 225, 243)'
-                          ],
-                          borderColor: [
-                              'rgba(255,99,132,1)',
-                              'rgba(54, 162, 235, 1)',
-                              'rgba(255, 206, 86, 1)',
-                              'rgba(75, 192, 192, 1)',
-                              'rgba(153, 102, 255, 1)',
-                              'rgba(255, 159, 64, 1)',
-                              'rgb(41, 185, 199)'
-                          ],
-                      }]
-                  },
-                  options: {
-                      scales: {
-                          yAxes: [{
-                              ticks: {
-                                  beginAtZero:true
-                              }
-                          }]
-                      }
-                  }
-              });
-          });
-        });
-  })
+  var Tansportasi = new Array();
+  var jumlahTrans = new Array();
+  $(document).ready(function() {
+    $('table').DataTable({
+      dom: 'Bfrtip',
+      buttons: [
+          'copyHtml5',
+          'excelHtml5',
+          'csvHtml5',
+          'pdfHtml5'
+      ],
+      "order": [[ 4, "desc" ]]
+    });
+
+
+    $.get("{{url('api/chartPesanan')}}", function(data) {
+
+      $.each(data, function(k, v) {
+        Tanggal.push(v.created_at);
+        Jumlah.push(v.rute);
+      });
+      var ctx = document.getElementById("canvass").getContext('2d');
+      var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: Tanggal,
+          datasets: [{
+            label: 'Jumlah pemesanan',
+            data: Jumlah,
+            borderWidth: 1,
+            backgroundColor: [
+              'rgba(255, 99, 132, 0.2)',
+              'rgba(54, 162, 235, 0.2)',
+              'rgba(255, 206, 86, 0.2)',
+              'rgba(75, 192, 192, 0.2)',
+              'rgba(153, 102, 255, 0.2)',
+              'rgba(255, 159, 64, 0.2)',
+              'rgb(47, 225, 243)'
+            ],
+            borderColor: [
+              'rgba(255,99,132,1)',
+              'rgba(54, 162, 235, 1)',
+              'rgba(255, 206, 86, 1)',
+              'rgba(75, 192, 192, 1)',
+              'rgba(153, 102, 255, 1)',
+              'rgba(255, 159, 64, 1)',
+              'rgb(41, 185, 199)'
+            ],
+          }]
+        },
+        options: {
+          scales: {
+            yAxes: [{
+              ticks: {
+                beginAtZero: true
+              }
+            }]
+          }
+        }
+      });
+    });
+
+    $.get("{{url('api/chartTrans')}}", function(data) {
+      $.each(data, function(k, v) {
+        Tansportasi.push(v.nama_transportasi);
+        jumlahTrans.push(v.jumlah);
+      });
+      var ctx = document.getElementById("canvas2").getContext('2d');
+      var myChart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+          labels: Tansportasi,
+          datasets: [{
+            data: jumlahTrans,
+            backgroundColor: [
+              'rgba(255, 99, 132, 0.2)',
+              'rgba(54, 162, 235, 0.2)',
+              'rgba(255, 206, 86, 0.2)',
+              'rgba(75, 192, 192, 0.2)',
+              'rgba(153, 102, 255, 0.2)',
+              'rgba(255, 159, 64, 0.2)',
+              'rgb(47, 225, 243)'
+            ],
+            borderColor: [
+              'rgba(255,99,132,1)',
+              'rgba(54, 162, 235, 1)',
+              'rgba(255, 206, 86, 1)',
+              'rgba(75, 192, 192, 1)',
+              'rgba(153, 102, 255, 1)',
+              'rgba(255, 159, 64, 1)',
+              'rgb(41, 185, 199)'
+            ],
+          }]
+        },
+        options: {
+          responsive: true,
+        }
+      });
+    });
+  });
 </script>
 
 @endsection
