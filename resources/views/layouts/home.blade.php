@@ -6,6 +6,13 @@
     </div>
     <div class="row">
       <div class="col-md-12">
+        @if(session()->has('message'))
+        <div class="alert alert-{{ session()->get('status') }} alert-dissmissible fade show mb-3">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
+          <i class="ti-{{ session()->get('status') == 'success' ? 'check' : 'close' }}">
+                </i> {{ session()->get('message') }}
+        </div>
+        @endif
         <div class="card features p-4 text-left text-dark">
           <form class="form-horizontal" action="{{ route('pesan.store') }}" method="post" id="pesanTiket">
             @csrf
@@ -130,7 +137,7 @@
                 <div class="form-group">
                   @if(!auth()->guard('penumpang')->check())
                   <div class="text-center text-dark mt-4">
-                    <a href="#">Masuk</a> atau <a href="#">Daftar</a> untuk melengkapi pemesanan tiket.
+                    <a href="{{ route('penumpang.login') }}">Masuk</a> atau <a href="{{ route('penumpang.register') }}">Daftar</a> untuk melengkapi pemesanan tiket.
                   </div>
                   @endif
                 </div>

@@ -45,9 +45,11 @@ var TIMEOUT = 2000;
 									text: 'Data berhasil dihapus.',
 									type: "success",
 									timer: TIMEOUT,
-									showConfirmButton: false
+									showConfirmButton: false,
+									onClose: () => {
+								    location.reload();
+								  }
 								});
-								location.reload();
 							}
 						}
 					})

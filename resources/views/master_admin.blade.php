@@ -36,6 +36,9 @@
   <!-- End plugin css for this page -->
   <!-- inject:css -->
   <link rel="stylesheet" href="{{ asset('admin/css/style.css') }}">
+  <link rel="stylesheet" href="{{ asset('admin/vendors/pace/pace-theme-minimal.css') }}">
+
+  <script src="{{ asset('admin/vendors/pace/pace.min.js') }}" charset="utf-8"></script>
   <!-- endinject -->
   <link rel="stylesheet" href="{{ asset('admin/vendors/datatables/datatables.min.css') }}">
   <link rel="stylesheet" href="{{ asset('admin/vendors/sweetalert/sweetalert2.min.css') }}">

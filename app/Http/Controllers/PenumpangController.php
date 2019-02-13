@@ -56,7 +56,7 @@ class PenumpangController extends Controller
 					if (Auth::guard('penumpang')->attempt(['email' => $request->email, 'password' => $request->password])) {
 		        // if successful, then redirect to their intended location
 		        return redirect()->route('home');
-		      }else {
+		      } else {
 						session()->flash('status', 'danger');
 						session()->flash('message', 'Email atau kata sandi anda salah.');
 					}

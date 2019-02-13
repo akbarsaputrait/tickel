@@ -26,6 +26,8 @@
   <meta name="msapplication-TileImage" content="{{ asset('favicon/ms-icon-144x144.png') }}">
   <meta name="theme-color" content="#ffffff">
 
+  <link rel="stylesheet" href="{{ asset('admin/css/style.css') }}">
+  <link rel="stylesheet" href="{{ asset('admin/vendors/pace/pace-theme-minimal.css') }}">
   <!-- plugins:css -->
   <link rel="stylesheet" href="{{ asset('admin/vendors/iconfonts/mdi/css/materialdesignicons.min.css') }}">
   <link rel="stylesheet" href="{{ asset('admin/vendors/css/vendor.bundle.base.css') }}">

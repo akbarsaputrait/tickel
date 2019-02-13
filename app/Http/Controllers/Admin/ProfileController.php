@@ -43,11 +43,12 @@ class ProfileController extends Controller
 
     				return redirect()->back();
     			}
-				$image = $request->file('file');
-				$filename = time() . '.' . $image->getClientOriginalExtension();
-				$request->file('file')->move(public_path('admin/uploads/images/avatars'), $filename);
-				$admin->image = $filename;
-			}
+  				$image = $request->file('file');
+  				$filename = time() . '.' . $image->getClientOriginalExtension();
+  				$request->file('file')->move(public_path('admin/uploads/images/avatars'), $filename);
+  				$admin->image = $filename;
+  			}
+      }
 			$admin->save();
 
 			session()->flash('status', 'success');

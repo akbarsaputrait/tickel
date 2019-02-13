@@ -14,9 +14,9 @@ class DashboardController extends Controller
 	public function index() {
 		$data['petugas'] = Petugas::all();
 		$data['penumpang'] = Penumpang::all();
-		$data['pesanan'] = Pemesanan::where('status', '=', 'done')->get();
+		$data['pesanan'] = Pemesanan::where('status', '!=', 'cancel')->get();
 		$data['pemasukan'] = Pemesanan::where('status', '=', 'done')->get(['total_bayar']);
-		$data['pemesanan'] = Pemesanan::with(['petugas', 'admin'])->limit(10)->get();
+		$data['pemesanan'] = Pemesanan::with(['petugas', 'admin'])->orderBy('created_at', 'DESC')->limit(10)->get();
 		$data['total_bayar'] = DB::table('pemesanans')
 															->where('pemesanans.status', '=', 'done')
 															->sum(DB::raw('replace(pemesanans.total_bayar, \'.\', "")'));

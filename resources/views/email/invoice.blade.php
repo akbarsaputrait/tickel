@@ -3,11 +3,11 @@
 
 <head>
   <meta charset="utf-8">
-  <title>Invoice | Tickel</title>
+  <title>Konfirmasi Pembayaran | Tickel</title>
 
   <style>
     .invoice-box {
-      max-width: 800px;
+      max-width: 1000px;
       margin: auto;
       padding: 30px;
       border: 1px solid #eee;
@@ -113,7 +113,7 @@
               <td>
                 Kode Pesanan #: {{ $pemesanan->kode_pemesanan }}
                 <br> Dibuat pada: {{ date('d F Y', strtotime($pemesanan->created_at)) }}
-                <!-- <br> Due: February 1, 2015 -->
+                <br> Admin Tickel
               </td>
             </tr>
           </table>
@@ -180,6 +180,9 @@
 			<td>
 				Kirim bukti pembayaran <a href="{{ route('pembayaran.show', ['id_pemesanan' => $pemesanan->kode_pemesanan]) }}" target="_blank">disini</a>
 			</td>
+      <td>
+        <a href="http://localhost:8000/export/pdf/{{ $pemesanan->kode_pemesanan }}.pdf">Unduh konfirmasi pembayaran</a>
+      </td>
 		</tr>
   </div>
 </body>

@@ -93,31 +93,34 @@ class OrderController extends Controller
          'status.required' => 'Status harus diisi'
        ]);
 
-       $pesanan = Pemesanan::with(['pelanggan'])->where('kode_pemesanan', '=', $id)->where('status', '!=', 'cancel')->first();
-       $pesanan->status = $request->status;
-       $pesanan->id_admin = auth()->guard('admin')->user()->id;
-       $pesanan->keterangan = $request->keterangan;
-       $pesanan->save();
-         // SEND EMAIL TO USER
-         $to = "akbarsaputra-548bce@inbox.mailtrap.io";
-         $beautymail = app()->make(Beautymail::class);
-           $beautymail->send('email.ticket', [
-             // DATA
-             'rute' => Rute::with(['transportasi', 'type'])->where('id_rute', '=', $pesanan->id_rute)->first(),
-             'pemesanan' => $pesanan,
-             'keterangan' => $request->keterangan,
-             'bukti' => BuktiPembayaran::where('id_pemesanan', '=', $pesanan->id_pemesanan)->first()
-           ], function($message)
-           {
-               $message
-           			->from(auth()->guard('admin')->user()->email)
-           			->to('akbarsaputra-548bce@inbox.mailtrap.io')
-           			->subject('Informasi Pesanan | Tickel');
-           });
+       if($request->status == "done") {
+         $pesanan = Pemesanan::with(['pelanggan'])->where('kode_pemesanan', '=', $id)->where('status', '!=', 'cancel')->first();
+         $pesanan->status = $request->status;
+         $pesanan->id_admin = auth()->guard('admin')->user()->id;
+         $pesanan->keterangan = $request->keterangan;
+         $pesanan->save();
+           // SEND EMAIL TO USER
+           $to = "akbarsaputra-548bce@inbox.mailtrap.io";
+           $beautymail = app()->make(Beautymail::class);
+             $beautymail->send('email.ticket', [
+               // DATA
+               'rute' => Rute::with(['transportasi', 'type'])->where('id_rute', '=', $pesanan->id_rute)->first(),
+               'pemesanan' => $pesanan,
+               'keterangan' => $request->keterangan,
+               'bukti' => BuktiPembayaran::where('id_pemesanan', '=', $pesanan->id_pemesanan)->first()
+             ], function($message)
+             {
+                 $message
+             			->from(auth()->guard('admin')->user()->email)
+             			->to('akbarsaputra-548bce@inbox.mailtrap.io')
+             			->subject('Informasi Pesanan | Tickel');
 
-           $bukti = BuktiPembayaran::where('id_pemesanan', '=', $pesanan->id_pemesanan)->first();
-           $bukti->id_admin = auth()->guard('admin')->user()->id;
-           $bukti->save();
+             });
+
+             $bukti = BuktiPembayaran::where('id_pemesanan', '=', $pesanan->id_pemesanan)->first();
+             $bukti->id_admin = auth()->guard('admin')->user()->id;
+             $bukti->save();
+         }
 
          session()->flash('status','success');
          session()->flash('message', 'Pesanan berhasil diperbarui dan email berhasil dikirim!');
@@ -133,7 +136,7 @@ class OrderController extends Controller
      public function destroy($id)
      {
        $pems = Pemesanan::find($id);
-        if($pems->status != "done")
+        if($pems->status != "done" && $pems->status != "cancel")
         {
           $rute = Rute::where('id_rute', '=', $pems->id_rute)->first();
     			$transportasi = Transportasi::find($rute->id_transportasi);

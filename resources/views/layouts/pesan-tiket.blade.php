@@ -19,7 +19,7 @@
             <h5 class="card-description">
             Informasi Rute
           </h5> @csrf
-            <input type="hidden" name="id_rutes" id="id_rute" value="{{ old('id_rute') }}">
+            <input type="hidden" name="id_rutes" id="id_rute" value="{{ old('id_rutes') }}">
             <div class="row">
               <div class="col-md-4">
                 <div class="form-group">

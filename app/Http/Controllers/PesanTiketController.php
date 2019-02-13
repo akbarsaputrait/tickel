@@ -85,18 +85,6 @@ class PesanTiketController extends Controller
 		$jumlah_kursi = $transportasi->jumlah_kursi;
 
 		if($jumlah_kursi > 0) {
-				$kode_transportasi = $rute->transportasi->kode;
-				$kode_kursi = $kode_transportasi .'-'.$jumlah_kursi;
-				$pemesanan->kode_kursi = $kode_kursi;
-				$transportasi->jumlah_kursi = $jumlah_kursi - 1;
-				$transportasi->save();
-				$pemesanan->save();
-
-				$bukti = new BuktiPembayaran;
-				$bukti->id_penumpang = auth()->guard('penumpang')->user()->id_penumpang;
-				$bukti->id_pemesanan = $pemesanan->id_pemesanan;
-				$bukti->save();
-
 				$request->validate([
 					'nama_penumpang' => 'required',
 					'email' => 'required',
@@ -120,7 +108,33 @@ class PesanTiketController extends Controller
 				$penumpang->alamat_penumpang = $request->alamat_penumpang;
 				$penumpang->tanggal_lahir = $request->tanggal_lahir;
 				$penumpang->telefone = $request->telefone;
+
+				$kode_transportasi = $rute->transportasi->kode;
+				$kode_kursi = $kode_transportasi .'-'.$jumlah_kursi;
+				$pemesanan->kode_kursi = $kode_kursi;
+				$transportasi->jumlah_kursi = $jumlah_kursi - 1;
+				$transportasi->save();
+				$pemesanan->save();
+
+				$bukti = new BuktiPembayaran;
+				$bukti->id_penumpang = auth()->guard('penumpang')->user()->id_penumpang;
+				$bukti->id_pemesanan = $pemesanan->id_pemesanan;
+				$bukti->save();
 				$penumpang->save();
+
+				// Send data to the view using loadView function of PDF facade
+				$pdf = PDF::loadView('templates.export_invoice', [
+					'rute' => Rute::with(['transportasi', 'type'])->where('id_rute', '=', $idrute)->first(),
+					'pemesanan' => $pemesanan,
+					'penumpang' => $penumpang,
+					'rekening' => Rekening::all()
+				]);
+
+				// If you want to store the generated pdf to the server then you can use the store function
+				$pdf->setPaper('A4', 'landscape');
+				$pdf->save(public_path('export/pdf/').$pemesanan->kode_pemesanan.'.pdf');
+				// Finally, you can download the file using download function
+				// return $pdf->download($data['pemesanan']->kode_pemesanan.'-'. date('Y-m-d') .'.pdf');
 
 				$beautymail = app()->make(Beautymail::class);
           $beautymail->send('email.invoice', [
@@ -139,7 +153,7 @@ class PesanTiketController extends Controller
 
 				session()->flash('status', 'success');
 				session()->flash('message', 'Periksa email anda untuk konfirmasi pembayaran.');
-				return redirect()->route('pesan.create');
+				return redirect()->route('profile.show',['username' => auth()->guard('penumpang')->user()->username]);
 		} else {
 			session()->flash('status', 'danger');
 			session()->flash('message', 'Maaf tiket yang anda pesan telah habis.');

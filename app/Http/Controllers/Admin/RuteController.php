@@ -42,6 +42,12 @@ class RuteController extends Controller
      */
     public function store(RuteRequest $request)
     {
+        if(Rute::where('id_transportasi','=', $request->id_transportasi)->exists()) {
+          session()->flash('status', 'danger');
+          session()->flash('message', 'Transportasi sudah digunakan rute lain');
+          return redirect()->route('admin.rute.create');
+        }
+
         $rute = new Rute;
         $rute->tujuan = $request->tujuan;
         $rute->rute_awal = $request->rute_awal;
@@ -92,6 +98,12 @@ class RuteController extends Controller
      */
     public function update(RuteRequest $request, $id)
     {
+      if(Rute::where('id_rute', '!=', $id)->where('id_transportasi','=', $request->id_transportasi)->exists()) {
+        session()->flash('status', 'danger');
+        session()->flash('message', 'Transportasi sudah digunakan rute lain');
+        return redirect()->route('admin.rute.edit',['rute' => $id]);
+      }
+
       $rute = Rute::find($id);
       $rute->tujuan = $request->tujuan;
       $rute->rute_awal = $request->rute_awal;
